@@ -1,0 +1,795 @@
+/* ========== 全局主题变量 ========== */
+/* 六套风格：默认清爽浅绿 / 简约蓝白色 / Hello Kitty / 夜晚科技 / 赛博炫彩 / 夜晚护眼色
+   风格由 <html data-theme> 切换（见 src/config/appTheme.ts），:root 即浅绿，
+   作为未设置 data-theme 时的兜底，保证首屏与默认风格一致。 */
+
+:root,
+html[data-theme="cream"] {
+  /* 主题三色（取 Modrinth 品牌绿 #00AF5C / 亮绿 #00BD3C） */
+  --color-gold: #00AF5C;
+  --color-green: #00BD3C;
+  --color-blue: #1B3A5C;
+  --rgb-gold: 0, 175, 92;
+  --rgb-green: 0, 189, 60;
+  --rgb-blue: 74, 125, 181;
+  --rgb-red: 217, 79, 79;
+  --rgb-orange: 217, 161, 59;
+  --logo-accent-light: #2BD97C;
+  --logo-accent-deep: #00A052;
+
+  /* 清爽浅绿背景（浅灰基调 + 绿意点缀，同 Modrinth 的明快色感） */
+  --bg-primary: #F1F3F1;
+  --bg-secondary: #E7EBE7;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F5F8F5;
+  --bg-sidebar: #ECF0EC;
+  --bg-topbar: #FFFFFF;
+  --bg-input: #FFFFFF;
+  --submenu-bg: rgba(231, 235, 231, 0.7);
+
+  /* 边框 */
+  --border-color: #DFE3DF;
+  --border-light: #D0D5D0;
+
+  /* 文字 */
+  --text-primary: #2C2E31;
+  --text-secondary: #484D54;
+  --text-muted: #7D838A;
+  --text-gold: #008F4C;
+  --text-green: #00A052;
+  --on-accent: #FFFFFF;
+
+  /* 状态色 */
+  --status-success: #00A052;
+  --status-warning: #D9A13B;
+  --status-danger: #D94F4F;
+  --status-info: #4A7DB5;
+
+  /* 导航 */
+  --sidebar-width: 220px;
+  --sidebar-collapsed-width: 60px;
+  --topbar-height: 56px;
+
+  /* 渐变 */
+  --gradient-gold: linear-gradient(135deg, #26D07C 0%, #00A052 100%);
+  --gradient-blue: linear-gradient(135deg, #1B3A5C 0%, #2E5C86 100%);
+  --gradient-card: linear-gradient(180deg, #FFFFFF 0%, #F8FBF8 100%);
+
+  /* 阴影（轻柔和缓） */
+  --shadow-card: 0 1px 6px rgba(0, 0, 0, 0.06);
+  --shadow-glow-gold: 0 2px 10px rgba(0, 175, 92, 0.2);
+
+  /* 浮层：压在底图上的面板/提示用半透明底 */
+  --surface-glass: rgba(255, 255, 255, 0.9);
+  --surface-glass-strong: rgba(255, 255, 255, 0.96);
+  --surface-solid: #FFFFFF;
+
+  /* 地图：底色、非聚焦省份、聚焦省份与地市标注 */
+  --map-bg: radial-gradient(ellipse at 50% 42%, #FCFEFC 0%, #F1F6F1 46%, #E3EBE4 100%);
+  --map-solid: #E7EBE7;
+  --map-nodata: #E7EBE7;
+  --map-nodata-border: #D0D5D0;
+  --map-focus: #00AF5C;
+  /* 热力色带：浅蓝 → 青 → 绿 → 黄 → 橙 → 红（冷暖全谱，低值偏蓝、高值偏红，一眼看出冷热） */
+  --map-heat: #BFD9F2, #6FC5C5, #8CCE6E, #EFD64E, #E87B33, #C6392F;
+  --map-label-name: #7D838A;
+  --map-label-value: #00733D;
+  --map-label-hot: #2C2E31;
+  --map-label-shadow: 0 0 3px rgba(255, 255, 255, 0.95), 0 1px 2px rgba(255, 255, 255, 0.9);
+  --map-label-value-shadow: 0 0 4px rgba(255, 255, 255, 0.95), 0 1px 2px rgba(255, 255, 255, 0.9);
+  --map-label-strong: #FFFFFF;
+  --map-label-strong-shadow: 0 1px 3px rgba(0, 92, 46, 0.5);
+  --map-title: #008F4C;
+  --map-title-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* 简约蓝白色 */
+html[data-theme="bluewhite"] {
+  --color-gold: #2B6CB0;
+  --color-green: #1F8A8A;
+  --color-blue: #1B3A5C;
+  --rgb-gold: 43, 108, 176;
+  --rgb-green: 31, 138, 138;
+  --rgb-blue: 61, 140, 208;
+  --rgb-red: 217, 79, 79;
+  --rgb-orange: 224, 150, 60;
+
+  --bg-primary: #F2F7FC;
+  --bg-secondary: #E7F0F9;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F5FAFF;
+  --bg-sidebar: #EAF3FB;
+  --bg-topbar: #FFFFFF;
+  --bg-input: #FFFFFF;
+  --submenu-bg: rgba(226, 238, 249, 0.7);
+
+  --border-color: #D5E4F2;
+  --border-light: #C2D6E8;
+
+  --text-primary: #22344A;
+  --text-secondary: #52697F;
+  --text-muted: #8AA0B5;
+  --text-gold: #1F5C9E;
+  --text-green: #1F8A8A;
+  --on-accent: #FFFFFF;
+
+  --status-success: #1F8A8A;
+  --status-warning: #D9A13B;
+  --status-danger: #D94F4F;
+  --status-info: #2B6CB0;
+
+  --gradient-gold: linear-gradient(135deg, #3D8CD0 0%, #2B6CB0 100%);
+  --logo-accent-light: #4DA3E8;
+  --logo-accent-deep: #2B6CB0;
+  --gradient-blue: linear-gradient(135deg, #1B3A5C 0%, #2E5C86 100%);
+  --gradient-card: linear-gradient(180deg, #FFFFFF 0%, #F7FBFF 100%);
+
+  --shadow-card: 0 1px 6px rgba(31, 71, 120, 0.08);
+  --shadow-glow-gold: 0 2px 10px rgba(43, 108, 176, 0.2);
+
+  --surface-glass: rgba(255, 255, 255, 0.9);
+  --surface-glass-strong: rgba(255, 255, 255, 0.96);
+  --surface-solid: #FFFFFF;
+
+  --map-bg: radial-gradient(ellipse at 50% 42%, #FBFDFF 0%, #EFF6FD 46%, #DFEBF8 100%);
+  --map-solid: #EAF2FA;
+  --map-nodata: #E9EEF4;
+  --map-nodata-border: #C9D6E3;
+  --map-focus: #2B6CB0;
+  --map-label-name: #6E86A0;
+  --map-label-value: #1F5C9E;
+  --map-label-hot: #2B4A6B;
+  --map-label-shadow: 0 0 3px rgba(255, 255, 255, 0.95), 0 1px 2px rgba(255, 255, 255, 0.9);
+  --map-label-value-shadow: 0 0 4px rgba(255, 255, 255, 0.95), 0 1px 2px rgba(255, 255, 255, 0.9);
+  --map-label-strong: #FFFFFF;
+  --map-label-strong-shadow: 0 1px 3px rgba(16, 44, 74, 0.55);
+  --map-title: #1F5C9E;
+  --map-title-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+  --map-heat: #E8F1FB, #C7E0F6, #9BC7EE, #69A6E2, #3D82CE, #1F5C9E;
+}
+
+/* Hello Kitty 粉 */
+html[data-theme="hellokitty"] {
+  --color-gold: #F06292;
+  --color-green: #7BC49B;
+  --color-blue: #9BB7E0;
+  --rgb-gold: 240, 98, 146;
+  --rgb-green: 123, 196, 155;
+  --rgb-blue: 155, 183, 224;
+  --rgb-red: 238, 106, 140;
+  --rgb-orange: 255, 167, 110;
+
+  --bg-primary: #FFF6F9;
+  --bg-secondary: #FDEBF2;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #FFF0F5;
+  --bg-sidebar: #FFF0F5;
+  --bg-topbar: #FFFFFF;
+  --bg-input: #FFFFFF;
+  --submenu-bg: rgba(253, 231, 240, 0.75);
+
+  --border-color: #FBD3E1;
+  --border-light: #F6BFD2;
+
+  --text-primary: #5A3A45;
+  --text-secondary: #8A6172;
+  --text-muted: #B894A1;
+  --text-gold: #D94A7E;
+  --text-green: #4E9E77;
+  --on-accent: #FFFFFF;
+
+  --status-success: #4E9E77;
+  --status-warning: #F0A93C;
+  --status-danger: #EE6A8C;
+  --status-info: #7FA8DC;
+
+  --gradient-gold: linear-gradient(135deg, #FF8FB1 0%, #F06292 100%);
+  --logo-accent-light: #FF9EB5;
+  --logo-accent-deep: #F06292;
+  --gradient-blue: linear-gradient(135deg, #F7A8C4 0%, #E67BA6 100%);
+  --gradient-card: linear-gradient(180deg, #FFFFFF 0%, #FFF7FA 100%);
+
+  --shadow-card: 0 2px 10px rgba(214, 111, 152, 0.12);
+  --shadow-glow-gold: 0 3px 14px rgba(240, 98, 146, 0.22);
+
+  --surface-glass: rgba(255, 255, 255, 0.92);
+  --surface-glass-strong: rgba(255, 252, 253, 0.96);
+  --surface-solid: #FFFFFF;
+
+  --map-bg: radial-gradient(ellipse at 50% 42%, #FFFCFD 0%, #FFF3F8 46%, #FDE1EC 100%);
+  --map-solid: #FDEDF4;
+  --map-nodata: #FCE7F0;
+  --map-nodata-border: #F5C6DA;
+  --map-focus: #F06292;
+  --map-label-name: #B0798F;
+  --map-label-value: #D94A7E;
+  --map-label-hot: #8A4A66;
+  --map-label-shadow: 0 0 3px rgba(255, 255, 255, 0.95), 0 1px 2px rgba(255, 255, 255, 0.9);
+  --map-label-value-shadow: 0 0 4px rgba(255, 255, 255, 0.95), 0 1px 2px rgba(255, 255, 255, 0.9);
+  --map-label-strong: #FFFFFF;
+  --map-label-strong-shadow: 0 1px 3px rgba(120, 40, 70, 0.5);
+  --map-title: #D94A7E;
+  --map-title-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+  --map-heat: #FFF0F5, #FFD3E2, #FFAFCB, #FF86B2, #F45C97, #D63A79;
+}
+
+/* 夜晚科技 */
+html[data-theme="night"] {
+  --color-gold: #C8A45C;
+  --color-green: #2E7D5B;
+  --color-blue: #1B3A5C;
+  --rgb-gold: 200, 164, 92;
+  --rgb-green: 76, 175, 125;
+  --rgb-blue: 58, 123, 213;
+  --rgb-red: 217, 79, 79;
+  --rgb-orange: 232, 168, 56;
+
+  --bg-primary: #0A1628;
+  --bg-secondary: #0F1F38;
+  --bg-card: #13294B;
+  --bg-card-hover: #1A3560;
+  --bg-sidebar: #0C1A2E;
+  --bg-topbar: #0E1E35;
+  --bg-input: #0F1F38;
+  --submenu-bg: rgba(15, 31, 56, 0.72);
+
+  --border-color: #1E3A5F;
+  --border-light: #2A4A6F;
+
+  --text-primary: #E8EDF5;
+  --text-secondary: #8FA3BF;
+  --text-muted: #8095B5;
+  --text-gold: #C8A45C;
+  --text-green: #4CAF7D;
+  --on-accent: #1B3A5C;
+
+  --status-success: #2E7D5B;
+  --status-warning: #E8A838;
+  --status-danger: #D94F4F;
+  --status-info: #3A7BD5;
+
+  --gradient-gold: linear-gradient(135deg, #C8A45C 0%, #A8863E 100%);
+  --logo-accent-light: #E0C078;
+  --logo-accent-deep: #B08A3E;
+  --gradient-blue: linear-gradient(135deg, #1B3A5C 0%, #0F1F38 100%);
+  --gradient-card: linear-gradient(180deg, rgba(19, 41, 75, 0.9) 0%, rgba(15, 31, 56, 0.95) 100%);
+
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.3);
+  --shadow-glow-gold: 0 0 20px rgba(200, 164, 92, 0.15);
+
+  --surface-glass: rgba(19, 41, 75, 0.9);
+  --surface-glass-strong: rgba(19, 41, 75, 0.96);
+  --surface-solid: #13294B;
+
+  --map-bg: radial-gradient(ellipse at 50% 42%, #12304F 0%, #0B1B2E 46%, #060E1A 100%);
+  --map-solid: #0A1628;
+  --map-nodata: #13294B;
+  --map-nodata-border: #2A4A6F;
+  --map-focus: #C8A45C;
+  --map-label-name: #9FB6D4;
+  --map-label-value: #E8C97A;
+  --map-label-hot: #DCE6F5;
+  --map-label-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
+  --map-label-value-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  --map-label-strong: #FFFFFF;
+  --map-label-strong-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
+  --map-title: #E8C97A;
+  --map-title-shadow: none;
+  --map-heat: #16304F, #215C7E, #2E8AA8, #4FB3A0, #D9A13B, #D94F4F;
+}
+
+/* 赛博炫彩 */
+html[data-theme="cyber"] {
+  --color-gold: #22D3EE;
+  --color-green: #A3E635;
+  --color-blue: #7C3AED;
+  --rgb-gold: 34, 211, 238;
+  --rgb-green: 163, 230, 53;
+  --rgb-blue: 124, 58, 237;
+  --rgb-red: 251, 113, 133;
+  --rgb-orange: 251, 191, 36;
+
+  --bg-primary: #090B1A;
+  --bg-secondary: #0D1030;
+  --bg-card: #121734;
+  --bg-card-hover: #1A2050;
+  --bg-sidebar: #0A0D24;
+  --bg-topbar: #0C1030;
+  --bg-input: #0D1030;
+  --submenu-bg: rgba(13, 16, 48, 0.75);
+
+  --border-color: #2A2560;
+  --border-light: #3B2A78;
+
+  --text-primary: #E6F7FF;
+  --text-secondary: #9FB0E8;
+  --text-muted: #7C89C9;
+  --text-gold: #22D3EE;
+  --text-green: #A3E635;
+  --on-accent: #06121E;
+
+  --status-success: #A3E635;
+  --status-warning: #FBBF24;
+  --status-danger: #FB7185;
+  --status-info: #38BDF8;
+
+  --gradient-gold: linear-gradient(135deg, #22D3EE 0%, #7C3AED 100%);
+  --logo-accent-light: #22D3EE;
+  --logo-accent-deep: #7C3AED;
+  --gradient-blue: linear-gradient(135deg, #7C3AED 0%, #22D3EE 100%);
+  --gradient-card: linear-gradient(180deg, rgba(18, 23, 52, 0.92) 0%, rgba(11, 14, 38, 0.96) 100%);
+
+  --shadow-card: 0 2px 14px rgba(0, 0, 0, 0.45);
+  --shadow-glow-gold: 0 0 22px rgba(34, 211, 238, 0.28);
+
+  --surface-glass: rgba(18, 23, 52, 0.9);
+  --surface-glass-strong: rgba(18, 23, 52, 0.96);
+  --surface-solid: #121734;
+
+  --map-bg: radial-gradient(ellipse at 50% 42%, #1B1146 0%, #0C0F2E 46%, #05060F 100%);
+  --map-solid: #090B1A;
+  --map-nodata: #171C42;
+  --map-nodata-border: #35306B;
+  --map-focus: #22D3EE;
+  --map-label-name: #9FB0E8;
+  --map-label-value: #5EEAD4;
+  --map-label-hot: #E6F7FF;
+  --map-label-shadow: 0 0 6px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.9);
+  --map-label-value-shadow: 0 0 6px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.9);
+  --map-label-strong: #FFFFFF;
+  --map-label-strong-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+  --map-title: #22D3EE;
+  --map-title-shadow: none;
+  --map-heat: #1A2050, #2B3A8F, #4B4BD6, #8A3AE0, #D6359B, #FF2D6E;
+}
+
+/* 夜晚护眼色 */
+html[data-theme="eyecare"] {
+  --color-gold: #D9A13B;
+  --color-green: #6FA07C;
+  --color-blue: #4E7A8F;
+  --rgb-gold: 217, 161, 59;
+  --rgb-green: 111, 160, 124;
+  --rgb-blue: 123, 167, 201;
+  --rgb-red: 201, 127, 107;
+  --rgb-orange: 201, 162, 39;
+
+  --bg-primary: #111C18;
+  --bg-secondary: #16241E;
+  --bg-card: #1B2A24;
+  --bg-card-hover: #223428;
+  --bg-sidebar: #131F1A;
+  --bg-topbar: #15221D;
+  --bg-input: #16241E;
+  --submenu-bg: rgba(22, 36, 30, 0.75);
+
+  --border-color: #2A3B33;
+  --border-light: #35463C;
+
+  --text-primary: #DCE6DC;
+  --text-secondary: #9BB0A2;
+  --text-muted: #869C8C;
+  --text-gold: #D9A13B;
+  --text-green: #8FBF9F;
+  --on-accent: #16211C;
+
+  --status-success: #6FA07C;
+  --status-warning: #D9A13B;
+  --status-danger: #C97F6B;
+  --status-info: #7BA7C9;
+
+  --gradient-gold: linear-gradient(135deg, #E0B45C 0%, #C08F2E 100%);
+  --logo-accent-light: #E8C070;
+  --logo-accent-deep: #C09040;
+  --gradient-blue: linear-gradient(135deg, #223428 0%, #16241E 100%);
+  --gradient-card: linear-gradient(180deg, rgba(27, 42, 36, 0.92) 0%, rgba(22, 36, 30, 0.96) 100%);
+
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.32);
+  --shadow-glow-gold: 0 0 18px rgba(217, 161, 59, 0.14);
+
+  --surface-glass: rgba(27, 42, 36, 0.9);
+  --surface-glass-strong: rgba(27, 42, 36, 0.96);
+  --surface-solid: #1B2A24;
+
+  --map-bg: radial-gradient(ellipse at 50% 42%, #1B2E26 0%, #131F1A 46%, #0B120F 100%);
+  --map-solid: #111C18;
+  --map-nodata: #1E2E27;
+  --map-nodata-border: #35463C;
+  --map-focus: #D9A13B;
+  --map-label-name: #A6B9AB;
+  --map-label-value: #E0C070;
+  --map-label-hot: #DCE6DC;
+  --map-label-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  --map-label-value-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  --map-label-strong: #FFFFFF;
+  --map-label-strong-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  --map-title: #D9A13B;
+  --map-title-shadow: none;
+  --map-heat: #24352C, #3A5342, #5C7F5A, #8FA85C, #C9A227, #C97F4B;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #app {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /* 中文优先用雅黑/苹方；后面这串是给切换语言兜底的：韩文、日文、西里尔、阿拉伯字形
+     各自挑系统里现成的字体，缺字形时再退到通用 sans-serif */
+  font-family: 'Microsoft YaHei', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Malgun Gothic', 'Yu Gothic UI', 'Noto Sans SC', 'Noto Sans', Tahoma, Arial, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+a {
+  color: var(--text-gold);
+  text-decoration: none;
+}
+
+/* 风格切换时给底色一个柔和的过渡 */
+body,
+.common-card,
+.btn {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+/* 滚动条 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
+
+/* 通用卡片 */
+.common-card {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: var(--shadow-card);
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  padding-left: 10px;
+  border-left: 3px solid var(--color-gold);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 按钮 */
+.btn {
+  padding: 6px 16px;
+  border-radius: 4px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+}
+.btn:hover {
+  border-color: var(--color-gold);
+  color: var(--text-gold);
+}
+.btn-primary {
+  background: var(--gradient-gold);
+  color: var(--on-accent);
+  border: none;
+  font-weight: 600;
+}
+.btn-primary:hover {
+  opacity: 0.9;
+  color: var(--on-accent);
+}
+
+/* 表格 */
+.common-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.common-table th {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border-color);
+}
+.common-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+.common-table tr:hover td {
+  background: var(--bg-card-hover);
+}
+
+/* 标签 */
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+.tag-gold { background: rgba(var(--rgb-gold), 0.12); color: var(--text-gold); border: 1px solid rgba(var(--rgb-gold), 0.35); }
+.tag-green { background: rgba(var(--rgb-green), 0.12); color: var(--text-green); border: 1px solid rgba(var(--rgb-green), 0.35); }
+.tag-blue { background: rgba(var(--rgb-blue), 0.12); color: var(--status-info); border: 1px solid rgba(var(--rgb-blue), 0.35); }
+.tag-red { background: rgba(var(--rgb-red), 0.12); color: var(--status-danger); border: 1px solid rgba(var(--rgb-red), 0.35); }
+.tag-orange { background: rgba(var(--rgb-orange), 0.12); color: var(--status-warning); border: 1px solid rgba(var(--rgb-orange), 0.35); }
+
+/* Leaflet 控件与弹窗：底色、文字随风格 */
+.leaflet-container {
+  background: var(--map-solid) !important;
+  font-family: inherit !important;
+}
+.leaflet-control-zoom a {
+  background: var(--bg-card) !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border-color) !important;
+}
+.leaflet-control-zoom a:hover {
+  background: var(--bg-card-hover) !important;
+  color: var(--text-gold) !important;
+}
+.leaflet-popup-content-wrapper {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+.leaflet-popup-tip {
+  background: var(--bg-card) !important;
+}
+.leaflet-popup-close-button {
+  color: var(--text-secondary) !important;
+}
+
+/* 地图右下角提示 */
+.map-tip {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: var(--surface-glass);
+  color: var(--text-secondary);
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* 全国底图（非聚焦省份）悬停提示：页面未单独定义样式时兜底 */
+.leaflet-tooltip.sd-tooltip {
+  padding: 8px 10px;
+  background: var(--surface-glass-strong);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  box-shadow: var(--shadow-card);
+  color: var(--text-primary);
+  font-size: 12px;
+}
+.sd-tip-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-gold);
+  margin-bottom: 4px;
+}
+.sd-tip-none {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ===== 首页入场「黄河奔流」：源头/入海口标签与头部呼吸点（动态创建，走全局样式） ===== */
+.sd-flow-head,
+.sd-flow-tag {
+  position: relative;
+}
+.sd-flow-head > span {
+  position: absolute;
+  border-radius: 50%;
+}
+.sd-flow-core {
+  left: -6px;
+  top: -6px;
+  width: 12px;
+  height: 12px;
+  background: #3E7FB0;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 0 8px rgba(62, 127, 176, 0.85);
+}
+.sd-flow-pulse {
+  left: -6px;
+  top: -6px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(62, 127, 176, 0.9);
+  animation: sd-flow-pulse 1.5s ease-out infinite;
+}
+@keyframes sd-flow-pulse {
+  from { transform: scale(1); opacity: 0.9; }
+  to { transform: scale(3.4); opacity: 0; }
+}
+.sd-flow-tag > span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #1C4E77;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(62, 127, 176, 0.45);
+  box-shadow: 0 2px 8px rgba(28, 78, 119, 0.18);
+  transition: opacity 0.45s ease-out;
+}
+.sd-flow-tag.at-source > span { opacity: 1; }
+.sd-flow-tag.at-source.out > span { opacity: 0; }
+.sd-flow-tag.at-sea > span { opacity: 0; }
+.sd-flow-tag.at-sea.in > span { opacity: 1; }
+
+/* ===== 常驻黄河干流的流动：虚线相位前移（动态创建，走全局样式） =====
+   位移量取虚线周期（12 + 16 = 28），循环点首尾相接；dashoffset 是 CSS 属性，
+   缩放重绘路径 d 时动画不断，任何层级下河道都在流。 */
+.sd-river-flow {
+  animation: sd-river-dash 2.4s linear infinite;
+}
+@keyframes sd-river-dash {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -28; }
+}
+
+/* ===== 入场运镜期间的输入锁（chinaMap 的 playNationalIntro 开关） =====
+   全国视野推近落位之前，地图不吃任何指针输入：拖拽、点选图元、滚轮缩放、缩放按钮全部失效，
+   免得用户点按打断运镜、观感上变成「放大到一半卡住」。落位或交还视野时移除类名即恢复。
+   子元素要一起压住：Leaflet 给图元层显式设了 pointer-events（auto / visiblePainted），
+   只锁容器挡不住它们。 */
+.sd-map-locked,
+.sd-map-locked * {
+  pointer-events: none !important;
+}
+.sd-map-locked {
+  cursor: default !important;
+}
+
+/* 输入框 */
+input, select, textarea {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  outline: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--color-gold);
+}
+
+/* ===== 地图浮层配色：覆盖各页面 scoped 里的固定浅色，让标注/图例随风格切换 ===== */
+html[data-theme] .headline-title {
+  color: var(--map-title);
+  text-shadow: var(--map-title-shadow);
+}
+html[data-theme] .headline-sub {
+  text-shadow: var(--map-title-shadow);
+}
+html[data-theme] .map-legend,
+html[data-theme] .layer-legend,
+html[data-theme] .basin-legend,
+html[data-theme] .heat-legend,
+html[data-theme] .choropleth-legend,
+html[data-theme] .float-panel,
+html[data-theme] .promo-hint {
+  background: var(--surface-glass);
+}
+html[data-theme] .sd-city-label-inner .sd-city-name {
+  color: var(--map-label-name);
+  text-shadow: var(--map-label-shadow);
+}
+html[data-theme] .sd-city-label-inner .sd-city-num,
+html[data-theme] .sd-city-label-inner .sd-city-heat,
+html[data-theme] .sd-city-label-inner .sd-city-risk {
+  color: var(--map-label-value);
+  text-shadow: var(--map-label-value-shadow);
+}
+html[data-theme] .sd-city-label-inner.hot .sd-city-name {
+  color: var(--map-label-hot);
+}
+html[data-theme] .heat-off .sd-city-label-inner.hot .sd-city-name {
+  color: var(--map-label-name);
+}
+/* 深色填充的城市改用浅色字，保证可读性 */
+html[data-theme] .sd-city-label-inner.on-deep .sd-city-name,
+html[data-theme] .sd-city-label-inner.on-deep .sd-city-num,
+html[data-theme] .sd-city-label-inner.on-deep .sd-city-heat,
+html[data-theme] .sd-city-label-inner.on-deep .sd-city-risk {
+  color: var(--map-label-strong);
+  text-shadow: var(--map-label-strong-shadow);
+}
+html[data-theme] .leaflet-tooltip.sd-tooltip {
+  background: var(--surface-glass-strong);
+}
+html[data-theme] .sd-tooltip.leaflet-tooltip-top::before {
+  border-top-color: var(--surface-solid);
+}
+html[data-theme] .sd-tooltip.leaflet-tooltip-bottom::before {
+  border-bottom-color: var(--surface-solid);
+}
+html[data-theme] .leaflet-tooltip.sd-tooltip .sd-tip-tag {
+  color: var(--text-gold);
+  background: rgba(var(--rgb-gold), 0.12);
+  border-color: rgba(var(--rgb-gold), 0.35);
+}
+/* KPI 金色数字：非米白风格改用各风格自身的金色，米白保持原配色 */
+html[data-theme]:not([data-theme="cream"]) .kpi-value.gold {
+  color: var(--text-gold);
+}
+/* 品牌渐变底上的文字（选中态按钮/分类标签/名次徽标）：
+   非米白风格改用各风格自身的对比色，米白保持原来的深蓝字 */
+html[data-theme]:not([data-theme="cream"]) .btn-group .btn.active,
+html[data-theme]:not([data-theme="cream"]) .cat-tab.active,
+html[data-theme]:not([data-theme="cream"]) .rank-badge.rank-top {
+  color: var(--on-accent);
+}
+
+/* ===== 各风格的细节打磨 ===== */
+/* Hello Kitty：圆角与小心心（自绘爱心 SVG 走 mask，颜色跟主题走，不依赖字体字形） */
+html[data-theme="hellokitty"] .common-card { border-radius: 14px; }
+html[data-theme="hellokitty"] .btn { border-radius: 12px; }
+html[data-theme="hellokitty"] .platform-title::after {
+  content: '';
+  display: inline-block;
+  width: 0.82em;
+  height: 0.82em;
+  margin-left: 0.28em;
+  vertical-align: -0.06em;
+  background-color: #E4749B;
+  -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20.6 4.4 13a4.8 4.8 0 0 1 6.8-6.8l.8.8.8-.8A4.8 4.8 0 0 1 19.6 13Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20.6 4.4 13a4.8 4.8 0 0 1 6.8-6.8l.8.8.8-.8A4.8 4.8 0 0 1 19.6 13Z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+html[data-theme="hellokitty"] .user-avatar { box-shadow: 0 0 0 3px rgba(var(--rgb-gold), 0.18); }
+
+/* 夜晚科技：卡片描一层金色微光 */
+html[data-theme="night"] .common-card {
+  box-shadow: var(--shadow-card), inset 0 0 0 1px rgba(var(--rgb-gold), 0.06);
+}
+
+/* 赛博炫彩：霓虹发光 */
+html[data-theme="cyber"] .platform-title { filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.45)); }
+html[data-theme="cyber"] .common-card {
+  box-shadow: var(--shadow-card), 0 0 0 1px rgba(var(--rgb-blue), 0.22);
+}
+html[data-theme="cyber"] .card-title { text-shadow: 0 0 8px rgba(34, 211, 238, 0.35); }
+
+/* 夜晚护眼色：整体降低对比 */
+html[data-theme="eyecare"] .platform-title { filter: saturate(0.85); }
+
+/* 粉色系的两种风格里危险色偏亮，危险按钮改用深色字更清楚 */
+html[data-theme="cyber"] .btn-danger,
+html[data-theme="hellokitty"] .btn-danger {
+  color: #1A0A10;
+}

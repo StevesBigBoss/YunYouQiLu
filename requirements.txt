@@ -1,0 +1,29 @@
+# ============================================================
+# 云游齐鲁（yunyouqilu）Python 依赖清单
+# 安装：pip install -r requirements.txt
+# 说明：Django 固定 4.2 LTS（安全维护至 2026-04，兼容 Python 3.8+）
+# ============================================================
+
+# Web 框架（由 2.0.2 升级至 4.2 LTS）
+Django>=4.2,<4.3
+
+# Django Admin 皮肤（INSTALLED_APPS 中 'simpleui'）
+django-simpleui>=2024.4.1
+
+# MySQL 驱动（tiktok_blogger_web/__init__.py 中 install_as_MySQLdb）
+PyMySQL>=1.1.0
+
+# 环境变量加载（.env）
+python-dotenv>=1.0.0
+
+# 模拟数据生成（爬虫/spider.py）
+Faker>=18.0.0,<26.0.0
+
+# HTTP 请求（爬虫/yellow_river_spider.py）
+requests>=2.31.0
+
+# Excel 读写（app/admin.py、scripts/*）
+openpyxl>=3.1.0
+
+# 图片处理（scripts/* 生成图片表格）
+Pillow>=10.0.0

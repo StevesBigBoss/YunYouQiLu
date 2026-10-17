@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="IE=edge" http-equiv="X-UA-Compatible">
+<meta name="renderer" content="webkit">
+<meta content="width=device-width, initial-scale=1" name="viewport">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<title>大众网旅游频道|山东旅游|山东旅游最佳路线|山东旅游景点大全|做山东最权威的旅行分享平台</title>
+<meta name="keywords" content="山东旅游,山东旅游最佳路线,山东旅游景点大全,好客山东,山东旅游新闻,山东旅游超市,山东旅游资讯,山东旅游线路,山东游记攻略,山东旅行社,山东景区,山东酒店,山东户外,山东骑行自驾,山东乡村旅游">
+<meta name="description" content="大众网旅游频道是山东最具影响力的旅游在线媒体，最大的在线旅游超市，提供最权威的山东旅游资、最具竞争力的旅游产品，立足山东，连接世界，做山东最权威的旅行分享平台。">
+<meta name="sogou_site_verification" content="yWTzXO3s29"/>
+<meta name="filetype" content="0">
+<meta name="publishedtype" content="1">
+<meta name="pagetype" content="2">
+<meta name="catalogs" content="174">
+<!-- Bootstrap -->
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery.min.js" ignoreapd="1"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js" ignoreapd="1"></script>
+<script src="js/bootstrap-hover-dropdown.js" ignoreapd="1"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet" ignoreapd="1">
+<link href="css/dzwww.css" rel="stylesheet" ignoreapd="1">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="js/html5shiv.min.js" ignoreapd="1"></script>
+  <script src="js/respond.min.js" ignoreapd="1"></script>
+  <link href="css/ie6.css" rel="stylesheet" ignoreapd="1">
+<![endif]-->
+<script>
+	$(function(){
+		var search_tab=$('.search .tab span');
+		var search_form=$('.search form');
+		var turn_search_funarr=[];
+		for(i=0;i<search_tab.length;i++){
+			turn_search_funarr[i]=$('.search .tab span')[i];
+		}
+		for(i=0;i<search_tab.length;i++){
+			(function(i){
+				turn_search_funarr[i].onclick=function(){
+					for(j=0;j<search_tab.length;j++){
+						$(search_tab[j]).removeClass('current');
+						$(search_form[j]).css('display','none');
+					}
+					$(search_tab[i]).addClass('current');
+					$(search_form[i]).css('display','block');
+				}
+			})(i)
+		}
+		$('#ticketSubmit1').click(function(){
+			function checkTicketSearch_ticketSubmit(){
+				var userinput = $("#txtTicket").attr("value");
+				if($.trim(userinput) == ""){
+					alert("请输入搜索关键字");
+					return false;
+				}else if(userinput.length > 20){
+					alert("您输入的搜索关键字字数过多，请删减");
+					return false;
+				}
+				return true;
+			}
+			if(checkTicketSearch_ticketSubmit()){
+				var root = "//www.zyql.cn/";
+				var s_k = $("#txtTicket").val();
+				var uri = root+'scenic/list-0-0-0-0-0-0-0-1-s_k.html';
+				uri = uri.replace('s_k', s_k);
+				$('#postjqmp').attr("action",uri);
+				$('#postjqmp').submit();
+			}
+		});
+		$('#tsmsSubmit1').click(function(){
+			function checktsmsSearch_tsmsSubmit(){
+				var userinputtsms = $("#txtttsms").attr("value");
+				if($.trim(userinputtsms) == ""){
+					alert("请输入搜索关键字");
+					return false;
+				}else if(userinputtsms.length > 20){
+					alert("您输入的搜索关键字字数过多，请删减");
+					return false;
+				}
+				return true;
+			}
+			if(checktsmsSearch_tsmsSubmit()){
+				var root = "//www.zyql.cn/";
+				var s_k = $("#txtttsms").val();
+				var uri = root+'minsu/list-0-0-0-0-0-0-0-1-s_k.html';
+				uri = uri.replace('s_k', s_k);
+				$('#posttsms').attr("action",uri);
+				$('#posttsms').submit();
+			}
+		});
+		$('#layout4').mouseenter(function(){
+			$('#layout4 .con').fadeIn('fast');
+		});
+		$('#layout4').mouseleave(function(){
+			$('#layout4 .con').fadeOut('fast');
+		});
+	/*	$('.dropdown'). mouseenter(function(){
+			$(this).find('.dropdown-menu').css('display','block');
+		});
+		$('.dropdown'). mouseleave(function(){
+			$(this).find('.dropdown-menu').css('display','none');
+		});*/
+	});
+</script>
+<script>
+	function loadCSS() {
+		if((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|wOSBrowser|BrowserNG|WebOS)/i))) {
+		}
+		else {
+	    	document.write('<style>#layout5 .layout{width:900px;}</style>');
+		}
+	}
+	loadCSS();
+</script>
+</head>
+<style>
+@media (min-width: 1200px) {
+	#layout5{ margin-top:50px; }
+	#layout5 .list li{ width:100px; margin-top:30px; }
+	#layout5 .list li p{ line-height:22px; height:66px; }
+
+}
+</style>
+<!-- 置灰代码 -->
+<link href="https://dzwww.com/tpl/gray.css" rel="stylesheet" type="text/css" />
+<body>
+
+<div id="top" class="navbar navbar-default">
+	<div class="container">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" target="_blank" href="//www.dzwww.com/">大众网首页</a>
+		</div>
+	
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-left">
+				<li><a target="_blank" href="//news.dzwww.com/">要闻</a></li>
+				<li><a target="_blank" href="//www.dzwww.com/dzwpl/">时评</a></li>
+				<li><a target="_blank" href="//sd.dzwww.com/">山东</a></li>
+			
+				<li><a target="_blank" href="//sports.dzwww.com/">体育</a></li>
+				<li><a target="_blank" href="//ent.dzwww.com/">娱乐</a></li>
+				
+				<li><a target="_blank" href="//finance.dzwww.com/">财经</a></li>
+				<li><a target="_blank" href="//tour.dzwww.com/">旅游</a></li>
+				<li><a target="_blank" href="//house.dzwww.com">选房</a></li>
+			
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a target="_blank" href="//www.dzwww.com/2014/sjb/">山东手机报</a></li>
+				<li class="dropdown">
+					<a href="//sd24.dzwww.com/" target="_blank" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">手机客户端<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a target="_blank" href="//sd24.dzwww.com/">海报新闻</a></li>
+						<li><a target="_blank" href="//www.dzwww.com/bbs/ltzt/app/">大众论坛客户端</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="//reg.dzwww.com/" target="_blank" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">用户登录<span class="caret"></span></a>
+					<ul class="dropdown-menu" style="z-index:99">
+						<li><a target="_blank" href="//mail.dzwww.com/">大众邮箱</a></li>
+					
+						<li><a target="_blank" href="//club.dzwww.com/">大众论坛</a></li>
+						
+					</ul>
+				</li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</div>
+
+
+<!-- 顶部广告条Start -->
+<div class="top-banner2" id="header">
+	<!-- <div class="left"> -->
+	<div>
+	<!-- 广告位：整通栏logo上1200 -->
+	<!--<script>
+	(function() {
+	    var s = "_" + Math.random().toString(36).slice(2);
+	    document.write('<div id="' + s + '"></div>');
+	    (window.slotbydup=window.slotbydup || []).push({
+	        id: '7339788',
+	        container: s,
+	        size: '1200,60',
+	        display: 'inlay-fix'
+	    });
+	})();
+            
+	</script>
+	<script src="//dup.baidustatic.com/js/os.js"></script>-->
+<ins data-revive-zoneid="405" data-revive-id="4acadfabeef7ba7d1a62cc6963c04dc7"></ins>
+
+	</div>
+	<!--<div class="right"><a href="#"><img src="images/temp/ad170x90.jpg" /></a></div>-->
+	<div class="clear"></div>
+   </div>
+
+<!-- 顶部广告条End -->
+
+
+<div id="nav" class="navbar navbar-default" style="z-index:9999;width:100%;background:#fff; ">
+	<div class="container">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" target="_blank" href="#"><img src="./images/nav-logo.gif" alt="大众网时尚" ignoreapd="1" /></a>
+		</div>
+	
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+			<ul class="nav navbar-nav navbar-right">
+				<li id="nav-icon1" class="current"><a href="/">首页</a></li>
+				<li id="nav-icon2" class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-hover="dropdown" data-delay="300" data-close-others="false" role="button" aria-haspopup="true" aria-expanded="false">新闻</a>
+					<dl class="dropdown-menu">
+						<dd><a href="/shandong/picnews/">图片新闻</a></dd>
+						<dd><a href="/lvnews/">焦点新闻</a></dd>
+						<dd><a href="/shandong/mxly/">文旅资讯</a></dd>
+						<dd><a href="/ycll/">原创力量</a></dd>
+					</dl>
+				</li>
+				<li id="nav-icon3" class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-hover="dropdown" data-delay="300" data-close-others="false" role="button" aria-haspopup="true" aria-expanded="false">独家</a>
+					<dl class="dropdown-menu">
+						<dd><a target="_blank" href="/lyzt/zyql/">周游齐鲁</a></dd>
+						<dd><a href="//tour.dzwww.com/lyzt/mhsdxl/ ">漫话山东</a></dd>
+					</dl>
+				</li>
+				<li id="nav-icon4" class="dropdown">
+					<a href="http://tour.dzwww.com/shandong/mstc/" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-hover="dropdown" data-delay="300" data-close-others="false" role="button" aria-haspopup="true" aria-expanded="false" target="_blank">文旅+</a>
+				</li>
+				<li id="nav-icon5" class="dropdown">
+					<a href="http://tour.dzwww.com/ycyj/qzy/" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-hover="dropdown" data-delay="300" data-close-others="false" role="button" aria-haspopup="true" aria-expanded="false" target="_blank">研学</a>
+					
+				</li>
+				<li id="nav-icon6"><a href="/lyzt/">专题</a></dd>
+				
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</div>
+<script type="text/javascript">
+	function getAbsTop(obj){  
+		var top=obj.offset().top+90;
+		return top;   
+	}
+	var topDiv =$("#nav" );
+	var topHeader=$("#header");
+	var topDivHeight=getAbsTop(topDiv);
+	window.onscroll = function(){ 
+		var scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
+		if( scrollPos < topDivHeight ) { 
+			if(topDiv.css('position')){
+				topDiv.css('position','fixed');
+				topDiv.css('top',(topDivHeight-scrollPos)+"px");
+				topHeader.css('margin-bottom','87px');
+			}
+		}else if( scrollPos >= topDivHeight ) { 
+			topDiv.css('position','fixed');
+			topDiv.css('top','0');
+			topHeader.css('margin-bottom','0');
+		}
+	}
+</script>
+
+<div id="layout1">
+	<div class="layout">
+		<div id="carousel" class="carousel slide" data-ride="carousel">
+			<!-- Indicators -->
+			<ol class="carousel-indicators">
+				<li data-target="#carousel" data-slide-to="0" class="active"></li>
+				<li data-target="#carousel" data-slide-to="1"></li>
+				
+			</ol>
+			<!-- Wrapper for slides -->
+			<div class="carousel-inner" role="listbox">
+				<div class="item active">
+					<div class="main-pic">
+												<a target="_blank" href="https://tour.dzwww.com/shandong/picnews/202606/t20260625_17870575.htm">
+							<img width=780 height=485 border=0 width="" height=""  src="https://appimg.dzwww.com/2026/0625/6a3c8cb78d6ba.jpg" />							<h3>夏日大明湖的荷花已开，第一时间就想分享给你</h3>
+							<p></p>
+							<div class="shadow"></div>
+						</a>
+											</div>
+					<div class="side-pic">
+												<div class="photo">
+							<a target="_blank" href="https://tour.dzwww.com/shandong/picnews/202603/t20260320_17560091.htm">
+								<img width=380 height=235 border=0 width="" height=""  src="https://appimg.dzwww.com/2026/0320/69bd149a561c1.jpg" />								<h3>组图｜摄影师镜头中的初春济南，有亿点</h3>
+								<div class="shadow"></div>
+							</a>
+						</div>
+						<div class="blank"></div>
+												<div class="photo">
+							<a target="_blank" href="https://tour.dzwww.com/shandong/picnews/202512/t20251211_17163946.htm">
+								<img width=380 height=235 border=0 width="" height=""  src="https://appimg.dzwww.com/2025/1211/693a7538a8350.jpg" />								<h3>寻味“济南的冬天”</h3>
+								<div class="shadow"></div>
+							</a>
+						</div>
+											</div>
+					<div class="clear"></div>
+				</div>
+				<div class="item">
+					<div class="main-pic">
+												<a target="_blank" href="https://tour.dzwww.com/shandong/picnews/202511/t20251104_16679104.htm">
+							<img width=780 height=485 border=0 width="" height=""  src="https://appimg.dzwww.com/2025/1104/6909556f00ab0.jpg" />							<h3>平分秋色</h3>
+							<p></p>
+							<div class="shadow"></div>
+						</a>
+											</div>
+					<div class="side-pic">
+												<div class="photo">
+							<a target="_blank" href="https://tour.dzwww.com/shandong/picnews/202511/t20251103_16676316.htm">
+								<img width=380 height=235 border=0 width="" height=""  src="https://appimg.dzwww.com/2025/1103/6908543c93870.jpg" />								<h3>天鹅翩跹映秋色</h3>
+								<div class="shadow"></div>
+							</a>
+						</div>
+						<div class="blank"></div>
+												<div class="photo">
+							<a target="_blank" href="https://tour.dzwww.com/shandong/picnews/202510/t20251031_16663769.htm">
+								<img width=380 height=235 border=0 width="" height=""  src="https://appimg.dzwww.com/2025/1031/690406b3b5cbd.jpg" />								<h3>临沂河湾公园金秋赏花活动启幕</h3>
+								<div class="shadow"></div>
+							</a>
+						</div>
+											</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<!-- Controls -->
+			<a class="left carousel-control" href="#carousel" role="button" data-slide="prev"></a>
+			<a class="right carousel-control" href="#carousel" role="button" data-slide="next"></a>
+		</div>
+	</div>
+</div>
+
+<div class="top-banner2" id="header">
+<!-- 广告位：整通栏logo下 -->
+<!--<script>
+(function() {
+    var s = "_" + Math.random().toString(36).slice(2);
+    document.write('<div id="' + s + '"></div>');
+    (window.slotbydup=window.slotbydup || []).push({
+        id: '5594336',
+        container: s,
+        size: '1170,90',
+        display: 'inlay-fix'
+    });
+})();
+</script>
+<script src="//dup.baidustatic.com/js/os.js" ignoreapd="1"></script>-->
+<ins data-revive-zoneid="406" data-revive-id="4acadfabeef7ba7d1a62cc6963c04dc7"></ins>
+</div>
+
+<div id="layout2" class="layout">
+	<div class="row">
+		<div class="col-sm-8 main">
+			<div class="headline">
+								<h2><a  target="_blank" href="https://tour.dzwww.com/lvnews/202609/t20260926_18157483.htm" title="寻芳历下 泉醉秋光丨沿着祠庙走，把济南的文脉读一遍——历下寻贤访古二日游推荐">寻芳历下 泉醉秋光丨沿着祠庙走，把济南的文脉读</a></h2>
+				<p></p>
+							</div>
+			
+			<div class="row block2">
+				<div class="col-sm-6 pic-txt3">
+					<div class="tag"><a TARGET="_blank" href="/lvnews/">焦点新闻</a></div>
+					<a target="_blank" href="https://tour.dzwww.com/lvnews/202609/t20260925_18155849.htm"><img width=370 height=228 border=0 width="" height=""  src="https://appimg.dzwww.com/2026/0925/6ab5e2079d1ce.jpg" /></a>					<p><a  target="_blank" href="https://tour.dzwww.com/lvnews/202609/t20260925_18155849.htm" title="寻芳历下 泉醉秋光丨沿着泉水，把老济南的日子过一遍——历下Citywalk二日游推荐">寻芳历下 泉醉秋光丨沿着泉水，把老济南的日</a></p>
+					<div class="shadow"></div>
+									</div>
+				<div class="col-sm-6 news-list2">
+					<ul>
+												<li>
+							<h4><a  target="_blank" href="https://tour.dzwww.com/lvnews/202609/t20260925_18155879.htm" title="寻芳历下 泉醉秋光丨济南绿发贵和洲际酒店中秋主题盛宴美味来袭">寻芳历下 泉醉秋光丨济南绿发贵和洲</a></h4>
+							<p></p>
+						</li>
+												<li>
+							<h4><a  target="_blank" href="https://tour.dzwww.com/lvnews/202609/t20260925_18155855.htm" title="寻芳历下 泉醉秋光丨山东新闻大厦双节优惠活动出炉">寻芳历下 泉醉秋光丨山东新闻大厦双</a></h4>
+							<p></p>
+						</li>
+												<li>
+							<h4><a  target="_blank" href="https://tour.dzwww.com/lvnews/202609/t20260924_18154320.htm" title="寻芳历下 泉醉秋光丨中秋假期千佛山三条文化线路待君来">寻芳历下 泉醉秋光丨中秋假期千佛山</a></h4>
+							<p></p>
+						</li>
+												<li>
+							<h4><a  target="_blank" href="https://tour.dzwww.com/lvnews/202609/t20260924_18154316.htm" title="寻芳历下 泉醉秋光丨济南天下第一泉双节游园会最全攻略来了">寻芳历下 泉醉秋光丨济南天下第一泉</a></h4>
+							<p></p>
+						</li>
+											</ul>
+				</div>
+			</div>
+			<div class="row block2">
+				<div class="col-sm-6 pic-txt3">
+					<div class="tag"><a TARGET="_blank" href="/shandong/mxly/">文旅资讯</a></div>
+					<a target="_blank" href="https://tour.dzwww.com/shandong/mxly/202608/t20260805_17994895.htm"><img width=370 height=228 border=0 width="" height=""  src="https://appimg.dzwww.com/2026/0804/6a71dfd858f54.jpg" /></a>					<p><a  target="_blank" href="https://tour.dzwww.com/shandong/mxly/202608/t20260805_17994895.htm" title="多个爆款点位，聊城古风打卡点上新！">多个爆款点位，聊城古风打卡点上新！</a></p>
+					<div class="shadow"></div>
+									</div>
+				<div class="col-sm-6 news-list2">
+					<ul>
+												<li>
+							<h4><a  target="_blank" href="https://tour.dzwww.com/shandong/mxly/202608/t20260805_17994893.htm" title="以风为歌，以城为章！聊城夏夜音乐会续绘水城浪漫">以风为歌，以城为章！聊城夏夜音乐会</a></h4>
+							<p></p>
+						</li>
+												<li>
+							<h4><a  target="_blank" href="https://tour.dzwww.com/shandong/mxly/202608/t20260805_17995010.htm" title="持《八仙！》票根免票！在灵岩寺换一场与时光的重逢">持《八仙！》票根免票！在灵岩寺换一</a></h4>
+							<p></p>
+						</li>
+												<li>
+							<h4><a  target="_blank" href="https://tour.dzwww.com/shandong/mxly/202608/t20260805_17994896.htm" title="山东古建筑博物馆暑期公益讲解预约公告">山东古建筑博物馆暑期公益讲解预约公</a></h4>
+							<p></p>
+						</li>
+												<li>
+							<h4><a  target="_blank" href="https://hb.dzwww.com/s/13590.html" title="入梦台城 穿越古今 | 台儿庄景区五一·国潮文化季">入梦台城 穿越古今 | 台儿庄景区五一</a></h4>
+							<p>文脉永续，潮起台城。当千年运河遇见国潮新风，当非遗</p>
+						</li>
+											</ul>
+				</div>
+			</div>
+			<div class="row block2">
+				<div class="col-sm-6 pic-txt3">
+					<div class="tag"><a TARGET="_blank" href="/ycll/">原创力量</a></div>
+					<a target="_blank" href="https://hb.dzwww.com/s/13888.html"><img width=370 height=228 border=0 width="" height=""  src="https://appimg.dzwww.com/2026/0727/6a66b6c2d7e77.jpg" /></a>					<p><a  target="_blank" href="https://hb.dzwww.com/s/13888.html" title="聚焦·新大众文艺">聚焦·新大众文艺</a></p>
+					<div class="shadow"></div>
+									</div>
+				<div class="col-sm-6 news-list2">
+					<ul>
+												<li>
+							<h4><a  target="_blank" href="https://tour.dzwww.com//202608/t20260805_17994899.htm" title="镜头里的齐鲁乡艺|青岛凤凰村、王哥庄街道">镜头里的齐鲁乡艺|青岛凤凰村、王哥</a></h4>
+							<p></p>
+						</li>
+												<li>
+							<h4><a  target="_blank" href="https://tour.dzwww.com//202608/t20260805_17995047.htm" title="泉城10种打开方式③|济南十二时辰">泉城10种打开方式③|济南十二时辰</a></h4>
+							<p></p>
+						</li>
+												<li>
+							<h4><a  target="_blank" href="https://tour.dzwww.com//202608/t20260805_17994901.htm" title="2026博斯弦乐艺术节在山东省会大剧院盛大开幕">2026博斯弦乐艺术节在山东省会大剧院</a></h4>
+							<p></p>
+						</li>
+												<li>
+							<h4><a  target="_blank" href="https://tour.dzwww.com//202609/t20260924_18153039.htm" title="以讲述激活文脉 助力山东文化“两创”  2026山东历史文化故事讲解大赛面向社会征集作品">以讲述激活文脉 助力山东文化“两创</a></h4>
+							<p></p>
+						</li>
+											</ul>
+				</div>
+			</div>
+			<div class="block">
+				<div class="title1">
+					<span><a href="//tour.dzwww.com/shandong/mstc/" TARGET="_blank">文旅<img src="images/title1-lvyou.gif" /></a></span>
+					<div class="right"><a href="//tour.dzwww.com/shandong/mstc/" TARGET="_blank" class="more1"></a></div>
+					<div class="clear"></div>
+				</div>
+				<div class="row">
+										<div class="col-sm-6">
+						<div class="pic-txt2">
+							<a href="https://tour.dzwww.com/shandong/mstc/202608/t20260818_18030391.htm" TARGET="_blank"><img width=370 height=228 border=0 width="" height=""  src="https://appimg.dzwww.com/share/2026/08/18/3b56c06304dfdf0_750.JPEG" />							<!--<table class="circle"><tr><td>旅游+<br />电商</td></tr></table>
+							<div class="circle-bg"></div>-->
+							<div class="shadow"></div>
+							<h5>“光阴里的构作”山东文物建筑主题摄</h5></a>
+						</div>
+					</div>
+										<div class="col-sm-6">
+						<div class="pic-txt2">
+							<a href="https://tour.dzwww.com/shandong/mstc/202608/t20260808_18004920.htm" TARGET="_blank"><img width=370 height=228 border=0 width="" height=""  src="https://appimg.dzwww.com/share/2026/08/08/194856a541637b6_750.JPEG" />							<!--<table class="circle"><tr><td>旅游+<br />电商</td></tr></table>
+							<div class="circle-bg"></div>-->
+							<div class="shadow"></div>
+							<h5>山东省自驾车旅游协会换届大会圆满召</h5></a>
+						</div>
+					</div>
+									</div>
+			</div>
+			<div class="block">
+				
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="pic-txt1">
+														<a TARGET="_blank" href="https://tour.dzwww.com/shandong/mstc/202412/t20241222_15286300.htm">
+								<img width=370 height=460 border=0 width="" height=""  src="https://appimg.dzwww.com/2024/1222/6767b57306b81.jpg" />								<div class="shadow">
+									<div class="line"></div>
+									<div class="tran"></div>
+								</div>
+								<h4>100元挑战一条街：外国友人在济南民族大街的</h4>
+							</a>
+													</div>
+					</div>
+					<div class="col-sm-6 news-list3">
+						<ul>
+														<li>
+								<h4><a  target="_blank" href="https://tour.dzwww.com/shandong/mstc/202410/t20241016_14953250.htm" title="“名泉印记”七十二名泉摄影展开展，百花洲里赏名泉">“名泉印记”七十二名泉摄影展开展，百花洲</a></h4>
+								<p></p>
+							</li>
+														<li>
+								<h4><a  target="_blank" href="https://tour.dzwww.com/shandong/mstc/202410/t20241012_14934237.htm" title="来永传书画作品展在莒州博物馆开展">来永传书画作品展在莒州博物馆开展</a></h4>
+								<p></p>
+							</li>
+														<li>
+								<h4><a  target="_blank" href="https://tour.dzwww.com/shandong/mstc/202409/t20240912_14796142.htm" title="贵和27周年庆：与济南共绘繁华新篇章">贵和27周年庆：与济南共绘繁华新篇章</a></h4>
+								<p></p>
+							</li>
+														<li>
+								<h4><a  target="_blank" href="https://tour.dzwww.com/shandong/mstc/202408/t20240818_14668165.htm" title="融古韵于华章：华山的千古风情">融古韵于华章：华山的千古风情</a></h4>
+								<p></p>
+							</li>
+														<li>
+								<h4><a  target="_blank" href="https://tour.dzwww.com/shandong/mstc/202406/t20240605_14283293.htm" title="山东金石学会田野石刻考察培训班举办">山东金石学会田野石刻考察培训班举办</a></h4>
+								<p></p>
+							</li>
+													</ul>
+					</div>
+				</div>
+				
+			</div>
+
+                    	<div class="block">
+				
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="pic-txt1">
+														<a TARGET="_blank" href="https://tour.dzwww.com/shandong/mstc/202405/t20240502_14101500.htm">
+								<img width=370 height=460 border=0 width="" height=""  src="https://appimg.dzwww.com/2024/0612/6668ffb84773b.jpg" />								<div class="shadow">
+									<div class="line"></div>
+									<div class="tran"></div>
+								</div>
+								<h4>2024济南市莱芜区牛泉镇文化旅游活动启动</h4>
+							</a>
+													</div>
+					</div>
+					<div class="col-sm-6 news-list3">
+						<ul>
+														<li>
+								<h4><a  target="_blank" href="https://tour.dzwww.com/shandong/mstc/202404/t20240410_13973832.htm" title="济南邮政推出四龙同年同月同日时相聚纪念邮戳">济南邮政推出四龙同年同月同日时相聚纪念邮</a></h4>
+								<p></p>
+							</li>
+														<li>
+								<h4><a  target="_blank" href="https://tour.dzwww.com/shandong/mstc/202406/t20240626_14393888.htm" title="“智汇经纬·才聚市中”对接会举办">“智汇经纬·才聚市中”对接会举办</a></h4>
+								<p></p>
+							</li>
+														<li>
+								<h4><a  target="_blank" href="https://tour.dzwww.com/shandong/mstc/202403/t20240322_13873902.htm" title="印象峡山||王云峰：峡山纪行">印象峡山||王云峰：峡山纪行</a></h4>
+								<p></p>
+							</li>
+														<li>
+								<h4><a  target="_blank" href="https://tour.dzwww.com/shandong/mstc/202403/t20240320_13858504.htm" title="山东省旅游行业协会召开五届五次理事会">山东省旅游行业协会召开五届五次理事会</a></h4>
+								<p></p>
+							</li>
+														<li>
+								<h4><a  target="_blank" href="https://tour.dzwww.com/shandong/mstc/202403/t20240320_13858404.htm" title="骨刻文话春分">骨刻文话春分</a></h4>
+								<p></p>
+							</li>
+													</ul>
+					</div>
+				</div>
+				
+			</div>
+
+
+			
+		</div>
+		<div class="col-sm-4 sidebar">
+			<div class="border">
+				<div class="search">
+					<div class="tab">
+						<img src="./images/wlrx.jpg" ignoreapd="1" />
+					</div>
+					
+				</div>
+				<div class="block">
+					<div class="title2">
+						<span><a TARGET="_blank" href="/hygc/">行业观察</a></span>
+						<a href="/hygc/" TARGET="_blank" class="more1"></a>
+						<div class="clear"></div>
+					</div>
+					<div class="pic-txt2">
+												<a TARGET="_blank" href="https://tour.dzwww.com/hygc/202201/t20220106_9659928.htm"><img width=320 height=212 border=0 width="" height=""  src="https://appimg.dzwww.com/2022/0106/61d64c42b1739.jpg" />						<div class="shadow"></div>
+						<h5>“十四五”山东文化和旅游工作这</h5></a>
+											</div>
+					<ul class="news-list5">
+												<li><a  target="_blank" href="https://tour.dzwww.com/hygc/202609/t20260912_18110293.htm" title="数字赋能远古文脉 国内首家骨刻文主题查询平台上线">数字赋能远古文脉 国内首家骨刻文主题</a></li>
+												<li><a  target="_blank" href="https://tour.dzwww.com/hygc/202609/t20260912_18110059.htm" title="把握“五性”特征，推动中国文旅高质量发展">把握“五性”特征，推动中国文旅高质量</a></li>
+												<li><a  target="_blank" href="https://tour.dzwww.com/hygc/202606/t20260611_17828527.htm" title="十年磨一剑 哲思铸宏篇——记姜翕芬哲学著作《论人的本性与社会性》">十年磨一剑 哲思铸宏篇——记姜翕芬哲</a></li>
+												<li><a  target="_blank" href="https://tour.dzwww.com/hygc/202506/t20250625_16125786.htm" title="2025中国非遗传承人研培计划启动 山东梆子表演人才培训班临沂开班">2025中国非遗传承人研培计划启动 山东</a></li>
+											</ul>
+				</div>
+				<div class="block">
+					<div class="title2">
+						<span><a TARGET="_blank" href="/lyzt/">专题专栏</a></span>
+						<a TARGET="_blank" href="/lyzt/" class="more1"></a>
+						<div class="clear"></div>
+					</div>
+					<div class="pic-txt1">
+												<a TARGET="_blank" href="https://tour.dzwww.com/lyzt/ztyldplswh/">
+							<img width=320 height=320 border=0 width="" height=""  src="https://appimg.dzwww.com/2025/1114/6917050f9f230.jpg" />							<div class="shadow">
+								<div class="line"></div>
+								<div class="tran"></div>
+							</div>
+							<h4>”走体验廊道 品历史文化“故事讲解大赛</h4>
+						</a>
+											</div>
+					<div class="news-list6">
+						<ul>
+														<li>
+								<h5><a  target="_blank" href="https://tour.dzwww.com/lyzt/gmwwyxjjy/" title="革命文物优秀讲解员">革命文物优秀讲解员</a></h5>
+								<p></p>
+							</li>
+														<li>
+								<h5><a  target="_blank" href="http://tour.dzwww.com/lyzt/dywhzdjnnwhjlpt/" title="东亚文化之都（济南年）文化交流平台">东亚文化之都（济南年）文化交流平台</a></h5>
+								<p></p>
+							</li>
+														<li>
+								<h5><a  target="_blank" href="http://travel.gog.cn/cms_udf/2021/tydcgz1126/index.shtml" title="2021全国重点网络媒体冬季贵州行">2021全国重点网络媒体冬季贵州行</a></h5>
+								<p></p>
+							</li>
+														<li>
+								<h5><a  target="_blank" href="https://hb.dzwww.com/s/6113.html" title="避暑度假到贵州 全国百家媒体贵州行">避暑度假到贵州 全国百家媒体贵州行</a></h5>
+								<p></p>
+							</li>
+													</ul>
+					</div>
+				</div>
+			
+				<div class="block">
+					<div class="title2">
+						<span><a href="/ycyj/qzy/">研学旅行</a></span>
+						<a href="/ycyj/qzy/" class="more1"></a>
+						<div class="clear"></div>
+					</div>
+					<div class="pic-txt2">
+												<a TARGET="_blank" href="https://tour.dzwww.com/ycyj/qzy/202111/t20211124_9468547.htm"><img width=320 height=212 border=0 width="" height=""  src="https://appimg.dzwww.com/word/images/20211124/874b7e4d-a17a-472b-8394-d7c8a9e00430.jpeg" />						<div class="shadow"></div>
+						<h5>融创海世界致敬“美好城市共建者</h5></a>
+											</div>
+					<div class="news-list7">
+						<ul>
+														<li>
+								<h4><a  target="_blank" href="https://tour.dzwww.com/ycyj/qzy/202111/t20211105_9389229.htm" title="山东：考古旅游和研学不再远">山东：考古旅游和研学不再远</a></h4>
+								<p></p>
+							</li>
+														<li>
+								<h4><a  target="_blank" href="https://tour.dzwww.com/ycyj/qzy/202109/t20210930_9238401.htm" title="“双减”倒逼研学旅行市场走向何方">“双减”倒逼研学旅行市场走向何方</a></h4>
+								<p></p>
+							</li>
+														<li>
+								<h4><a  target="_blank" href="https://tour.dzwww.com/ycyj/qzy/202109/t20210930_9238400.htm" title="研学游必须把教育功能放在首位">研学游必须把教育功能放在首位</a></h4>
+								<p></p>
+							</li>
+														<li>
+								<h4><a  target="_blank" href="https://tour.dzwww.com/ycyj/qzy/202109/t20210908_9117594.htm" title="济南非遗“研学基地”创建工作组调研">济南非遗“研学基地”创建工作组调研</a></h4>
+								<p></p>
+							</li>
+														<li>
+								<h4><a  target="_blank" href="https://tour.dzwww.com/ycyj/qzy/202109/t20210908_9117593.htm" title="研学游从业者呼吁提高准入门槛">研学游从业者呼吁提高准入门槛</a></h4>
+								<p></p>
+							</li>
+													</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div id="layout3" class="layout">
+	<div class="title1">
+		<span><a href="/photo/">大摄汇</a></span>
+		<!--<p><a href="/photo/lj/">丽影</a><a href="/photo/mj/">旅途</a><a href="/photo/lt/">美景</a><a href="/photo/hhj/">哈哈镜</a></p>-->
+		<div class="clear"></div>
+	</div>
+	<div class="show">
+		<div class="line sty1">
+			<div class="photo big">
+								<a href="https://tour.dzwww.com/photo/202608/t20260803_17988405.htm" target="_blank">
+				<img width=580 height=359 border=0 width="" height=""  src="https://appimg.dzwww.com/dzcloud/20260803/b3d323e693f04e9727619075b78240f4.png" />				<div class="figcaption">
+					<!--<div class="circle">
+						<h2>美景</h2>
+						<span></span>
+					</div>-->
+					<h3>荷花美</h3>
+					<p></p>
+				</div>
+				<div class="shadow"></div></a>
+							</div>
+						<div class="photo small">
+				<a href="https://tour.dzwww.com/photo/202302/t20230214_11412387.htm" target="_blank">
+				<img width=285 height=359 border=0 width="" height=""  src="https://appimg.dzwww.com/2023/0214/63eb523929aa1.JPG" />				<div class="figcaption">
+					<!--<div class="circle">
+						<h2>美景</h2>
+						<span></span>
+					</div>-->
+					<h3>潍坊沂山，再现雾凇奇观！</h3>
+					<p></p>
+				</div>
+				<div class="shadow"></div></a>
+			</div>
+						<div class="photo small">
+				<a href="https://tour.dzwww.com/photo/202302/t20230207_11383221.htm" target="_blank">
+				<img width=285 height=359 border=0 width="" height=""  src="https://appimg.dzwww.com/2024/0612/6669029015f44.jpg" />				<div class="figcaption">
+					<!--<div class="circle">
+						<h2>美景</h2>
+						<span></span>
+					</div>-->
+					<h3>壮美山川风光！在这里遇见</h3>
+					<p></p>
+				</div>
+				<div class="shadow"></div></a>
+			</div>
+						<div class="clear"></div>
+		</div>
+		<div class="line sty2">
+			<div class="photo big">
+								<a href="https://tour.dzwww.com/photo/202306/t20230605_12073202.htm" target="_blank">
+				<img width=580 height=359 border=0 width="" height=""  src="https://appimg.dzwww.com/2024/0612/66690158d5694.jpg" />				<div class="figcaption">
+					<!--<div class="circle">
+						<h2>美景</h2>
+						<span></span>
+					</div>-->
+					<h3>淄博潭溪山高空酒店的火烧云奇观</h3>
+					<p></p>
+				</div>
+				<div class="shadow"></div></a>
+							</div>
+						<div class="photo small">
+				<a href="https://tour.dzwww.com/photo/202302/t20230207_11383179.htm" target="_blank">
+				<img width=285 height=359 border=0 width="" height=""  src="https://appimg.dzwww.com/2024/0612/66690257145bd.jpg" />				<div class="figcaption">
+					<!--<div class="circle">
+						<h2>美景</h2>
+						<span></span>
+					</div>-->
+					<h3>山村快乐夜，美丽烟花秀</h3>
+					<p></p>
+				</div>
+				<div class="shadow"></div></a>
+			</div>
+						<div class="photo small">
+				<a href="https://tour.dzwww.com/photo/202302/t20230207_11383135.htm" target="_blank">
+				<img width=285 height=359 border=0 width="" height=""  src="https://appimg.dzwww.com/2024/0612/666902683afaa.jpg" />				<div class="figcaption">
+					<!--<div class="circle">
+						<h2>美景</h2>
+						<span></span>
+					</div>-->
+					<h3>爱心泸沽湖，感受大自然的创意！</h3>
+					<p></p>
+				</div>
+				<div class="shadow"></div></a>
+			</div>
+						<div class="clear"></div>
+		</div>
+	</div>
+</div>
+
+
+<div id="layout5">
+	<div class="title">
+		<span>联系我们</span>
+		<div class="line"></div>
+	</div>
+	<div class="layout">
+		<div class="list">
+			<ul>
+								<li>
+					<img width=80 height=100 border=0 width="" height=""  src="https://appimg.dzwww.com/2022/1201/63880d88b4928.png" />					<p><br />臧文博<br />85196623</p>
+				</li>
+								<li>
+					<img width=80 height=100 border=0 width="" height=""  src="https://appimg.dzwww.com/2019/0827/1dj8rf9jnpt924kc3l4.jpg" />					<p><br />刘国郁<br />85196044</p>
+				</li>
+								<li>
+					<img width=80 height=100 border=0 width="" height=""  src="https://appimg.dzwww.com/2020/1218/5fdc4cd833d9a.jpg" />					<p><br />李嘉倩<br />85193294</p>
+				</li>
+								<li>
+					<img width=80 height=100 border=0 width="" height=""  src="https://appimg.dzwww.com/2024/0612/6668fd7e3e9be.png" />					<p><br />陈新亮<br />85196044</p>
+				</li>
+								<li>
+					<img width=80 height=100 border=0 width="" height=""  src="https://appimg.dzwww.com/2024/0612/6668fdc660142.png" />					<p><br />邢睿坤<br />85196044</p>
+				</li>
+								<li>
+					<img width=80 height=100 border=0 width="" height=""  src="https://appimg.dzwww.com/2024/0612/6668fde387dca.png" />					<p><br />盆鑫雨<br />85196044</p>
+				</li>
+								<li>
+					<img width=80 height=100 border=0 width="" height=""  src="https://appimg.dzwww.com/2024/0612/6668fdf88f497.png" />					<p><br />王滢梅<br />85196044</p>
+				</li>
+								<div class="clear"></div>
+			</ul>
+		</div>
+		
+		
+	</div>
+</div>
+
+
+<div id="friendly">
+	<div class="layout">
+		<table class="title"><tr><td>友情<br />链接</td></tr></table>
+		<div class="content">
+			<div class="link">
+				<ul>
+											<li><a  target="_blank" href="https://www.mct.gov.cn/" title="国家文化和旅游部">国家文化和旅游部</a></li>
+											<li><a  target="_blank" href="http://whhly.shandong.gov.cn/" title="山东省文化和旅游厅">山东省文化和旅游厅</a></li>
+											<li><a  target="_blank" href="https://www.sdta.cn/" title="好客山东网">好客山东网</a></li>
+											<li><a  target="_blank" href="http://travel.news.cn/" title="新华网旅游频道">新华网旅游频道</a></li>
+											<li><a  target="_blank" href="http://travel.people.com.cn/" title="人民网旅游频道">人民网旅游频道</a></li>
+											<li><a  target="_blank" href="http://www.china.com.cn/travel/node_5001722.htm" title="中国网旅游频道">中国网旅游频道</a></li>
+											<li><a  target="_blank" href="http://travel.taiwan.cn/" title="中国台湾网旅游">中国台湾网旅游</a></li>
+											<li><a  target="_blank" href="http://travel.gxnews.com.cn/" title="广西新闻网旅游">广西新闻网旅游</a></li>
+											<li><a  target="_blank" href="http://travel.yunnan.cn/" title="云南网旅游">云南网旅游</a></li>
+											<li><a  target="_blank" href="http://tour.gansudaily.com.cn/" title="每日甘肃网旅游">每日甘肃网旅游</a></li>
+											<li><a  target="_blank" href="https://www.nxnews.net/ly/" title="宁夏新闻网旅游">宁夏新闻网旅游</a></li>
+											<li><a  target="_blank" href="http://travel.gog.cn/" title="多彩贵州网旅游">多彩贵州网旅游</a></li>
+											<li><a  target="_blank" href="http://travel.sxrb.com/" title="山西新闻网旅游">山西新闻网旅游</a></li>
+											<li><a  target="_blank" href="http://www.qhnews.com/qhly/" title="青海新闻网旅游">青海新闻网旅游</a></li>
+											<li><a  target="_blank" href="http://www.898.travel/" title="南海网旅游">南海网旅游</a></li>
+											<li><a  target="_blank" href="http://www.tibet.cn/cn/travel/" title="中国西藏网旅游">中国西藏网旅游</a></li>
+											<li><a  target="_blank" href="http://www.nxnews.net/ly/" title="宁夏新闻网旅游">宁夏新闻网旅游</a></li>
+											<li><a  target="_blank" href="http://www.southcn.com/travel/" title="南方网旅游">南方网旅游</a></li>
+											<li><a  target="_blank" href="http://tour.cqnews.net/" title="华龙网旅游">华龙网旅游</a></li>
+											<li><a  target="_blank" href="http://travel.anhuinews.com/" title="中安在线旅游">中安在线旅游</a></li>
+											<li><a  target="_blank" href="https://tour.dbw.cn/" title="东北网旅游">东北网旅游</a></li>
+											<li><a  target="_blank" href="http://lvyou.nen.com.cn/" title="东北新闻网旅游">东北新闻网旅游</a></li>
+											<li><a  target="_blank" href="http://travel.cnjiwang.com/" title="中国吉林网旅游">中国吉林网旅游</a></li>
+											<li><a  target="_blank" href="http://travel.enorth.com.cn/" title="北方网旅游">北方网旅游</a></li>
+											<li><a  target="_blank" href="http://travel.nmgnews.com.cn/index.shtml" title="内蒙古新闻网旅游">内蒙古新闻网旅游</a></li>
+											<li><a  target="_blank" href="http://www.ts.cn/" title="天山网旅游">天山网旅游</a></li>
+											<li><a  target="_blank" href="http://travel.qianlong.com/" title="千龙网旅游">千龙网旅游</a></li>
+											<li><a  target="_blank" href="http://gotrip.zjol.com.cn/" title="浙江旅游新闻网">浙江旅游新闻网</a></li>
+											<li><a  target="_blank" href="http://tour.jxcn.cn/" title="江西文化旅游网">江西文化旅游网</a></li>
+											<li><a  target="_blank" href="http://tour.rednet.cn/" title="湖南红网旅游">湖南红网旅游</a></li>
+											<li><a  target="_blank" href="http://travel.cnwest.com/" title="陕西西部网旅游">陕西西部网旅游</a></li>
+											<li><a  target="_blank" href="http://tour.jschina.com.cn/" title="中国江苏网旅游">中国江苏网旅游</a></li>
+											<li><a  target="_blank" href="http://travel.hebei.com.cn/" title="长城网旅游">长城网旅游</a></li>
+											<li><a  target="_blank" href="http://www.ctcnn.com/" title="劲旅网">劲旅网</a></li>
+											<li><a  target="_blank" href="http://travel.shangdu.com/" title="河南商都网旅游">河南商都网旅游</a></li>
+											<li><a  target="_blank" href="http://travel.cnhubei.com/" title="荆楚网旅游">荆楚网旅游</a></li>
+											<li><a  target="_blank" href="http://travel.newssc.org/" title="四川新闻网旅游">四川新闻网旅游</a></li>
+											<li><a  target="_blank" href="http://lysh.eastday.com/" title="东方网旅游">东方网旅游</a></li>
+											<li><a  target="_blank" href="http://travel.hebnews.cn/" title="河北新闻网旅游频道">河北新闻网旅游频道</a></li>
+											<li><a  target="_blank" href="http://www.fjsen.com/t/travel.htm" title="东南网旅游">东南网旅游</a></li>
+											<li><a  target="_blank" href="http://tour.dahe.cn/" title="大河网旅游频道">大河网旅游频道</a></li>
+										<div class="clear"></div>
+				</ul>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+
+
+
+<div id="footer">
+	<div class="layout">
+		<p><a href="https://sd.dzwww.com/sdnews/202106/t20210607_8594422.htm">大众报业集团</a> - <a href="https://sd.dzwww.com/sdnews/202105/t20210510_8467065.htm">山东省互联网传媒集团</a> - <a href="https://sd.dzwww.com/sdnews/202106/t20210607_8594465.htm">版权声明</a> - <a href="https://www.dzwww.com/yedineirong/default.htm">广告业务</a> <!--- <a href="https://www.dzwww.com/about/lxfs/">联系方式</a>--> <!-- - <a href="https://www.dzwww.com/map/">站点地图</a>--><!-- - <a href="https://www.cctls.cn/index.html">法律顾问</a>--></p>
+		<p><span id="copyright">Copyright © 2001-<script>document.write(new Date().getFullYear());</script></span> &nbsp; dzwww.com. All Rights Reserved</p>
+	<p><a href="//www.dzwww.com/about/xwxk/" target="_blank">新闻信息服务许可证</a> - <a href="//www.dzwww.com/about/yxzp/">音像制品出版许可证</a> - <a href="//www.dzwww.com/about/gbxk/">广播电视节目制作经营许可证</a> - <a href="//www.dzwww.com/about/wlst/">网络视听许可证</a> - <a href="//www.dzwww.com/about/wlwh/">网络文化经营许可证</a></p>
+	<p>山东省互联网传媒集团主办 &nbsp;技术服务：0531-85196201 &nbsp;<!--Email:<a href="mailto:webmaster@dzwww.com">webmaster@dzwww.com</a> &nbsp-->;违法不良信息举报电话：0531-85196540</p>
+	<p><a target="_blank" href="http://beian.miit.gov.cn">鲁ICP备09023866号</a> &nbsp; <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=37010202000111">鲁公网安备 37010202000111号</a> &nbsp; <a>新出网证（鲁）字02号</a></p>
+		<p>违法不良信息举报电话：0531-85196540</p>
+	</div>
+</div>
+<div id="footer-mobile" class="layout">@2015 Dzwww &nbsp;<a style="color:#999;" target="_blank" href="http://www.beian.miit.gov.cn"> 鲁ICP备09023866号</a></div>
+<!-- 广告js -->
+<script>
+	document.write("<s"+"cript type='text/javascript' async src='//ad.dzwww.com/js/newad.js' ignoreapd='1'></scr"+"ipt>");
+</script>
+<script type="text/javascript" src="//ad.dzwww.com/js/allad2013.js" ignoreapd="1"></script>
+</body>
+</html>
+<!-- generated by dzcloud 2026-09-26 10:48:52-->

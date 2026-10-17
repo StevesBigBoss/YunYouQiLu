@@ -1,0 +1,366 @@
+{
+  "updatedAt": "2026-09-27T03:18:47.257Z",
+  "runs": [
+    {
+      "startedAt": "2026-09-27T03:18:47.257Z",
+      "sources": [
+        {
+          "id": "news",
+          "title": "黄河·山东文旅公开新闻（文旅部 / 新华网 / 大众网）",
+          "status": "ok",
+          "records": 78,
+          "problems": [],
+          "file": "data\\normalized\\news.json",
+          "elapsedMs": 5012
+        }
+      ]
+    },
+    {
+      "startedAt": "2026-09-27T03:04:49.728Z",
+      "sources": [
+        {
+          "id": "news",
+          "title": "黄河·山东文旅公开新闻（文旅部 / 新华网 / 大众网）",
+          "status": "ok",
+          "records": 77,
+          "problems": [],
+          "file": "data\\normalized\\news.json",
+          "elapsedMs": 1969
+        }
+      ]
+    },
+    {
+      "startedAt": "2026-09-27T03:04:45.168Z",
+      "sources": [
+        {
+          "id": "news",
+          "title": "黄河·山东文旅公开新闻（文旅部 / 新华网 / 大众网）",
+          "status": "ok",
+          "records": 77,
+          "problems": [],
+          "file": "data\\normalized\\news.json",
+          "elapsedMs": 2266
+        }
+      ]
+    },
+    {
+      "startedAt": "2026-09-27T03:04:25.606Z",
+      "sources": [
+        {
+          "id": "news",
+          "title": "黄河·山东文旅公开新闻（文旅部 / 新华网 / 大众网）",
+          "status": "ok",
+          "records": 80,
+          "problems": [],
+          "file": "data\\normalized\\news.json",
+          "elapsedMs": 3198
+        }
+      ]
+    },
+    {
+      "startedAt": "2026-09-27T02:40:22.170Z",
+      "sources": [
+        {
+          "id": "weather",
+          "title": "山东16市实时天气与预报（Open-Meteo）",
+          "status": "ok",
+          "records": 16,
+          "problems": [],
+          "file": "data\\normalized\\weather.json",
+          "elapsedMs": 1641
+        },
+        {
+          "id": "quake",
+          "title": "山东及邻区地震目录（USGS）",
+          "status": "ok",
+          "records": 20,
+          "problems": [],
+          "file": "data\\normalized\\quake.json",
+          "elapsedMs": 2545
+        },
+        {
+          "id": "heritage",
+          "title": "山东国家级非遗代表性项目（中国非物质文化遗产网）",
+          "status": "ok",
+          "records": 190,
+          "problems": [],
+          "file": "data\\normalized\\heritage.json",
+          "elapsedMs": 9433
+        },
+        {
+          "id": "news",
+          "title": "黄河·山东文旅公开新闻（文旅部 / 新华网 / 大众网）",
+          "status": "ok",
+          "records": 99,
+          "problems": [],
+          "file": "data\\normalized\\news.json",
+          "elapsedMs": 1931
+        }
+      ]
+    },
+    {
+      "startedAt": "2026-09-27T02:40:12.980Z",
+      "sources": [
+        {
+          "id": "news",
+          "title": "黄河·山东文旅公开新闻（文旅部 / 新华网 / 大众网）",
+          "status": "ok",
+          "records": 99,
+          "problems": [],
+          "file": "data\\normalized\\news.json",
+          "elapsedMs": 3170
+        }
+      ]
+    },
+    {
+      "startedAt": "2026-09-27T02:38:50.091Z",
+      "sources": [
+        {
+          "id": "news",
+          "title": "黄河·山东文旅公开新闻（文旅部 / 新华网山东）",
+          "status": "ok",
+          "records": 202,
+          "problems": [],
+          "file": "data\\normalized\\news.json",
+          "elapsedMs": 3255
+        }
+      ]
+    },
+    {
+      "startedAt": "2026-09-27T02:37:44.206Z",
+      "sources": [
+        {
+          "id": "weather",
+          "title": "山东16市实时天气与预报（Open-Meteo）",
+          "status": "ok",
+          "records": 16,
+          "problems": [],
+          "file": "data\\normalized\\weather.json",
+          "elapsedMs": 1093
+        },
+        {
+          "id": "quake",
+          "title": "山东及邻区地震目录（USGS）",
+          "status": "ok",
+          "records": 20,
+          "problems": [],
+          "file": "data\\normalized\\quake.json",
+          "elapsedMs": 1502
+        },
+        {
+          "id": "heritage",
+          "title": "山东国家级非遗代表性项目（中国非物质文化遗产网）",
+          "status": "ok",
+          "records": 190,
+          "problems": [],
+          "file": "data\\normalized\\heritage.json",
+          "elapsedMs": 12061
+        },
+        {
+          "id": "news",
+          "title": "黄河·山东文旅公开新闻（文旅部 / 新华网山东）",
+          "status": "ok",
+          "records": 202,
+          "problems": [],
+          "file": "data\\normalized\\news.json",
+          "elapsedMs": 3804
+        }
+      ]
+    },
+    {
+      "startedAt": "2026-09-27T02:36:59.674Z",
+      "sources": [
+        {
+          "id": "heritage",
+          "title": "山东国家级非遗代表性项目（中国非物质文化遗产网）",
+          "status": "ok",
+          "records": 190,
+          "problems": [],
+          "file": "data\\normalized\\heritage.json",
+          "elapsedMs": 11985
+        },
+        {
+          "id": "news",
+          "title": "黄河·山东文旅公开新闻（文旅部 / 新华网山东）",
+          "status": "ok",
+          "records": 202,
+          "problems": [],
+          "file": "data\\normalized\\news.json",
+          "elapsedMs": 3264
+        }
+      ]
+    },
+    {
+      "startedAt": "2026-09-27T02:36:23.416Z",
+      "sources": [
+        {
+          "id": "weather",
+          "title": "山东16市实时天气与预报（Open-Meteo）",
+          "status": "ok",
+          "records": 16,
+          "problems": [],
+          "file": "data\\normalized\\weather.json",
+          "elapsedMs": 3085
+        }
+      ]
+    },
+    {
+      "startedAt": "2026-09-27T02:36:10.390Z",
+      "sources": [
+        {
+          "id": "weather",
+          "title": "山东16市实时天气与预报（Open-Meteo）",
+          "status": "ok",
+          "records": 16,
+          "problems": [],
+          "file": "data\\normalized\\weather.json",
+          "elapsedMs": 692
+        }
+      ]
+    },
+    {
+      "startedAt": "2026-09-27T02:34:33.986Z",
+      "sources": [
+        {
+          "id": "weather",
+          "title": "山东16市实时天气与预报（中国天气网）",
+          "status": "partial",
+          "records": 0,
+          "problems": [
+            "济南 实况解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "济南 预报解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "青岛 实况解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "青岛 预报解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "淄博 实况解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "淄博 预报解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "枣庄 实况解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "枣庄 预报解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "东营 实况解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "东营 预报解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "烟台 实况解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "烟台 预报解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "潍坊 实况解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "潍坊 预报解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "济宁 实况解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "济宁 预报解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "泰安 实况解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "泰安 预报解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "威海 实况解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "威海 预报解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "日照 实况解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "日照 预报解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "临沂 实况解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "临沂 预报解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "德州 实况解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "德州 预报解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "聊城 实况解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "聊城 预报解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "滨州 实况解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "滨州 预报解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "菏泽 实况解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde",
+            "菏泽 预报解析失败：HTTP 403，349B，<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidde"
+          ],
+          "file": "data\\normalized\\weather.json",
+          "elapsedMs": 37612
+        }
+      ]
+    },
+    {
+      "startedAt": "2026-09-27T02:32:45.180Z",
+      "sources": [
+        {
+          "id": "weather",
+          "title": "山东16市实时天气与预报（中国天气网）",
+          "status": "partial",
+          "records": 0,
+          "problems": [
+            "济南 实况解析失败",
+            "济南 预报解析失败",
+            "青岛 实况解析失败",
+            "青岛 预报解析失败",
+            "淄博 实况解析失败",
+            "淄博 预报解析失败",
+            "枣庄 实况解析失败",
+            "枣庄 预报解析失败",
+            "东营 实况解析失败",
+            "东营 预报解析失败",
+            "烟台 实况解析失败",
+            "烟台 预报解析失败",
+            "潍坊 实况解析失败",
+            "潍坊 预报解析失败",
+            "济宁 实况解析失败",
+            "济宁 预报解析失败",
+            "泰安 实况解析失败",
+            "泰安 预报解析失败",
+            "威海 实况解析失败",
+            "威海 预报解析失败",
+            "日照 实况解析失败",
+            "日照 预报解析失败",
+            "临沂 实况解析失败",
+            "临沂 预报解析失败",
+            "德州 实况解析失败",
+            "德州 预报解析失败",
+            "聊城 实况解析失败",
+            "聊城 预报解析失败",
+            "滨州 实况解析失败",
+            "滨州 预报解析失败",
+            "菏泽 实况解析失败",
+            "菏泽 预报解析失败"
+          ],
+          "file": "data\\normalized\\weather.json",
+          "elapsedMs": 37631
+        },
+        {
+          "id": "quake",
+          "title": "山东及邻区地震目录（USGS）",
+          "status": "ok",
+          "records": 20,
+          "problems": [],
+          "file": "data\\normalized\\quake.json",
+          "elapsedMs": 2205
+        },
+        {
+          "id": "heritage",
+          "title": "山东国家级非遗代表性项目（中国非物质文化遗产网）",
+          "status": "ok",
+          "records": 190,
+          "problems": [],
+          "file": "data\\normalized\\heritage.json",
+          "elapsedMs": 11629
+        },
+        {
+          "id": "news",
+          "title": "黄河·山东文旅公开新闻（文旅部 / 新华网山东）",
+          "status": "ok",
+          "records": 202,
+          "problems": [],
+          "file": "data\\normalized\\news.json",
+          "elapsedMs": 3347
+        }
+      ]
+    },
+    {
+      "startedAt": "2026-09-27T02:32:04.756Z",
+      "sources": [
+        {
+          "id": "heritage",
+          "title": "山东国家级非遗代表性项目（中国非物质文化遗产网）",
+          "status": "ok",
+          "records": 190,
+          "problems": [],
+          "file": "data\\normalized\\heritage.json",
+          "elapsedMs": 15037
+        },
+        {
+          "id": "news",
+          "title": "黄河·山东文旅公开新闻（文旅部 / 新华网山东）",
+          "status": "ok",
+          "records": 202,
+          "problems": [],
+          "file": "data\\normalized\\news.json",
+          "elapsedMs": 4190
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,687 @@
+{
+  "source": "文化和旅游部 www.mct.gov.cn、新华网山东频道 sd.news.cn、大众网文旅/山东频道 dzwww.com（公开列表页）",
+  "note": "已按山东/黄河相关性过滤，全部为山东题材稿；关键词与情感分布为基于标题的词表统计结果，非平台互动量；抖音/微博/微信需开放平台密钥，未纳入",
+  "fetchedAt": "2026-09-27T03:18:52.267Z",
+  "pages": [
+    {
+      "name": "文旅部-全国文化信息联播·山东",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/",
+      "filter": "none",
+      "status": 200,
+      "picked": 30
+    },
+    {
+      "name": "文旅部-全国文化信息联播",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/",
+      "filter": "region",
+      "status": 200,
+      "picked": 10
+    },
+    {
+      "name": "新华网-山东频道",
+      "url": "http://sd.news.cn/",
+      "filter": "topic",
+      "status": 200,
+      "picked": 21
+    },
+    {
+      "name": "大众网-文旅频道",
+      "url": "https://tour.dzwww.com/",
+      "filter": "region",
+      "status": 200,
+      "picked": 17
+    },
+    {
+      "name": "大众网-山东频道",
+      "url": "https://sd.dzwww.com/",
+      "filter": "topic",
+      "status": 200,
+      "picked": 8
+    }
+  ],
+  "count": 78,
+  "datedCount": 74,
+  "items": [
+    {
+      "title": "文旅新探|\"追火箭\"追出文旅新体验",
+      "url": "http://sd.news.cn/20260927/220c29463b7e46d6aefdce9f0e12448a/c.html",
+      "date": "2026-09-27",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "中秋假期返程山东高速公路将有短时车流高峰",
+      "url": "http://sd.news.cn/20260927/2b428cbf74a74bb8a110e37e91db1e3b/c.html",
+      "date": "2026-09-27",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "寻芳历下 泉醉秋光丨双节狂欢 明湖夜酌Barhop",
+      "url": "https://tour.dzwww.com/lvnews/202609/t20260927_18159045.htm",
+      "date": "2026-09-27",
+      "channel": "大众网-文旅频道"
+    },
+    {
+      "title": "济宁为儒家文化遗产建起“数字档案”，打造智慧文旅新场景",
+      "url": "https://sd.dzwww.com/sdnews/202609/t20260927_18158666.htm",
+      "date": "2026-09-27",
+      "channel": "大众网-山东频道"
+    },
+    {
+      "title": "文化中国行·校馆弦歌｜在这个大学图书馆，读懂“为国找油”精神",
+      "url": "https://sd.dzwww.com/sdnews/202609/t20260927_18158669.htm",
+      "date": "2026-09-27",
+      "channel": "大众网-山东频道"
+    },
+    {
+      "title": "在济宁，文化是这样“活”的",
+      "url": "https://sd.dzwww.com/sdnews/202609/t20260927_18158671.htm",
+      "date": "2026-09-27",
+      "channel": "大众网-山东频道"
+    },
+    {
+      "title": "月圆泉城秋正好 济南中秋假期首日文旅市场热力全开",
+      "url": "http://sd.news.cn/20260926/f6e5bdcbcec34fbeaaf379e356f325d4/c.html",
+      "date": "2026-09-26",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "月满神州地 新风润齐鲁",
+      "url": "https://sd.dzwww.com/sdnews/202609/t20260926_18157871.htm",
+      "date": "2026-09-26",
+      "channel": "大众网-山东频道"
+    },
+    {
+      "title": "中秋假期首日，山东200家重点景区纳客209.3万人次",
+      "url": "https://sd.dzwww.com/sdnews/202609/t20260926_18157238.htm",
+      "date": "2026-09-26",
+      "channel": "大众网-山东频道"
+    },
+    {
+      "title": "山东：推动文旅消费从“网红”走向“长红”",
+      "url": "https://www.news.cn/20260924/1fdcb64e79774e8b8d9994c7383f2776/c.html",
+      "date": "2026-09-24",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "2026山东秋季\"黄河大集\"\"运河大集\"\"海洋大集\"启动",
+      "url": "http://sd.news.cn/20260924/bc9bf67688ac41e5be866e2e85209c20/c.html",
+      "date": "2026-09-24",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "济南凤凰黄河大桥南延工程“静音安全走廊”亮相",
+      "url": "http://sd.news.cn/20260924/21d280a68c804a0bb1b741e81ab48b8f/c.html",
+      "date": "2026-09-24",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "济南交警发布中秋国庆假期交通预警提示",
+      "url": "http://sd.news.cn/20260924/40140d9ffcb049d4b88d6c262ad583c7/c.html",
+      "date": "2026-09-24",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "亩产3000斤！黄河冬枣开始采摘",
+      "url": "http://sd.news.cn/20260924/395fd3fd091d4b1c91ca0e4d5b48ca64/c.html",
+      "date": "2026-09-24",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "东营市东营区“公益市集”促消费暖民心",
+      "url": "http://sd.news.cn/20260924/af75d817f1744b8ca14dc79a91da3e39/c.html",
+      "date": "2026-09-24",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "以讲述激活文脉 助力山东文化“两创",
+      "url": "https://tour.dzwww.com//202609/t20260924_18153039.htm",
+      "date": "2026-09-24",
+      "channel": "大众网-文旅频道"
+    },
+    {
+      "title": "地理标志助力黄河流域知识产权高质量发展",
+      "url": "http://sd.news.cn/20260923/354e8c09d88945ec820f01c488061e7b/c.html",
+      "date": "2026-09-23",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "仲秋绿意浓，济南中央森林公园铺展城市生态画卷",
+      "url": "http://sd.news.cn/20260923/bf9560a274e54997889522b433d9854c/c.html",
+      "date": "2026-09-23",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "​青岛市“迎双节·庆丰收”农文旅融合活动启动",
+      "url": "http://sd.news.cn/20260923/aab1dda21cfd4a0e95471191da0b0782/c.html",
+      "date": "2026-09-23",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "济南九大公园景区推出“乐赏金秋”主题系列活动",
+      "url": "http://sd.news.cn/20260922/c30a2088e5654aeb92c8378398573295/c.html",
+      "date": "2026-09-22",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "山东菏泽：黄河滩区迁建绘就幸福新画卷",
+      "url": "http://sd.news.cn/20260921/a380cf3f2552407891d1434036115080/c.html",
+      "date": "2026-09-21",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "公益电影放映5万场 德州文化惠民直抵村头",
+      "url": "http://sd.news.cn/20260918/95e8da17eea1460bbee134d9bd5980e2/c.html",
+      "date": "2026-09-18",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "济南儿艺《飞越母亲河》开启沿黄省区巡演之旅",
+      "url": "http://sd.news.cn/20260908/870e6a5b47d6463d94e20f929296310f/c.html",
+      "date": "2026-09-08",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "百鸟翩跹 AI全天候守护黄河入海口生态",
+      "url": "http://sd.news.cn/20260830/67192be7a74c4fab8e4a3a5942aa6153/c.html",
+      "date": "2026-08-30",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "山东发布10个博物馆研学旅游品牌",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202608/t20260812_966836.htm",
+      "date": "2026-08-12",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "2026第三届黄河小剧场戏剧周璀璨开幕",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/gs/202608/t20260811_966823.htm",
+      "date": "2026-08-11",
+      "channel": "文旅部-全国文化信息联播"
+    },
+    {
+      "title": "多个爆款点位，聊城古风打卡点上新！",
+      "url": "https://tour.dzwww.com/shandong/mxly/202608/t20260805_17994895.htm",
+      "date": "2026-08-05",
+      "channel": "大众网-文旅频道"
+    },
+    {
+      "title": "以风为歌，以城为章！聊城夏夜音乐会",
+      "url": "https://tour.dzwww.com/shandong/mxly/202608/t20260805_17994893.htm",
+      "date": "2026-08-05",
+      "channel": "大众网-文旅频道"
+    },
+    {
+      "title": "山东古建筑博物馆暑期公益讲解预约公",
+      "url": "https://tour.dzwww.com/shandong/mxly/202608/t20260805_17994896.htm",
+      "date": "2026-08-05",
+      "channel": "大众网-文旅频道"
+    },
+    {
+      "title": "镜头里的齐鲁乡艺|青岛凤凰村、王哥",
+      "url": "https://tour.dzwww.com//202608/t20260805_17994899.htm",
+      "date": "2026-08-05",
+      "channel": "大众网-文旅频道"
+    },
+    {
+      "title": "泉城10种打开方式③|济南十二时辰",
+      "url": "https://tour.dzwww.com//202608/t20260805_17995047.htm",
+      "date": "2026-08-05",
+      "channel": "大众网-文旅频道"
+    },
+    {
+      "title": "2026博斯弦乐艺术节在山东省会大剧院",
+      "url": "https://tour.dzwww.com//202608/t20260805_17994901.htm",
+      "date": "2026-08-05",
+      "channel": "大众网-文旅频道"
+    },
+    {
+      "title": "山东举办夏季主题宣传推广活动",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202607/t20260731_966740.htm",
+      "date": "2026-07-31",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "小巷寻宝｜废弃坑塘如何“长”出年入千万的生态村",
+      "url": "http://sd.news.cn/20260731/3c9004d14dde485085bde446340e5e7f/c.html",
+      "date": "2026-07-31",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "《买河村的七月》亮相中国原创话剧邀请展",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202607/t20260730_966724.htm",
+      "date": "2026-07-30",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "“鲁疆同心 非遗列车”发车",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202607/t20260717_966574.htm",
+      "date": "2026-07-17",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "第三届大运河文化发展论坛举办",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/js/202607/t20260714_966518.htm",
+      "date": "2026-07-14",
+      "channel": "文旅部-全国文化信息联播"
+    },
+    {
+      "title": "山东启动红色文化主题月",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202607/t20260702_966392.htm",
+      "date": "2026-07-02",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "山东淄博：暑期打卡陶瓷琉璃博物馆",
+      "url": "http://sd.news.cn/20260702/97c6972ca5d84705a9289421eb396d3a/c.html",
+      "date": "2026-07-02",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "山东开展文旅体融合发展交流",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202606/t20260629_966361.htm",
+      "date": "2026-06-29",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "青岛丝路千古情景区开园纳客",
+      "url": "http://sd.news.cn/20260627/bb571864516f43f3ad8eea33596e83cf/c.html",
+      "date": "2026-06-27",
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "山东交流展示齐长城非遗旅游",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202606/t20260626_966348.htm",
+      "date": "2026-06-26",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "山东推进金融与文旅双向赋能",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202606/t20260610_966206.htm",
+      "date": "2026-06-10",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "山东谋划乡村旅游高质量发展",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202606/t20260609_966182.htm",
+      "date": "2026-06-09",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "山东力争2028年底建成旅游公路6000公里",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202606/t20260608_966164.htm",
+      "date": "2026-06-08",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "山东力争2028年底建成旅游公路600...",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202606/t20260608_966164.htm",
+      "date": "2026-06-08",
+      "channel": "文旅部-全国文化信息联播"
+    },
+    {
+      "title": "山东“文化润疆”旅游列车首发",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202606/t20260601_966059.htm",
+      "date": "2026-06-01",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "山东日照推出“山海畅游卡”",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202605/t20260526_965980.htm",
+      "date": "2026-05-26",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "山东泰安加快建设文化强市旅游强市",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202605/t20260520_965902.htm",
+      "date": "2026-05-20",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "齐鲁天路连百景 安丘融合农文旅",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202605/t20260515_965837.htm",
+      "date": "2026-05-15",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "山东青岛修订发布《青岛市旅游条例》",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202605/t20260512_965780.htm",
+      "date": "2026-05-12",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "山东乡村旅游：既有乡土味，更有文化魂",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202605/t20260511_965774.htm",
+      "date": "2026-05-11",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "济宁推动文化服务“双向互动”",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202604/t20260430_965663.htm",
+      "date": "2026-04-30",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "好客山东燃情淄博 厚植融合发展优势",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202604/t20260429_965656.htm",
+      "date": "2026-04-29",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "日照集中展示乡村民宿资源",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202604/t20260428_965639.htm",
+      "date": "2026-04-28",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "山东省文旅产业高质量发展大会举行",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202604/t20260427_965609.htm",
+      "date": "2026-04-27",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "青岛旅游民宿生活季启动",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202604/t20260421_965530.htm",
+      "date": "2026-04-21",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "“发现宝藏山东”主题旅游年启动",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202604/t20260420_965512.htm",
+      "date": "2026-04-20",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "山东举办春季文旅消费促进主场活动",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202604/t20260414_965429.htm",
+      "date": "2026-04-14",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "山东：文旅向海而兴 加速“蓝色崛起”",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202604/t20260413_965392.htm",
+      "date": "2026-04-13",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "“镜头里的宝藏山东”采风聚焦春日之美",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202604/t20260408_965337.htm",
+      "date": "2026-04-08",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "济南开展高铁营销活动",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202604/t20260403_965295.htm",
+      "date": "2026-04-03",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "山东从“沉下来、深下去”中找答案——破解舞台艺术“出人出戏”难",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202604/t20260402_965280.htm",
+      "date": "2026-04-02",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "山东发布《山东省齐长城遗址保护规划（2023-2035年）》",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202604/t20260401_965253.htm",
+      "date": "2026-04-01",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "山东文旅深融，创新更“走心”",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202603/t20260330_965211.htm",
+      "date": "2026-03-30",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "山东非遗融合创新迈出新步伐",
+      "url": "https://www.mct.gov.cn/whzx/qgwhxxlb/sd/202603/t20260326_965164.htm",
+      "date": "2026-03-26",
+      "channel": "文旅部-全国文化信息联播·山东"
+    },
+    {
+      "title": "2025中国非遗传承人研培计划启动 山东",
+      "url": "https://tour.dzwww.com/hygc/202506/t20250625_16125786.htm",
+      "date": "2025-06-25",
+      "channel": "大众网-文旅频道"
+    },
+    {
+      "title": "贵和27周年庆：与济南共绘繁华新篇章",
+      "url": "https://tour.dzwww.com/shandong/mstc/202409/t20240912_14796142.htm",
+      "date": "2024-09-12",
+      "channel": "大众网-文旅频道"
+    },
+    {
+      "title": "山东金石学会田野石刻考察培训班举办",
+      "url": "https://tour.dzwww.com/shandong/mstc/202406/t20240605_14283293.htm",
+      "date": "2024-06-05",
+      "channel": "大众网-文旅频道"
+    },
+    {
+      "title": "济南邮政推出四龙同年同月同日时相聚纪念邮",
+      "url": "https://tour.dzwww.com/shandong/mstc/202404/t20240410_13973832.htm",
+      "date": "2024-04-10",
+      "channel": "大众网-文旅频道"
+    },
+    {
+      "title": "山东省旅游行业协会召开五届五次理事会",
+      "url": "https://tour.dzwww.com/shandong/mstc/202403/t20240320_13858504.htm",
+      "date": "2024-03-20",
+      "channel": "大众网-文旅频道"
+    },
+    {
+      "title": "山东：考古旅游和研学不再远",
+      "url": "https://tour.dzwww.com/ycyj/qzy/202111/t20211105_9389229.htm",
+      "date": "2021-11-05",
+      "channel": "大众网-文旅频道"
+    },
+    {
+      "title": "济南非遗“研学基地”创建工作组调研",
+      "url": "https://tour.dzwww.com/ycyj/qzy/202109/t20210908_9117594.htm",
+      "date": "2021-09-08",
+      "channel": "大众网-文旅频道"
+    },
+    {
+      "title": "山东省互联网传媒集团",
+      "url": "https://sd.dzwww.com/sdnews/202105/t20210510_8467065.htm",
+      "date": "2021-05-10",
+      "channel": "大众网-文旅频道"
+    },
+    {
+      "title": "提质增效惠民生 齐鲁医保显担当",
+      "url": "http://sd.news.cn/zhzt/qlyb/index.html",
+      "date": null,
+      "channel": "新华网-山东频道"
+    },
+    {
+      "title": "入梦台城 穿越古今 | 台儿庄景区五一",
+      "url": "https://hb.dzwww.com/s/13590.html",
+      "date": null,
+      "channel": "大众网-文旅频道"
+    },
+    {
+      "title": "中秋假期首日，济南30家景区共接待游客25.82万人次",
+      "url": "https://hb.dzwww.com/p/p5VmkYS3x3.html",
+      "date": null,
+      "channel": "大众网-山东频道"
+    },
+    {
+      "title": "山东28条财金措施扩内需，个人消费贷最高贴息5000元",
+      "url": "https://hb.dzwww.com/p/pfjCT0OrAGc.html",
+      "date": null,
+      "channel": "大众网-山东频道"
+    }
+  ],
+  "keywords": [
+    {
+      "word": "山东",
+      "count": 39
+    },
+    {
+      "word": "济南",
+      "count": 12
+    },
+    {
+      "word": "旅游",
+      "count": 12
+    },
+    {
+      "word": "文旅",
+      "count": 10
+    },
+    {
+      "word": "文化",
+      "count": 10
+    },
+    {
+      "word": "黄河",
+      "count": 6
+    },
+    {
+      "word": "中秋",
+      "count": 5
+    },
+    {
+      "word": "假期",
+      "count": 5
+    },
+    {
+      "word": "景区",
+      "count": 5
+    },
+    {
+      "word": "青岛",
+      "count": 5
+    },
+    {
+      "word": "活动",
+      "count": 5
+    },
+    {
+      "word": "非遗",
+      "count": 5
+    },
+    {
+      "word": "齐鲁",
+      "count": 4
+    },
+    {
+      "word": "消费",
+      "count": 4
+    },
+    {
+      "word": "发布",
+      "count": 4
+    },
+    {
+      "word": "主题",
+      "count": 4
+    },
+    {
+      "word": "公路",
+      "count": 3
+    },
+    {
+      "word": "济宁",
+      "count": 3
+    },
+    {
+      "word": "首日",
+      "count": 3
+    },
+    {
+      "word": "启动",
+      "count": 3
+    },
+    {
+      "word": "公益",
+      "count": 3
+    },
+    {
+      "word": "高质量发展",
+      "count": 3
+    },
+    {
+      "word": "生态",
+      "count": 3
+    },
+    {
+      "word": "推出",
+      "count": 3
+    },
+    {
+      "word": "博物馆",
+      "count": 3
+    },
+    {
+      "word": "举办",
+      "count": 3
+    },
+    {
+      "word": "乡村",
+      "count": 3
+    },
+    {
+      "word": "融合",
+      "count": 3
+    },
+    {
+      "word": "泉城",
+      "count": 2
+    },
+    {
+      "word": "纳客",
+      "count": 2
+    },
+    {
+      "word": "推动",
+      "count": 2
+    },
+    {
+      "word": "凤凰",
+      "count": 2
+    },
+    {
+      "word": "亮相",
+      "count": 2
+    },
+    {
+      "word": "助力",
+      "count": 2
+    },
+    {
+      "word": "公园",
+      "count": 2
+    },
+    {
+      "word": "惠民",
+      "count": 2
+    },
+    {
+      "word": "第三",
+      "count": 2
+    },
+    {
+      "word": "聊城",
+      "count": 2
+    },
+    {
+      "word": "打卡",
+      "count": 2
+    },
+    {
+      "word": "暑期",
+      "count": 2
+    }
+  ],
+  "sentiment": {
+    "total": 78,
+    "positive": 17,
+    "neutral": 82,
+    "negative": 1,
+    "raw": {
+      "positive": 13,
+      "neutral": 64,
+      "negative": 1
+    }
+  }
+}

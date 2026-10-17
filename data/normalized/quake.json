@@ -1,0 +1,216 @@
+{
+  "source": "USGS FDSN Event API（公开数据）",
+  "note": "中国地震台网 ceic.ac.cn 的 robots.txt 禁止其接口，故改用 USGS；国内 3 级上下小震在 USGS 收录不全",
+  "fetchedAt": "2026-09-27T02:40:26.767Z",
+  "bbox": {
+    "minlatitude": 34,
+    "maxlatitude": 39,
+    "minlongitude": 114,
+    "maxlongitude": 123
+  },
+  "minMagnitude": 3,
+  "startTime": "2015-01-01",
+  "count": 20,
+  "events": [
+    {
+      "id": "us6000rtzi",
+      "time": "2025-12-10T20:06:59.123Z",
+      "magnitude": 4.5,
+      "place": "23 km SSW of Qingnian, China",
+      "depthKm": 10,
+      "lng": 115.6142,
+      "lat": 36.6426,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000rtzi"
+    },
+    {
+      "id": "us6000qz59",
+      "time": "2025-07-27T11:13:42.004Z",
+      "magnitude": 4.5,
+      "place": "118 km NW of Longgang, China",
+      "depthKm": 10,
+      "lng": 119.3497,
+      "lat": 38.3902,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000qz59"
+    },
+    {
+      "id": "us7000pmjv",
+      "time": "2025-03-25T17:21:17.179Z",
+      "magnitude": 4.5,
+      "place": "34 km SSW of Yangliuqing, China",
+      "depthKm": 10,
+      "lng": 116.8263,
+      "lat": 38.8579,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000pmjv"
+    },
+    {
+      "id": "us6000pw46",
+      "time": "2025-02-21T18:41:44.485Z",
+      "magnitude": 4.2,
+      "place": "23 km E of Puyang Chengguanzhen, China",
+      "depthKm": 10,
+      "lng": 115.2707,
+      "lat": 35.7191,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000pw46"
+    },
+    {
+      "id": "us6000muj5",
+      "time": "2024-04-28T03:43:50.108Z",
+      "magnitude": 4.6,
+      "place": "90 km SSE of Zhangzi, China",
+      "depthKm": 10,
+      "lng": 122.9347,
+      "lat": 38.2325,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000muj5"
+    },
+    {
+      "id": "us6000mkim",
+      "time": "2024-03-19T03:03:00.127Z",
+      "magnitude": 4,
+      "place": "82 km NE of Dongkan, China",
+      "depthKm": 10,
+      "lng": 120.4732,
+      "lat": 34.5218,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mkim"
+    },
+    {
+      "id": "us7000lgxu",
+      "time": "2023-12-07T15:01:46.079Z",
+      "magnitude": 5,
+      "place": "70 km SE of Taoluo, China",
+      "depthKm": 10,
+      "lng": 119.9328,
+      "lat": 34.8398,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000lgxu"
+    },
+    {
+      "id": "us6000ky5l",
+      "time": "2023-08-05T18:33:59.457Z",
+      "magnitude": 5.4,
+      "place": "24 km S of Dezhou, China",
+      "depthKm": 18,
+      "lng": 116.3908,
+      "lat": 37.2306,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000ky5l"
+    },
+    {
+      "id": "us7000jvsv",
+      "time": "2023-04-25T15:34:30.993Z",
+      "magnitude": 4.8,
+      "place": "230 km ENE of Hede, China",
+      "depthKm": 10,
+      "lng": 122.5924,
+      "lat": 34.5245,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000jvsv"
+    },
+    {
+      "id": "us7000h84u",
+      "time": "2022-05-01T23:53:31.674Z",
+      "magnitude": 4.3,
+      "place": "11 km SE of Suozhen, China",
+      "depthKm": 10,
+      "lng": 118.1967,
+      "lat": 36.8868,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000h84u"
+    },
+    {
+      "id": "us70007vx1",
+      "time": "2020-02-18T09:07:18.102Z",
+      "magnitude": 4.4,
+      "place": "16 km WNW of Changqing, China",
+      "depthKm": 10,
+      "lng": 116.5638,
+      "lat": 36.6213,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us70007vx1"
+    },
+    {
+      "id": "us10008dll",
+      "time": "2017-03-27T14:06:54.810Z",
+      "magnitude": 4.3,
+      "place": "20 km NNW of Dengzhou, China",
+      "depthKm": 15.51,
+      "lng": 120.6564,
+      "lat": 37.9705,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us10008dll"
+    },
+    {
+      "id": "us10008di7",
+      "time": "2017-03-24T03:03:23.530Z",
+      "magnitude": 4.3,
+      "place": "131 km S of Changli, China",
+      "depthKm": 10,
+      "lng": 119.2894,
+      "lat": 38.5254,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us10008di7"
+    },
+    {
+      "id": "us100086kj",
+      "time": "2017-03-02T18:48:35.470Z",
+      "magnitude": 4.4,
+      "place": "43 km N of Dengzhou, China",
+      "depthKm": 13.14,
+      "lng": 120.7982,
+      "lat": 38.1999,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us100086kj"
+    },
+    {
+      "id": "us10004bej",
+      "time": "2015-12-24T23:56:14.530Z",
+      "magnitude": 4.3,
+      "place": "Shandong, China",
+      "depthKm": 10,
+      "lng": 117.8564,
+      "lat": 35.5932,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us10004bej"
+    },
+    {
+      "id": "us10003pej",
+      "time": "2015-10-09T09:20:24.570Z",
+      "magnitude": 4.1,
+      "place": "190 km ENE of Hede, China",
+      "depthKm": 10,
+      "lng": 122.2752,
+      "lat": 34.1485,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us10003pej"
+    },
+    {
+      "id": "us1000313w",
+      "time": "2015-07-22T00:51:53.880Z",
+      "magnitude": 4.2,
+      "place": "29 km N of Longgang, China",
+      "depthKm": 11.19,
+      "lng": 120.338,
+      "lat": 37.9211,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us1000313w"
+    },
+    {
+      "id": "us20002x7p",
+      "time": "2015-06-28T23:03:23.950Z",
+      "magnitude": 4.3,
+      "place": "31 km W of Lüshun, China",
+      "depthKm": 14.94,
+      "lng": 120.904,
+      "lat": 38.7695,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us20002x7p"
+    },
+    {
+      "id": "us10002b6x",
+      "time": "2015-05-21T16:05:35.830Z",
+      "magnitude": 4.6,
+      "place": "48 km SSW of Tianfu, China",
+      "depthKm": 46.24,
+      "lng": 121.7749,
+      "lat": 36.885,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us10002b6x"
+    },
+    {
+      "id": "usb000tiys",
+      "time": "2015-01-18T03:01:24.500Z",
+      "magnitude": 4.4,
+      "place": "36 km E of Puyang Chengguanzhen, China",
+      "depthKm": 10,
+      "lng": 115.4156,
+      "lat": 35.6454,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/usb000tiys"
+    }
+  ]
+}
