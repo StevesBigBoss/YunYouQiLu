@@ -121,7 +121,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
+# Django 4.0 起 USE_L10N 已并入 USE_I18N，不再单独设置
 
 USE_TZ = True
 

@@ -12,6 +12,8 @@
   3. 如果真实爬取失败，脚本自动生成模拟数据（SEED_MODE=True）
 """
 
+import os
+from dotenv import load_dotenv
 import requests
 import json
 import time
@@ -19,12 +21,15 @@ import random
 import pymysql
 from datetime import datetime
 
+# 加载项目根目录下的 .env 环境变量（敏感配置不入库）
+load_dotenv()
+
 # ==================== 数据库配置 ====================
 DB_CONFIG = {
     "host": "127.0.0.1",
     "port": 3306,
     "user": "root",
-    "password": "123456",
+    "password": os.getenv("DB_PASSWORD"),
     "database": "dyinfo_schema",
     "charset": "utf8mb4",
 }
@@ -34,8 +39,8 @@ KEYWORD = "黄河流域生态治理"
 MAX_VIDEOS = 50          # 最多爬取视频数
 COMMENTS_PER_VIDEO = 20  # 每个视频爬取评论数
 
-# 浏览器 Cookie（登录抖音网页版后复制）
-COOKIE = ""  # 例: "ttwid=xxx; msToken=xxx; sessionid=xxx;"
+# 浏览器 Cookie（登录抖音网页版后复制，放入 .env 的 TIKTOK_COOKIE，留空则使用模拟数据）
+COOKIE = os.getenv("TIKTOK_COOKIE", "")  # 例: "ttwid=xxx; msToken=xxx; sessionid=xxx;"
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
