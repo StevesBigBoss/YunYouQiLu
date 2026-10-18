@@ -26,3 +26,13 @@ dist-ssr
 .env.*
 !.env.example
 tiktok_user_data.csv
+
+# 构建产物与数据快照（体积大，不入库）
+dist.zip
+data/
+
+# 本机部署脚本与隧道地址（含本机路径/局域网IP，不入库）
+公网地址.txt
+启动公网访问.bat
+启动开发模式.bat
+启动网站.bat
