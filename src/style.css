@@ -1,11 +1,6 @@
-/* ========== 全局主题变量 ========== */
-/* 六套风格：默认清爽浅绿 / 简约蓝白色 / Hello Kitty / 夜晚科技 / 赛博炫彩 / 夜晚护眼色
-   风格由 <html data-theme> 切换（见 src/config/appTheme.ts），:root 即浅绿，
-   作为未设置 data-theme 时的兜底，保证首屏与默认风格一致。 */
 
 :root,
 html[data-theme="cream"] {
-  /* 主题三色（取 Modrinth 品牌绿 #00AF5C / 亮绿 #00BD3C） */
   --color-gold: #00AF5C;
   --color-green: #00BD3C;
   --color-blue: #1B3A5C;
@@ -17,7 +12,6 @@ html[data-theme="cream"] {
   --logo-accent-light: #2BD97C;
   --logo-accent-deep: #00A052;
 
-  /* 清爽浅绿背景（浅灰基调 + 绿意点缀，同 Modrinth 的明快色感） */
   --bg-primary: #F1F3F1;
   --bg-secondary: #E7EBE7;
   --bg-card: #FFFFFF;
@@ -27,11 +21,9 @@ html[data-theme="cream"] {
   --bg-input: #FFFFFF;
   --submenu-bg: rgba(231, 235, 231, 0.7);
 
-  /* 边框 */
   --border-color: #DFE3DF;
   --border-light: #D0D5D0;
 
-  /* 文字 */
   --text-primary: #2C2E31;
   --text-secondary: #484D54;
   --text-muted: #7D838A;
@@ -39,38 +31,31 @@ html[data-theme="cream"] {
   --text-green: #00A052;
   --on-accent: #FFFFFF;
 
-  /* 状态色 */
   --status-success: #00A052;
   --status-warning: #D9A13B;
   --status-danger: #D94F4F;
   --status-info: #4A7DB5;
 
-  /* 导航 */
   --sidebar-width: 220px;
   --sidebar-collapsed-width: 60px;
   --topbar-height: 56px;
 
-  /* 渐变 */
   --gradient-gold: linear-gradient(135deg, #26D07C 0%, #00A052 100%);
   --gradient-blue: linear-gradient(135deg, #1B3A5C 0%, #2E5C86 100%);
   --gradient-card: linear-gradient(180deg, #FFFFFF 0%, #F8FBF8 100%);
 
-  /* 阴影（轻柔和缓） */
   --shadow-card: 0 1px 6px rgba(0, 0, 0, 0.06);
   --shadow-glow-gold: 0 2px 10px rgba(0, 175, 92, 0.2);
 
-  /* 浮层：压在底图上的面板/提示用半透明底 */
   --surface-glass: rgba(255, 255, 255, 0.9);
   --surface-glass-strong: rgba(255, 255, 255, 0.96);
   --surface-solid: #FFFFFF;
 
-  /* 地图：底色、非聚焦省份、聚焦省份与地市标注 */
   --map-bg: radial-gradient(ellipse at 50% 42%, #FCFEFC 0%, #F1F6F1 46%, #E3EBE4 100%);
   --map-solid: #E7EBE7;
   --map-nodata: #E7EBE7;
   --map-nodata-border: #D0D5D0;
   --map-focus: #00AF5C;
-  /* 热力色带：浅蓝 → 青 → 绿 → 黄 → 橙 → 红（冷暖全谱，低值偏蓝、高值偏红，一眼看出冷热） */
   --map-heat: #BFD9F2, #6FC5C5, #8CCE6E, #EFD64E, #E87B33, #C6392F;
   --map-label-name: #7D838A;
   --map-label-value: #00733D;
@@ -83,7 +68,6 @@ html[data-theme="cream"] {
   --map-title-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-/* 简约蓝白色 */
 html[data-theme="bluewhite"] {
   --color-gold: #2B6CB0;
   --color-green: #1F8A8A;
@@ -148,7 +132,6 @@ html[data-theme="bluewhite"] {
   --map-heat: #E8F1FB, #C7E0F6, #9BC7EE, #69A6E2, #3D82CE, #1F5C9E;
 }
 
-/* Hello Kitty 粉 */
 html[data-theme="hellokitty"] {
   --color-gold: #F06292;
   --color-green: #7BC49B;
@@ -213,7 +196,6 @@ html[data-theme="hellokitty"] {
   --map-heat: #FFF0F5, #FFD3E2, #FFAFCB, #FF86B2, #F45C97, #D63A79;
 }
 
-/* 夜晚科技 */
 html[data-theme="night"] {
   --color-gold: #C8A45C;
   --color-green: #2E7D5B;
@@ -278,7 +260,6 @@ html[data-theme="night"] {
   --map-heat: #16304F, #215C7E, #2E8AA8, #4FB3A0, #D9A13B, #D94F4F;
 }
 
-/* 赛博炫彩 */
 html[data-theme="cyber"] {
   --color-gold: #22D3EE;
   --color-green: #A3E635;
@@ -343,7 +324,6 @@ html[data-theme="cyber"] {
   --map-heat: #1A2050, #2B3A8F, #4B4BD6, #8A3AE0, #D6359B, #FF2D6E;
 }
 
-/* 夜晚护眼色 */
 html[data-theme="eyecare"] {
   --color-gold: #D9A13B;
   --color-green: #6FA07C;
@@ -418,8 +398,6 @@ html, body, #app {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  /* 中文优先用雅黑/苹方；后面这串是给切换语言兜底的：韩文、日文、西里尔、阿拉伯字形
-     各自挑系统里现成的字体，缺字形时再退到通用 sans-serif */
   font-family: 'Microsoft YaHei', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     'Malgun Gothic', 'Yu Gothic UI', 'Noto Sans SC', 'Noto Sans', Tahoma, Arial, sans-serif;
   background: var(--bg-primary);
@@ -432,14 +410,12 @@ a {
   text-decoration: none;
 }
 
-/* 风格切换时给底色一个柔和的过渡 */
 body,
 .common-card,
 .btn {
   transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
-/* 滚动条 */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -455,7 +431,6 @@ body,
   background: var(--color-gold);
 }
 
-/* 通用卡片 */
 .common-card {
   background: var(--gradient-card);
   border: 1px solid var(--border-color);
@@ -476,7 +451,6 @@ body,
   justify-content: space-between;
 }
 
-/* 按钮 */
 .btn {
   padding: 6px 16px;
   border-radius: 4px;
@@ -501,7 +475,6 @@ body,
   color: var(--on-accent);
 }
 
-/* 表格 */
 .common-table {
   width: 100%;
   border-collapse: collapse;
@@ -524,7 +497,6 @@ body,
   background: var(--bg-card-hover);
 }
 
-/* 标签 */
 .tag {
   display: inline-block;
   padding: 2px 8px;
@@ -537,7 +509,6 @@ body,
 .tag-red { background: rgba(var(--rgb-red), 0.12); color: var(--status-danger); border: 1px solid rgba(var(--rgb-red), 0.35); }
 .tag-orange { background: rgba(var(--rgb-orange), 0.12); color: var(--status-warning); border: 1px solid rgba(var(--rgb-orange), 0.35); }
 
-/* Leaflet 控件与弹窗：底色、文字随风格 */
 .leaflet-container {
   background: var(--map-solid) !important;
   font-family: inherit !important;
@@ -564,7 +535,6 @@ body,
   color: var(--text-secondary) !important;
 }
 
-/* 地图右下角提示 */
 .map-tip {
   position: absolute;
   bottom: 12px;
@@ -579,7 +549,6 @@ body,
   pointer-events: none;
 }
 
-/* 全国底图（非聚焦省份）悬停提示：页面未单独定义样式时兜底 */
 .leaflet-tooltip.sd-tooltip {
   padding: 8px 10px;
   background: var(--surface-glass-strong);
@@ -600,7 +569,6 @@ body,
   color: var(--text-muted);
 }
 
-/* ===== 首页入场「黄河奔流」：源头/入海口标签与头部呼吸点（动态创建，走全局样式） ===== */
 .sd-flow-head,
 .sd-flow-tag {
   position: relative;
@@ -651,9 +619,6 @@ body,
 .sd-flow-tag.at-sea > span { opacity: 0; }
 .sd-flow-tag.at-sea.in > span { opacity: 1; }
 
-/* ===== 常驻黄河干流的流动：虚线相位前移（动态创建，走全局样式） =====
-   位移量取虚线周期（12 + 16 = 28），循环点首尾相接；dashoffset 是 CSS 属性，
-   缩放重绘路径 d 时动画不断，任何层级下河道都在流。 */
 .sd-river-flow {
   animation: sd-river-dash 2.4s linear infinite;
 }
@@ -662,11 +627,6 @@ body,
   to { stroke-dashoffset: -28; }
 }
 
-/* ===== 入场运镜期间的输入锁（chinaMap 的 playNationalIntro 开关） =====
-   全国视野推近落位之前，地图不吃任何指针输入：拖拽、点选图元、滚轮缩放、缩放按钮全部失效，
-   免得用户点按打断运镜、观感上变成「放大到一半卡住」。落位或交还视野时移除类名即恢复。
-   子元素要一起压住：Leaflet 给图元层显式设了 pointer-events（auto / visiblePainted），
-   只锁容器挡不住它们。 */
 .sd-map-locked,
 .sd-map-locked * {
   pointer-events: none !important;
@@ -675,7 +635,6 @@ body,
   cursor: default !important;
 }
 
-/* 输入框 */
 input, select, textarea {
   background: var(--bg-input);
   border: 1px solid var(--border-color);
@@ -689,7 +648,6 @@ input:focus, select:focus, textarea:focus {
   border-color: var(--color-gold);
 }
 
-/* ===== 地图浮层配色：覆盖各页面 scoped 里的固定浅色，让标注/图例随风格切换 ===== */
 html[data-theme] .headline-title {
   color: var(--map-title);
   text-shadow: var(--map-title-shadow);
@@ -722,7 +680,6 @@ html[data-theme] .sd-city-label-inner.hot .sd-city-name {
 html[data-theme] .heat-off .sd-city-label-inner.hot .sd-city-name {
   color: var(--map-label-name);
 }
-/* 深色填充的城市改用浅色字，保证可读性 */
 html[data-theme] .sd-city-label-inner.on-deep .sd-city-name,
 html[data-theme] .sd-city-label-inner.on-deep .sd-city-num,
 html[data-theme] .sd-city-label-inner.on-deep .sd-city-heat,
@@ -744,20 +701,15 @@ html[data-theme] .leaflet-tooltip.sd-tooltip .sd-tip-tag {
   background: rgba(var(--rgb-gold), 0.12);
   border-color: rgba(var(--rgb-gold), 0.35);
 }
-/* KPI 金色数字：非米白风格改用各风格自身的金色，米白保持原配色 */
 html[data-theme]:not([data-theme="cream"]) .kpi-value.gold {
   color: var(--text-gold);
 }
-/* 品牌渐变底上的文字（选中态按钮/分类标签/名次徽标）：
-   非米白风格改用各风格自身的对比色，米白保持原来的深蓝字 */
 html[data-theme]:not([data-theme="cream"]) .btn-group .btn.active,
 html[data-theme]:not([data-theme="cream"]) .cat-tab.active,
 html[data-theme]:not([data-theme="cream"]) .rank-badge.rank-top {
   color: var(--on-accent);
 }
 
-/* ===== 各风格的细节打磨 ===== */
-/* Hello Kitty：圆角与小心心（自绘爱心 SVG 走 mask，颜色跟主题走，不依赖字体字形） */
 html[data-theme="hellokitty"] .common-card { border-radius: 14px; }
 html[data-theme="hellokitty"] .btn { border-radius: 12px; }
 html[data-theme="hellokitty"] .platform-title::after {
@@ -773,22 +725,18 @@ html[data-theme="hellokitty"] .platform-title::after {
 }
 html[data-theme="hellokitty"] .user-avatar { box-shadow: 0 0 0 3px rgba(var(--rgb-gold), 0.18); }
 
-/* 夜晚科技：卡片描一层金色微光 */
 html[data-theme="night"] .common-card {
   box-shadow: var(--shadow-card), inset 0 0 0 1px rgba(var(--rgb-gold), 0.06);
 }
 
-/* 赛博炫彩：霓虹发光 */
 html[data-theme="cyber"] .platform-title { filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.45)); }
 html[data-theme="cyber"] .common-card {
   box-shadow: var(--shadow-card), 0 0 0 1px rgba(var(--rgb-blue), 0.22);
 }
 html[data-theme="cyber"] .card-title { text-shadow: 0 0 8px rgba(34, 211, 238, 0.35); }
 
-/* 夜晚护眼色：整体降低对比 */
 html[data-theme="eyecare"] .platform-title { filter: saturate(0.85); }
 
-/* 粉色系的两种风格里危险色偏亮，危险按钮改用深色字更清楚 */
 html[data-theme="cyber"] .btn-danger,
 html[data-theme="hellokitty"] .btn-danger {
   color: #1A0A10;

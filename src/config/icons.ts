@@ -1,30 +1,20 @@
-/**
- * 自绘图标库：全站图标（导航、卡片、图例、按钮、地图弹窗）统一从这里取。
- *
- * 线条语言与品牌徽标一致——24 栅格、圆头描边、描边取 currentColor，
- * 不用 emoji 与文字符号（→ ▾ ✕ ⚠ 等）以避免各端字形不一致。
- * 模板里用 `<AppIcon name="..." />`；Leaflet 弹窗等 innerHTML 场景用 `iconSvg()`。
- */
 
 export interface IconPrim {
   tag: 'path' | 'circle' | 'rect' | 'line'
   attrs: Record<string, string | number>
 }
 
-/** 实心圆点（眼睛、警示点）用 style 覆盖描边 */
 const dot = (cx: number, cy: number, r: number): IconPrim => ({
   tag: 'circle',
   attrs: { cx, cy, r, style: 'fill:currentColor;stroke:none' },
 })
 
 export const ICONS: Record<string, IconPrim[]> = {
-  // ---- 导航：首页 ----
   home: [
     { tag: 'path', attrs: { d: 'M3.6 10.4 12 3.9l8.4 6.5' } },
     { tag: 'path', attrs: { d: 'M5.8 9.6v9.9h12.4V9.6' } },
     { tag: 'path', attrs: { d: 'M9.9 19.5v-4.9h4.2v4.9' } },
   ],
-  // ---- 自然环境保护区 ----
   leaf: [
     {
       tag: 'path',
@@ -34,40 +24,34 @@ export const ICONS: Record<string, IconPrim[]> = {
     },
     { tag: 'path', attrs: { d: 'M4.9 19.6c2.4-3.6 5.3-6.4 9.2-8.7' } },
   ],
-  // ---- 旅游景点：山峦与日 ----
   scenic: [
     { tag: 'path', attrs: { d: 'M3.4 19.2 10 8.4l4.3 6.9' } },
     { tag: 'path', attrs: { d: 'M12.9 19.2l3.1-4.5 4.8 4.5' } },
     { tag: 'circle', attrs: { cx: 17.8, cy: 6.8, r: 2.2 } },
   ],
-  // ---- 饮食文化：碗与箸 ----
   food: [
     { tag: 'path', attrs: { d: 'M3.8 11.8h16.4a8.2 8.2 0 0 1-8.2 8.2 8.2 8.2 0 0 1-8.2-8.2Z' } },
     { tag: 'path', attrs: { d: 'M9.4 20.2 8.6 21.2' } },
     { tag: 'path', attrs: { d: 'M15.2 4.4 18.3 10.5' } },
     { tag: 'path', attrs: { d: 'M17.7 5 20.6 10.9' } },
   ],
-  // ---- 客流监测与预警：客流人群 ----
   flow: [
     { tag: 'circle', attrs: { cx: 8.6, cy: 8, r: 2.4 } },
     { tag: 'path', attrs: { d: 'M3.8 19.2c0-3 2.2-5.2 4.8-5.2s4.8 2.2 4.8 5.2' } },
     { tag: 'circle', attrs: { cx: 16.6, cy: 9, r: 1.9 } },
     { tag: 'path', attrs: { d: 'M14 19.2c0-2.6 1.3-4.5 2.6-4.5s2.6 1.9 2.6 4.5' } },
   ],
-  // ---- 文旅产业分析：柱状图 ----
   industry: [
     { tag: 'path', attrs: { d: 'M4.4 4.8v14.4h15.2' } },
     { tag: 'path', attrs: { d: 'M8.6 16.6v-4.8' } },
     { tag: 'path', attrs: { d: 'M12 16.6V9' } },
     { tag: 'path', attrs: { d: 'M15.4 16.6v-7.2' } },
   ],
-  // ---- 文旅资源管理：资源层 ----
   resource: [
     { tag: 'path', attrs: { d: 'M12 4 3.9 8.2 12 12.4l8.1-4.2Z' } },
     { tag: 'path', attrs: { d: 'M3.9 12.4 12 16.6l8.1-4.2' } },
     { tag: 'path', attrs: { d: 'M3.9 16.4 12 20.6l8.1-4.2' } },
   ],
-  // ---- 舆情分析：对话气泡 ----
   opinion: [
     { tag: 'rect', attrs: { x: 3.4, y: 4.4, width: 17.2, height: 10.6, rx: 2.4 } },
     { tag: 'path', attrs: { d: 'M8.4 15v3.6l3.8-3.6' } },
@@ -75,19 +59,16 @@ export const ICONS: Record<string, IconPrim[]> = {
     dot(12, 9.7, 1.25),
     dot(15.4, 9.7, 1.25),
   ],
-  // ---- 智慧营销：喇叭 ----
   marketing: [
     { tag: 'path', attrs: { d: 'M3.8 10.2h2.6l8.8-4.8v13.2l-8.8-4.8H3.8Z' } },
     { tag: 'path', attrs: { d: 'M7.4 13.8v2.6a2.2 2.2 0 0 0 4.4 0v-.9' } },
     { tag: 'path', attrs: { d: 'M18.2 8.6a5.6 5.6 0 0 1 0 6.8' } },
   ],
-  // ---- 灾难监控：警示三角 ----
   disaster: [
     { tag: 'path', attrs: { d: 'M12 4.4 21.2 19.6H2.8Z' } },
     { tag: 'path', attrs: { d: 'M12 9.6v4.4' } },
     dot(12, 17, 1.15),
   ],
-  // ---- 黄河文化遗产：殿堂 ----
   heritage: [
     { tag: 'path', attrs: { d: 'M3.6 9.4 12 4.4l8.4 5' } },
     { tag: 'path', attrs: { d: 'M5.6 9.4h12.8' } },
@@ -97,7 +78,6 @@ export const ICONS: Record<string, IconPrim[]> = {
     { tag: 'path', attrs: { d: 'M4.8 19.6h14.4' } },
   ],
 
-  // ---- 交通/通用指示 ----
   chevron: [{ tag: 'path', attrs: { d: 'M10.2 6.6 15.4 12l-5.2 5.4' } }],
   'caret-right': [{ tag: 'path', attrs: { d: 'M10.4 6.8 15.6 12l-5.2 5.2' } }],
   'caret-down': [{ tag: 'path', attrs: { d: 'M7.8 10.4 12 14.6l4.2-4.2' } }],
@@ -132,7 +112,6 @@ export const ICONS: Record<string, IconPrim[]> = {
     { tag: 'circle', attrs: { cx: 12, cy: 10.2, r: 2.3 } },
   ],
 
-  // ---- 增减/趋势 ----
   'trend-up': [
     { tag: 'path', attrs: { d: 'M3.8 16.8 9.4 11.2l3.2 3.2 6.8-6.8' } },
     { tag: 'path', attrs: { d: 'M15.2 7.6h4.2v4.2' } },
@@ -146,7 +125,6 @@ export const ICONS: Record<string, IconPrim[]> = {
     { tag: 'path', attrs: { d: 'M14.2 7.8 18.4 12l-4.2 4.2' } },
   ],
 
-  // ---- 数据/业态 ----
   coin: [
     { tag: 'circle', attrs: { cx: 12, cy: 12, r: 8.4 } },
     { tag: 'path', attrs: { d: 'M9.2 9.4 12 13.2l2.8-3.8' } },
@@ -180,7 +158,6 @@ export const ICONS: Record<string, IconPrim[]> = {
     },
   ],
 
-  // ---- 情感 ----
   happy: [
     { tag: 'circle', attrs: { cx: 12, cy: 12, r: 8.6 } },
     dot(9.2, 10.2, 1.05),
@@ -200,7 +177,6 @@ export const ICONS: Record<string, IconPrim[]> = {
     { tag: 'path', attrs: { d: 'M8.6 16.4a4.6 4.6 0 0 1 6.8 0' } },
   ],
 
-  // ---- 媒体平台 ----
   music: [
     { tag: 'path', attrs: { d: 'M9.6 17.4V6.8l8.2-1.9v10.1' } },
     { tag: 'circle', attrs: { cx: 7.5, cy: 17.4, r: 2.1 } },
@@ -214,7 +190,6 @@ export const ICONS: Record<string, IconPrim[]> = {
       },
     },
   ],
-  // ---- 项目配图：画框里一座山一轮日 ----
   image: [
     { tag: 'rect', attrs: { x: 3.4, y: 5, width: 17.2, height: 14, rx: 2.4 } },
     { tag: 'circle', attrs: { cx: 8.6, cy: 9.9, r: 1.6 } },
@@ -226,7 +201,6 @@ export const ICONS: Record<string, IconPrim[]> = {
     { tag: 'path', attrs: { d: 'M10.4 18.2h3.2' } },
     { tag: 'path', attrs: { d: 'M9.8 6.2h4.4' } },
   ],
-  // ---- 语言切换：地球与子午线 ----
   global: [
     { tag: 'circle', attrs: { cx: 12, cy: 12, r: 8.6 } },
     { tag: 'path', attrs: { d: 'M3.4 12h17.2' } },
@@ -245,7 +219,6 @@ function attrsToStr(attrs: Record<string, string | number>): string {
     .join('')
 }
 
-/** 给 innerHTML（Leaflet 弹窗、提示气泡）用的内联 SVG：样式写进属性，不依赖外部 CSS */
 export function iconSvg(name: string, size = 14, cls = 'app-icon'): string {
   const prims = ICONS[name] ?? []
   const body = prims.map((p) => `<${p.tag}${attrsToStr(p.attrs)} />`).join('')

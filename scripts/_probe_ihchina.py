@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
 import urllib.request, ssl, re, sys
+
 ctx = ssl.create_default_context(); ctx.check_hostname=False; ctx.verify_mode=ssl.CERT_NONE
+
 urls = [
     'http://www.ihchina.cn/Project/info/id/12190.html',
     'https://www.ihchina.cn/Project/info/id/12190.html',
@@ -14,7 +15,6 @@ for url in urls:
         print(url, r.status, len(body))
         imgs = re.findall(r'<img[^>]+src=["\']([^"\']+)["\']', body)
         print(' imgs:', imgs[:15])
-        # also look for og:image
         og = re.findall(r'property=["\']og:image["\'][^>]*content=["\']([^"\']+)', body)
         print(' og:image:', og)
         break

@@ -1,6 +1,5 @@
 ﻿<template>
   <div class="topic-list">
-    <!-- 数据口径说明 -->
     <div class="filter-info common-card">
       <span class="info-label">{{ t('数据源：') }}</span>
       <span class="tag tag-blue">{{ tv(dataSources.news) }}</span>
@@ -94,11 +93,11 @@ inject<FilterState>('filterState', {
   sentiment: 'all',
 })
 
+
 type SortKey = 'hits' | 'date'
 const sortKey = ref<SortKey>('hits')
 const expanded = ref<string | null>(null)
 
-/** 口径组成：全省范围内两个数字重合，就不再啰嗦 */
 const scopeDirectNote = computed(() =>
   scope.value === 'all'
     ? ''
@@ -115,6 +114,7 @@ const sortedNews = computed<NewsItem[]>(() => {
   }
   return list.sort((a, b) => String(b.date ?? '').localeCompare(String(a.date ?? '')))
 })
+
 
 function toggle(url: string) {
   expanded.value = expanded.value === url ? null : url

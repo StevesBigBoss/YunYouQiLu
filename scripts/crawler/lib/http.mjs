@@ -1,17 +1,10 @@
-/**
- * 礼貌请求封装：统一 UA、按域限速、超时重试、robots.txt 校验、GBK/UTF-8 解码。
- * 只依赖 Node 内置能力（Node 18+ 自带 fetch / TextDecoder），无需安装依赖。
- */
 import { sleep } from './util.mjs'
 
-// 保留爬虫身份（Mozilla/5.0 (compatible; ...) 是告诉服务器"我是机器人"的老写法），
-// 但不能省掉 Mozilla/5.0 前缀：d1.weather.com.cn 只认这个前缀，写别的直接 403。
 const UA = 'Mozilla/5.0 (compatible; ShandongYellowRiverDashboardBot/1.0; +local research crawler)'
 const DEFAULT_DELAY = 1200
 const DEFAULT_TIMEOUT = 20000
 const DEFAULT_RETRIES = 2
 
-/** 各域最小请求间隔（毫秒）。robots 里声明 Crawl-delay 时取两者较大值 */
 const hostDelay = new Map()
 const lastHit = new Map()
 const robotsCache = new Map()
@@ -23,17 +16,15 @@ function hostOf(url) {
 function decodeBody(buf, contentType) {
   const ct = contentType || ''
   if (/gb2312|gbk|gb18030/i.test(ct)) {
-    try { return new TextDecoder('gbk').decode(buf) } catch { /* 回落到 utf8 */ }
+    try { return new TextDecoder('gbk').decode(buf) } catch { }
   }
   const text = buf.toString('utf8')
-  // 部分站点不带 charset 声明，用乱码特征判断
   if (text.includes('\uFFFD')) {
-    try { return new TextDecoder('gbk').decode(buf) } catch { /* ignore */ }
+    try { return new TextDecoder('gbk').decode(buf) } catch { }
   }
   return text
 }
 
-/** 解析 robots.txt：返回 { rules, crawlDelay }，只处理 User-agent: * 段 */
 function parseRobots(text) {
   const rules = []
   let crawlDelay = 0
@@ -53,7 +44,6 @@ function parseRobots(text) {
   return { rules, crawlDelay }
 }
 
-/** 取 robots.txt（4xx 视为无约束，5xx/超时保守视为不允许） */
 async function loadRobots(url) {
   const host = hostOf(url)
   if (robotsCache.has(host)) return robotsCache.get(host)
@@ -71,7 +61,6 @@ async function loadRobots(url) {
   return result
 }
 
-/** 按 robots 规则判断路径是否可抓（长路径优先，Allow 覆盖 Disallow） */
 function robotsAllows(rules, pathname) {
   let verdict = true
   let best = -1
@@ -113,10 +102,6 @@ async function throttle(url) {
   lastHit.set(host, Date.now())
 }
 
-/**
- * 抓一个页面：先过 robots，再限速，失败按退避重试。
- * @returns {{status:number, text:string, bytes:number, contentType?:string, url:string}}
- */
 export async function get(url, opts = {}) {
   const { referer, timeout = DEFAULT_TIMEOUT, retries = DEFAULT_RETRIES, ignoreRobots = false } = opts
   if (!ignoreRobots) {
@@ -147,7 +132,6 @@ export async function get(url, opts = {}) {
   throw lastErr ?? new Error(`抓取失败：${url}`)
 }
 
-/** 抓 JSON（容错：部分接口返回 JSONP 或带 var 前缀，交给调用方用 pickJson 处理） */
 export async function getJson(url, opts = {}) {
   const res = await get(url, opts)
   try {

@@ -38,6 +38,7 @@ import { t } from '../../config/i18n'
 
 const open = ref(false)
 const rootRef = ref<HTMLElement | null>(null)
+
 const current = computed(() => findAppTheme(currentThemeId.value))
 
 function toggle() {

@@ -1,17 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-黄河流域生态治理 - 抖音视频&评论爬虫
-功能：
-  1. 按关键词搜索抖音视频（标题、封面、分类、作者、点赞/评论/分享数）
-  2. 爬取每个视频的评论（用户昵称、性别、省份、评论内容、点赞数）
-  3. 写入 MySQL 数据库（Video + VideoComment 表）
-
-使用方法：
-  1. 先用浏览器登录抖音网页版，复制 Cookie 填入下方 COOKIE 变量
-  2. 运行: python yellow_river_spider.py
-  3. 如果真实爬取失败，脚本自动生成模拟数据（SEED_MODE=True）
-"""
-
 import os
 from dotenv import load_dotenv
 import requests
@@ -21,10 +7,8 @@ import random
 import pymysql
 from datetime import datetime
 
-# 加载项目根目录下的 .env 环境变量（敏感配置不入库）
 load_dotenv()
 
-# ==================== 数据库配置 ====================
 DB_CONFIG = {
     "host": "127.0.0.1",
     "port": 3306,
@@ -34,13 +18,11 @@ DB_CONFIG = {
     "charset": "utf8mb4",
 }
 
-# ==================== 爬取配置 ====================
 KEYWORD = "黄河流域生态治理"
-MAX_VIDEOS = 50          # 最多爬取视频数
-COMMENTS_PER_VIDEO = 20  # 每个视频爬取评论数
+MAX_VIDEOS = 50
+COMMENTS_PER_VIDEO = 20
 
-# 浏览器 Cookie（登录抖音网页版后复制，放入 .env 的 TIKTOK_COOKIE，留空则使用模拟数据）
-COOKIE = os.getenv("TIKTOK_COOKIE", "")  # 例: "ttwid=xxx; msToken=xxx; sessionid=xxx;"
+COOKIE = os.getenv("TIKTOK_COOKIE", "")
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
@@ -50,13 +32,10 @@ HEADERS = {
     "Cookie": COOKIE,
 }
 
-# 沿黄九省
 YELLOW_RIVER_PROVINCES = ["山东", "河南", "陕西", "山西", "内蒙古", "甘肃", "宁夏", "四川", "青海"]
 
-# 视频分类
 CATEGORIES = ["生态治理", "黄河保护", "节水灌溉", "水土保持", "湿地保护", "生物多样性", "防洪减灾", "水资源利用"]
 
-# ==================== 模拟数据生成（用于无Cookie时） ====================
 SEED_VIDEOS = [
     ("黄河三角洲湿地生态修复成效显著", "东营黄河入海口", "生态治理"),
     ("山东黄河滩区搬迁居民新生活", "济南黄河边", "黄河保护"),
@@ -104,7 +83,6 @@ def get_db_connection():
 
 
 def save_video(conn, video_data):
-    """插入或更新视频"""
     cursor = conn.cursor()
     sql = """INSERT INTO Video (aweme_id, title, cover_url, category, author, author_gender,
              author_province, likes, comments_count, shares, publish_time)
@@ -126,7 +104,6 @@ def save_video(conn, video_data):
 
 
 def save_comment(conn, video_id, comment_data):
-    """插入评论"""
     cursor = conn.cursor()
     sql = """INSERT INTO VideoComment (video_id, user_name, gender, province, content, likes, publish_time)
              VALUES (%s,%s,%s,%s,%s,%s,%s)"""
@@ -143,7 +120,6 @@ def save_comment(conn, video_id, comment_data):
 
 
 def seed_mode(conn):
-    """无Cookie时生成模拟数据"""
     print("=" * 60)
     print("进入模拟数据生成模式（无Cookie）")
     print("=" * 60)
@@ -168,7 +144,6 @@ def seed_mode(conn):
             continue
         print(f"  视频[{idx + 1}] {title[:20]}... 点赞{video_data['likes']}")
 
-        # 为每个视频生成评论
         for _ in range(random.randint(10, COMMENTS_PER_VIDEO)):
             comment_data = {
                 "user_name": random.choice(SEED_USERS) + str(random.randint(1, 99)),
@@ -186,7 +161,6 @@ def seed_mode(conn):
 
 
 def scrape_mode(conn):
-    """真实爬取抖音数据"""
     print("=" * 60)
     print("开始爬取抖音数据...")
     print("=" * 60)
@@ -232,7 +206,6 @@ def scrape_mode(conn):
                 vid = save_video(conn, video_data)
                 print(f"  视频: {video_data['title'][:30]}...")
 
-                # 爬取评论
                 comment_url = "https://www.douyin.com/aweme/v1/web/comment/list/"
                 c_params = {"aweme_id": aweme_id, "count": COMMENTS_PER_VIDEO, "cursor": 0}
                 try:

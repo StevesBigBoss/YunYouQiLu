@@ -1,9 +1,3 @@
-/**
- * 数据源：USGS 地震目录（earthquake.usgs.gov，公开开放数据 API）。
- * 取山东及邻区（北纬 34–39、东经 114–123）震级 ≥3 的地震事件，用于「灾难监控和预测」页。
- * 备注：中国地震台网（ceic.ac.cn）的 robots.txt 明确 Disallow /ajax/ 与 /speedsearch，
- * 其数据只能从被禁接口取，故本项目不抓取该站。
- */
 import { get } from '../lib/http.mjs'
 import { writeRaw } from '../lib/store.mjs'
 

@@ -1,6 +1,5 @@
 <template>
   <div class="resource-manage">
-    <!-- 顶部搜索栏 -->
     <div class="search-bar common-card">
       <input v-model="searchKw" class="search-input" :placeholder="t('搜索资源名称...')" />
       <select v-model="selType">
@@ -21,9 +20,7 @@
       </div>
     </div>
 
-    <!-- 主体：左树 + 右内容 -->
     <div class="layout">
-      <!-- 左侧分类树 -->
       <aside class="tree-panel common-card">
         <div class="tree-header">{{ t('资源分类 · {scope}', { scope: scopeLabel }) }}</div>
         <div class="tree-note">{{ t('分类数量按当前范围折算；清单为已录入台账明细') }}</div>
@@ -52,7 +49,6 @@
         </div>
       </aside>
 
-      <!-- 右侧表格区 -->
       <div class="right">
         <ChartCard :title="densityTitle" :option="cityDensityOption" height="220px">
           <template #extra>
@@ -104,12 +100,10 @@
           </table>
         </div>
 
-        <!-- 文旅资源管理场景配图：点缩略图看大图 -->
         <ImageGallery page="resource" :title="t('文旅资源管理场景图集')" />
       </div>
     </div>
 
-    <!-- 冲突详情浮层 -->
     <div v-if="activeConflict" class="conflict-panel">
       <div class="conflict-header">
         <span>{{ t('生态红线冲突详情') }}</span>
@@ -119,7 +113,6 @@
       <div class="conflict-reason">{{ tv(activeConflict.reason) }}</div>
     </div>
 
-    <!-- 新增/编辑弹窗 -->
     <div v-if="showModal" class="modal-mask" @click.self="showModal = false">
       <div class="modal">
         <div class="modal-title">{{ modalTitle }}</div>
@@ -192,7 +185,6 @@ import type { ResourceItem, ConflictItem } from '../types'
 
 const router = useRouter()
 
-// 筛选状态
 const searchKw = ref('')
 const selType = ref('all')
 const selLevel = ref('all')
@@ -202,7 +194,6 @@ const expandedTypes = ref<string[]>([mockResourceTree[0]?.type ?? ''])
 
 const typeOptions = mockResourceTree.map((t) => t.type)
 
-// 资源树：分类结构不变，节点数量按当前范围缩放
 const treeNodes = computed(() =>
   mockResourceTree.map((node) => ({
     type: node.type,
@@ -213,21 +204,18 @@ const treeNodes = computed(() =>
   })),
 )
 
-/** 首页资源点的粗类型归并到资源树的四类 */
 function treeTypeOf(raw: string): string {
   if (raw.includes('文博') || raw.includes('博物') || raw.includes('场馆')) return '文博场馆'
   if (raw.includes('非遗')) return '非遗项目'
   if (raw.includes('村') || raw.includes('乡')) return '乡村旅游点'
   return 'A级景区'
 }
-/** 由客流反推等级 */
 function levelOfFlow(flow: number): string {
   if (flow >= 25000) return '5A'
   if (flow >= 15000) return '4A'
   if (flow >= 8000) return '3A'
   return '2A'
 }
-/** 某市在已登记清单里没有条目时，用首页资源点补齐，保证任意范围都有数据 */
 function rowsFromPoints(city: string): ResourceItem[] {
   return mockHomeData.resourcePoints
     .filter((p) => normCity(p.city) === city)
@@ -242,7 +230,6 @@ function rowsFromPoints(city: string): ResourceItem[] {
     }))
 }
 
-// 当前范围的基础清单：已登记的沿黄条目 + 缺口城市由资源点补齐
 const baseList = computed<ResourceItem[]>(() => {
   const listed = filterByCity(mockResourceList)
   const covered = new Set(listed.map((r) => r.city))
@@ -256,7 +243,6 @@ const cityOptions = computed(() => {
   return cities.length ? cities : [...SHANDONG_CITIES]
 })
 
-// 冲突映射
 const conflictMap = computed(() => {
   const m = new Map<string, ConflictItem>()
   mockConflictList.forEach((c) => m.set(c.id, c))
@@ -273,7 +259,6 @@ function showConflict(r: ResourceItem) {
   if (c) activeConflict.value = c
 }
 
-// 树交互
 function toggleType(t: string) {
   const idx = expandedTypes.value.indexOf(t)
   if (idx >= 0) expandedTypes.value.splice(idx, 1)
@@ -295,7 +280,6 @@ function matchLoose(level: string, kw: string): boolean {
   return level.includes(k) || k.includes(level)
 }
 
-// 过滤后的列表
 const filteredList = computed(() =>
   baseList.value.filter((r) => {
     if (searchKw.value && !r.name.includes(searchKw.value)) return false
@@ -307,7 +291,6 @@ const filteredList = computed(() =>
   }),
 )
 
-// 密度柱状图：范围含多市时按市统计，选中单个城市时下钻到县区
 const densityTitle = computed(() =>
   scopeCity.value
     ? t('{city}市县区资源分布密度', { city: scopeCity.value })
@@ -349,14 +332,12 @@ const cityDensityOption = computed<Record<string, unknown>>(() => {
   }
 })
 
-// 状态 tag
 function statusTag(s: ResourceItem['status']): string {
   if (s === '正常') return 'tag-green'
   if (s === '维护中') return 'tag-orange'
   return 'tag-red'
 }
 
-// 弹窗
 const showModal = ref(false)
 const modalTitle = ref('')
 const form = reactive({ name: '', type: 'A级景区', level: '5A', city: '济南', status: '正常' as ResourceItem['status'] })
@@ -499,7 +480,6 @@ function viewMap() {
   color: var(--text-muted);
   padding: 24px 0;
 }
-/* 冲突浮层 */
 .conflict-panel {
   position: fixed;
   right: 24px;
@@ -538,7 +518,6 @@ function viewMap() {
   color: var(--text-secondary);
   line-height: 1.6;
 }
-/* 弹窗 */
 .modal-mask {
   position: fixed;
   inset: 0;

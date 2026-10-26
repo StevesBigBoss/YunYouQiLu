@@ -1,6 +1,5 @@
 <template>
   <div class="food-page">
-    <!-- 左侧地图 70%：各市饮食文化收录热力图（点市切范围，单市范围细分县区） -->
     <div class="map-side">
       <CityChoropleth
         :data="choroplethData"
@@ -15,7 +14,6 @@
         @select="onSelectCity"
         @point-select="onPointSelect"
       >
-        <!-- 图例里带上本页的点位说明：碗形标 = 美食点位，颜色 = 类别（类别色见右上「图层」） -->
         <template #legend-extra>
           <div class="map-mark-legend">
             <span class="map-mark-title">{{ t('碗形标 = 收录美食（按类别着色）；点标记定位到所属县区') }}</span>
@@ -24,10 +22,8 @@
       </CityChoropleth>
     </div>
 
-    <!-- 右侧数据面板 30% -->
     <div class="panel-side">
       <div class="panel-scroll">
-        <!-- 顶部统计：随分析范围与类别筛选重算 -->
         <div class="stat-row">
           <div class="stat-mini">
             <div class="stat-mini-head">
@@ -59,7 +55,6 @@
           </div>
         </div>
 
-        <!-- 类别与搜索：筛选清单与地图着色 -->
         <div class="common-card">
           <div class="food-filter">
             <button
@@ -80,7 +75,6 @@
           />
         </div>
 
-        <!-- 选中美食详情：点清单或地图标记后展示，并已定位到所属县区 -->
         <div v-if="selected" class="common-card detail-card">
           <div class="card-title">
             {{ t('美食详情') }}
@@ -98,8 +92,6 @@
             <span v-for="d in selected.dishes" :key="d" class="tag tag-green">{{ tv(d) }}</span>
           </div>
           <p class="food-desc">{{ tv(selected.desc) }}</p>
-          <!-- 配图：点中某条美食就在详情下方带出对应的实景/同类菜品照片（无配图的条目不显示）；
-               双击图片用灯箱展开放大，图注与署名跟着带过去 -->
           <div v-if="selectedImage" class="food-figure">
             <img
               class="food-figure-img"
@@ -120,7 +112,6 @@
           </button>
         </div>
 
-        <!-- 美食清单：点击任意一项，地图直接定位到其所属县区 -->
         <div class="common-card">
           <div class="card-title">
             {{ t('美食清单 · {scope}（{n}）', { scope: scopeLabel, n: filtered.length }) }}
@@ -144,9 +135,7 @@
           </div>
         </div>
 
-        <!-- 类别构成 -->
         <ChartCard :title="t('类别构成 · {scope}', { scope: scopeLabel })" :option="pieOption" height="230px" />
-        <!-- 各市收录对比 -->
         <ChartCard :title="t('各市收录对比（前 8）· {scope}', { scope: scopeLabel })" :option="barOption" height="250px" />
 
         <div class="data-note">
@@ -154,7 +143,6 @@
           {{ t('共 {n} 项；县区归属为名录口径，县区粒度暂无公开统计，故不参与数值折算。', { n: filtered.length }) }}
         </div>
 
-        <!-- 饮食文化配图：点缩略图看大图 -->
         <ImageGallery page="food" :title="t('饮食文化图集')" />
       </div>
     </div>
@@ -177,23 +165,19 @@ import { t, tv } from '../config/i18n'
 import { themeColors, themeTitle } from '../config/theme'
 import type { CityCountItem, FoodItem, MapPointGroup, MapSpotPoint } from '../types'
 
-/** 类别顺序固定：筛选按钮与饼图共用 */
 const CATEGORIES = ['全部', '鲁菜名菜', '地方名吃', '地理标志', '非遗美食'] as const
 
 const activeCategory = ref<string>('全部')
 const keyword = ref('')
 const selected = ref<FoodItem | null>(null)
-/** 传给地图的定位目标：每次点击都换一个新对象，保证同一个县区再点也能重新飞一次 */
 const focusTarget = ref<{ city: string; county: string; label?: string } | null>(null)
 
 function shortCity(name: string): string {
   return name.replace(/市$/, '')
 }
 
-/** 范围口径的美食清单：列表与地图都从这里取 */
 const scopeFoods = computed(() => mockFoodList.filter((f) => inScope(f.city)))
 
-/** 类别 + 关键词过滤后的清单 */
 const filtered = computed(() => {
   const kw = keyword.value.trim()
   return scopeFoods.value.filter((f) => {
@@ -203,7 +187,6 @@ const filtered = computed(() => {
   })
 })
 
-/** 当前选中美食的配图：点清单或地图标记后，详情下方直接带出对应照片；名下无图则为 null */
 const selectedImage = computed<FoodDishImage | null>(() =>
   selected.value ? FOOD_DISH_IMAGES[selected.value.id] ?? null : null,
 )
@@ -219,7 +202,6 @@ function categoryTag(category: string): string {
   return 'tag-orange'
 }
 
-/** 各市收录数量：按当前类别/搜索过滤后的清单统计，地图着色与清单始终一致 */
 const choroplethData = computed<CityCountItem[]>(() => {
   const counts = new Map<string, { total: number; byCategory: Map<string, number> }>()
   filtered.value.forEach((f) => {
@@ -238,25 +220,17 @@ const choroplethData = computed<CityCountItem[]>(() => {
     }))
 })
 
-/** 点击清单 / 详情里的定位：选中该项并让地图飞到县区中心 */
 function locateFood(f: FoodItem) {
   selected.value = f
   focusTarget.value = { city: f.city, county: f.county, label: f.name }
 }
 
-/** 类别 → 色板色：与类别构成饼图取色顺序一致，地图上的标与饼图同色 */
 function categoryColor(category: string): string {
   const colors = themeColors()
   const idx = CATEGORIES.indexOf(category as (typeof CATEGORIES)[number])
   return colors[Math.max(0, idx - 1) % colors.length]
 }
 
-/**
- * 地图点位分组：一条类别 = 右上「图层」里的一行开关，可单独显隐（与灾难监控页同款）。
- * 收录美食按「名录县区归属」落在县区中心（带一点确定性错开，
- * 免得相邻城区的点位完全叠在一起），颜色按类别区分。
- * 点位跟当前类别/搜索过滤一致：图上有的，清单里一定有。
- */
 const foodGroups = computed<MapPointGroup[]>(() =>
   CATEGORIES.slice(1).map((category) => {
     const points: MapSpotPoint[] = filtered.value
@@ -288,25 +262,21 @@ const foodGroups = computed<MapPointGroup[]>(() =>
   }).filter((g) => g.points.length > 0),
 )
 
-/** 地图上点美食标记：与点击清单一致——选中该项并定位到所属县区 */
 function onPointSelect(id: string) {
   const f = filtered.value.find((item) => item.id === id)
   if (f) locateFood(f)
 }
 
-/** 地图上点市：CityChoropleth 已把顶栏范围切过去，这里同步收起详情（县区归属可能已不在范围内） */
 function onSelectCity(name: string) {
   const city = cityOfArea(name)
   if (city && selected.value && selected.value.city !== city) selected.value = null
 }
 
-/** 范围切换：清掉定位标记与选中项，避免指向上一个范围 */
 watch(scope, () => {
   selected.value = null
   focusTarget.value = null
 })
 
-// ===== 图表 =====
 const pieOption = computed<Record<string, unknown>>(() => {
   const colors = themeColors()
   const counts = CATEGORIES.slice(1).map((c) => ({ name: t(c), value: categoryCount(c) }))

@@ -1,13 +1,9 @@
-# -*- coding: utf-8 -*-
-"""根据 heritage_image_map.json 下载每个项目的代表图片到 static/heritage/。
-按 heritage.json 中的 item.id 命名；同名项目共享同一张图（缓存避免重复下载）。"""
 import json, os, time, shutil, urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IMG_DIR = os.path.join(ROOT, "static", "heritage")
 os.makedirs(IMG_DIR, exist_ok=True)
 
-# 清空旧图
 for f in os.listdir(IMG_DIR):
     try:
         os.remove(os.path.join(IMG_DIR, f))

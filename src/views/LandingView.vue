@@ -1,10 +1,7 @@
 <template>
-  <!-- 平台首页：仿 Modrinth 首页 —— 左上角图标入口、右上角登录、居中大图标、平台名、轮播功能词、
-       两个入口按钮，下面一行流动图文（1:1 圆角方图＋名称简介，一屏之内全部可见） -->
   <div class="landing">
     <AuthBackdrop />
 
-    <!-- 顶栏：左上角软件图标＋平台名（点一下直接以游客身份进平台），右上角换语言与登录 -->
     <header class="landing-top">
       <button class="brand-entry" type="button" :aria-label="t('以游客身份进入云游齐鲁')" @click="enterAsVisitor">
         <BrandLogo :size="34" :label="t('云游齐鲁')" />
@@ -44,7 +41,6 @@
       </div>
     </main>
 
-    <!-- 流动图带：铺满整幅宽度，一行到底，一进首页就在视野里 -->
     <ImageMarquee class="landing-strip" />
 
     <footer class="landing-foot">{{ t('山东沿黄九市文旅数据 · 演示环境') }}</footer>
@@ -63,7 +59,6 @@ import { enterAsGuest } from '../config/userProfile'
 
 const router = useRouter()
 
-/** 滚动切换的功能词：中文都是四个字，切换时宽度稳定；换成别的语言长度不一，靠固定高度窗口兜住不跳版 */
 const FEATURES = [
   '旅游景点',
   '饮食文化',
@@ -88,7 +83,6 @@ onBeforeUnmount(() => {
   window.clearInterval(ticker)
 })
 
-/** 游客登录：不校验账号，记下游客身份直接进平台 */
 function enterAsVisitor() {
   enterAsGuest()
   void router.push('/dashboard')
@@ -105,7 +99,6 @@ function goLogin() {
   box-sizing: border-box;
   width: 100%;
   min-height: 100%;
-  /* 上下留出顶栏和页脚的位置，中间内容整体居中：图标、文字、胶片一屏收得下，不用滚轮 */
   padding: 62px 0 34px;
   overflow-y: auto;
   display: flex;
@@ -115,7 +108,6 @@ function goLogin() {
   background: linear-gradient(162deg, var(--bg-primary) 0%, var(--bg-secondary) 54%, var(--bg-primary) 100%);
 }
 
-/* 顶栏：左上角图标＋平台名（点一下直接游客进平台），右上角登录键 */
 .landing-top {
   position: absolute;
   top: 0;
@@ -179,7 +171,6 @@ function goLogin() {
 .top-login:active {
   transform: translateY(1px);
 }
-/* 右上角：换语言 ＋ 登录，横排对齐 */
 .landing-actions {
   display: flex;
   align-items: center;
@@ -196,7 +187,6 @@ function goLogin() {
   padding: 0 24px 6px;
 }
 
-/* 进场：各元素自上而下依次浮现 */
 .hero > * {
   animation: hero-rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
 }
@@ -217,7 +207,6 @@ function goLogin() {
   }
 }
 
-/* 大图标：下面垫一层主题色光晕，和底图右上角的圆环彼此呼应 */
 .hero-logo {
   position: relative;
   display: flex;
@@ -255,7 +244,6 @@ function goLogin() {
   text-indent: 7px;
   color: var(--text-secondary);
 }
-/* 7px 字距是给中文看的；拉丁/西里尔/阿拉伯文下会拉得太散，收到 2px */
 html:not([data-locale='zh-CN']):not([data-locale='zh-TW']) .hero-sub {
   letter-spacing: 2px;
   text-indent: 2px;
@@ -272,7 +260,6 @@ html:not([data-locale='zh-CN']):not([data-locale='zh-TW']) .hero-sub {
   margin-right: 6px;
 }
 
-/* 滚动切换的功能词：定高窗口内上下滑动，只动这一小块 */
 .rotator {
   position: relative;
   display: inline-block;
@@ -305,7 +292,6 @@ html:not([data-locale='zh-CN']):not([data-locale='zh-TW']) .hero-sub {
   color: var(--text-muted);
 }
 
-/* 两个入口：游客登录（描边）与登录（主题色实体），主次分明 */
 .hero-actions {
   display: flex;
   flex-wrap: wrap;

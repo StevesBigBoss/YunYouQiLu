@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-"""抓取 ihchina.cn 每个非遗项目详情页的主图并下载到 static/heritage/。"""
 import json, os, re, time, ssl, urllib.request, hashlib
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,9 +18,7 @@ def fetch(url, timeout=20):
 def get_main_image(project_id):
     url = f"{BASE}/Project/info/id/{project_id}.html"
     html = fetch(url).decode("utf-8", "ignore")
-    # 所有 Uploads/Picture 图片
     imgs = re.findall(r'<img[^>]+src=["\']([^"\']*?/Uploads/Picture/[^"\']+)["\']', html)
-    # 去重保序
     seen = set(); uniq = []
     for x in imgs:
         if x not in seen:
@@ -71,7 +67,6 @@ def main():
         except Exception as e:
             results[pid] = {"name": it["name"], "error": repr(e)[:200]}
             print(f"[{i}/{total}] {pid} ERR {repr(e)[:120]}")
-        # checkpoint
         if i % 10 == 0:
             json.dump(results, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
         time.sleep(1.2)

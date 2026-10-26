@@ -1,39 +1,14 @@
-/**
- * 界面多语言（右上角「语言」切换器用）。
- *
- * 设计上刻意用「中文原文」当字典键：模板里直接写 t('首页')，
- * 某个词条没翻译时自动落回中文，不会出现空白或 key 泄漏。
- *
- * 词条分两层：
- *   1) 本文件里的内置 UI 词典（导航、登录、落地页这类固定界面文案，随主包加载）；
- *   2) src/config/i18nExtra/<id>.ts 的补充词典（界面上的数据内容：城市/县区名、非遗项目名与
- *      简介、新闻标题、词云词、景点与美食名称、图表文案、图片说明等，两千多条），
- *      按语言动态 import，切到该语言时加载一次并缓存在 EXTRA 里。
- * 数据内容同样进词典：模板里对数据字段用 tv() 包一层（tv = 词条值翻译），
- * 命中即显示译文，未命中落回中文原文。
- *
- * 用法：
- *   import { t, tv } from '../config/i18n'
- *   t('数据更新：{time}', { time: '2026-10-16 13:20' })
- *   tv('济南')                      // 城市名一类的数据值
- * 切换：setLocale('en')（异步：等字典到位再切，避免闪一下中文），
- * 选择结果记在 localStorage，刷新后仍生效（启动时 initLocale 会先加载好字典再挂载）。
- */
 import { computed, reactive } from 'vue'
 
 export type LocaleId = 'en' | 'zh-CN' | 'zh-TW' | 'ja' | 'ru' | 'es' | 'pt' | 'ko' | 'fr' | 'ar'
 
 export interface LocaleMeta {
   id: LocaleId
-  /** 该语言自己的写法：下拉与按钮上都显示它，切到哪种语言都认得出 */
   native: string
-  /** 中文名（中文界面下显示在英文名之前） */
   zh: string
-  /** 英语名 */
   en: string
 }
 
-/** 顺序按需求给的清单：英语在首位，简体中文为默认语言 */
 export const LOCALES: LocaleMeta[] = [
   { id: 'en', native: 'English', zh: '英语', en: 'English' },
   { id: 'zh-CN', native: '简体中文', zh: '简体中文', en: 'Simplified Chinese' },
@@ -51,7 +26,7 @@ export const DEFAULT_LOCALE: LocaleId = 'zh-CN'
 
 type Dict = Record<string, string>
 
-/** 繁體中文 */
+
 const ZH_TW: Dict = {
   '首页': '首頁',
   '旅游景点图': '旅遊景點圖',
@@ -167,7 +142,6 @@ const ZH_TW: Dict = {
   '聚焦山东沿黄文旅数据：旅游景点、饮食文化、客流监测、文旅产业、文旅资源、生态舆情、灾害监测、文化遗产、智慧营销': '聚焦山東沿黃文旅數據：旅遊景點、飲食文化、客流監測、文旅產業、文旅資源、生態輿情、災害監測、文化遺產、智慧營銷',
 }
 
-/** English */
 const EN: Dict = {
   '首页': 'Home',
   '旅游景点图': 'Tourist Attraction Map',
@@ -283,7 +257,6 @@ const EN: Dict = {
   '聚焦山东沿黄文旅数据：旅游景点、饮食文化、客流监测、文旅产业、文旅资源、生态舆情、灾害监测、文化遗产、智慧营销': 'Shandong Yellow River tourism data: attractions, food culture, visitor flow, tourism industry, tourism resources, eco opinion, disaster watch, cultural heritage, smart marketing',
 }
 
-/** 日本語 */
 const JA: Dict = {
   '首页': 'ホーム',
   '旅游景点图': '観光スポットマップ',
@@ -399,7 +372,6 @@ const JA: Dict = {
   '聚焦山东沿黄文旅数据：旅游景点、饮食文化、客流监测、文旅产业、文旅资源、生态舆情、灾害监测、文化遗产、智慧营销': '山東黄河沿いの文化観光データ：観光スポット、食文化、来訪者動態、文化観光産業、文化観光資源、生態世論、災害モニタリング、文化遺産、スマートマーケティング',
 }
 
-/** Русский */
 const RU: Dict = {
   '首页': 'Главная',
   '旅游景点图': 'Карта достопримечательностей',
@@ -515,7 +487,6 @@ const RU: Dict = {
   '聚焦山东沿黄文旅数据：旅游景点、饮食文化、客流监测、文旅产业、文旅资源、生态舆情、灾害监测、文化遗产、智慧营销': 'Данные культурного туризма Шаньдуна вдоль Хуанхэ: достопримечательности, кулинария, турпоток, индустрия туризма, ресурсы туризма, экология и мнения, мониторинг катастроф, культурное наследие, умный маркетинг',
 }
 
-/** Español */
 const ES: Dict = {
   '首页': 'Inicio',
   '旅游景点图': 'Mapa de lugares turísticos',
@@ -631,7 +602,6 @@ const ES: Dict = {
   '聚焦山东沿黄文旅数据：旅游景点、饮食文化、客流监测、文旅产业、文旅资源、生态舆情、灾害监测、文化遗产、智慧营销': 'Datos de turismo cultural de Shandong junto al río Amarillo: lugares turísticos, gastronomía, flujo de visitantes, industria turística, recursos turísticos, opinión ecológica, vigilancia de desastres, patrimonio cultural, marketing inteligente',
 }
 
-/** Português */
 const PT: Dict = {
   '首页': 'Início',
   '旅游景点图': 'Mapa de pontos turísticos',
@@ -747,7 +717,6 @@ const PT: Dict = {
   '聚焦山东沿黄文旅数据：旅游景点、饮食文化、客流监测、文旅产业、文旅资源、生态舆情、灾害监测、文化遗产、智慧营销': 'Dados de turismo cultural de Shandong ao longo do Rio Amarelo: pontos turísticos, gastronomia, fluxo de visitantes, indústria do turismo, recursos turísticos, opinião ambiental, monitoramento de desastres, patrimônio cultural, marketing inteligente',
 }
 
-/** 한국어 */
 const KO: Dict = {
   '首页': '홈',
   '旅游景点图': '관광지 지도',
@@ -863,7 +832,6 @@ const KO: Dict = {
   '聚焦山东沿黄文旅数据：旅游景点、饮食文化、客流监测、文旅产业、文旅资源、生态舆情、灾害监测、文化遗产、智慧营销': '산둥 황허 문화관광 데이터: 관광지, 음식 문화, 방문객 흐름, 관광 산업, 관광 자원, 생태 여론, 재난 모니터링, 문화유산, 스마트 마케팅',
 }
 
-/** Français */
 const FR: Dict = {
   '首页': 'Accueil',
   '旅游景点图': 'Carte des sites touristiques',
@@ -979,7 +947,6 @@ const FR: Dict = {
   '聚焦山东沿黄文旅数据：旅游景点、饮食文化、客流监测、文旅产业、文旅资源、生态舆情、灾害监测、文化遗产、智慧营销': 'Données de tourisme culturel du Shandong le long du Fleuve Jaune : sites touristiques, gastronomie, flux de visiteurs, industrie touristique, ressources touristiques, opinion écologique, veille des catastrophes, patrimoine culturel, marketing intelligent',
 }
 
-/** العربية */
 const AR: Dict = {
   '首页': 'الرئيسية',
   '旅游景点图': 'خريطة المعالم السياحية',
@@ -1095,9 +1062,7 @@ const AR: Dict = {
   '聚焦山东沿黄文旅数据：旅游景点、饮食文化、客流监测、文旅产业、文旅资源、生态舆情、灾害监测、文化遗产、智慧营销': 'بيانات السياحة الثقافية في شاندونغ على طول النهر الأصفر: المعالم السياحية، ثقافة الطعام، حركة الزوار، صناعة السياحة، الموارد السياحية، الرأي البيئي، رصد الكوارث، التراث الثقافي، التسويق الذكي',
 }
 
-/** 非中文语言 → 词条表；中文（简体）直接用原文，无需词典 */
-const MESSAGES: Record<Exclude<LocaleId, 'zh-CN'>, Dict> = {
-  'en': EN,
+const MESSAGES: Record<Exclude<LocaleId, 'zh-CN'>, Dict> = {  'en': EN,
   'zh-TW': ZH_TW,
   'ja': JA,
   'ru': RU,
@@ -1110,10 +1075,6 @@ const MESSAGES: Record<Exclude<LocaleId, 'zh-CN'>, Dict> = {
 
 const STORAGE_KEY = 'sd-locale'
 
-/**
- * 补充词典：按语言动态加载（两千多条，全部内联会把主包撑大）。
- * 键仍然是中文原文，与内置 UI 词典同一个命名空间，查表时先看它再看内置词典。
- */
 const EXTRA: Partial<Record<Exclude<LocaleId, 'zh-CN'>, Dict>> = {}
 const DICT_LOADERS: Record<Exclude<LocaleId, 'zh-CN'>, () => Promise<{ default: Dict }>> = {
   'en': () => import('./i18nExtra/en'),
@@ -1128,7 +1089,6 @@ const DICT_LOADERS: Record<Exclude<LocaleId, 'zh-CN'>, () => Promise<{ default: 
 }
 const dictLoading: Partial<Record<LocaleId, Promise<void>>> = {}
 
-/** 加载某语言的补充词典（幂等；失败就只保留内置 UI 词典，不阻塞界面） */
 export function ensureDict(id: LocaleId): Promise<void> {
   if (id === 'zh-CN' || EXTRA[id]) return Promise.resolve()
   const pending = (dictLoading[id] ??= DICT_LOADERS[id as Exclude<LocaleId, 'zh-CN'>]()
@@ -1136,12 +1096,10 @@ export function ensureDict(id: LocaleId): Promise<void> {
       EXTRA[id as Exclude<LocaleId, 'zh-CN'>] = (mod.default ?? mod) as Dict
     })
     .catch(() => {
-      // 分包拉取失败（离线、旧版本缓存等）：只影响本语言的数据词条，界面照常可用
     }))
   return pending
 }
 
-/** 查词条：补充词典优先，其次内置 UI 词典；中文直接返回 undefined（用原文） */
 function lookup(id: LocaleId, key: string): string | undefined {
   if (id === 'zh-CN') return undefined
   const extra = EXTRA[id as Exclude<LocaleId, 'zh-CN'>]
@@ -1159,33 +1117,22 @@ function readStoredLocale(): LocaleId {
     const saved = window.localStorage.getItem(STORAGE_KEY)
     if (saved && isLocaleId(saved)) return saved
   } catch {
-    // 隐私模式等场景下 localStorage 不可用，用默认语言
   }
   return DEFAULT_LOCALE
 }
 
-/** 当前语言（响应式：模板里读过 t() 的地方会随它重渲染） */
 export const localeState = reactive<{ current: LocaleId }>({ current: readStoredLocale() })
 export const locale = computed(() => localeState.current)
 
-/** 当前语言的元信息（切换按钮上显示它的 native 名） */
 export const currentLocaleMeta = computed<LocaleMeta>(
   () => LOCALES.find((item) => item.id === localeState.current) ?? LOCALES[1],
 )
 
-/** 词典里该词条是否已翻译（用于「有没有漏翻」的自检） */
 export function hasTranslation(key: string): boolean {
   if (localeState.current === 'zh-CN') return true
   return lookup(localeState.current, key) !== undefined
 }
 
-/**
- * 取词条：以中文原文为键；缺失时回退中文原文，绝不显示空串或 key。
- * {name} 形式的占位符用 vars 传入替换；传入的字符串值本身若也是词条
- * （市名、县区名、等级、类别这类固定词表），会一并翻成当前语言，
- * 这样 t('{city}市', { city: '济南' }) 直接得到 'Jinan City'；
- * 数字（条数、金额、百分比）原样代入。
- */
 export function t(key: string, vars?: Record<string, string | number>): string {
   let text = lookup(localeState.current, key) ?? key
   if (vars) {
@@ -1197,21 +1144,11 @@ export function t(key: string, vars?: Record<string, string | number>): string {
   return text
 }
 
-/**
- * 数据值翻译：给数据里的字符串字段（城市名、非遗项目名、简介、图注、标签等）用，
- * 命中词典就返回译文，否则原样返回。
- * 会连着套几层：整串命中 → 带「市/县/区」后缀的城市名套模板 → 顿号/斜杠分隔的组合串逐段翻译。
- */
 export function tv(value: string): string {
   if (localeState.current === 'zh-CN' || !value) return value
   return translateValue(value)
 }
 
-/**
- * 值翻译：先查固定词表；数据里的城市名有的带「市」后缀（保护区清单是「东营市」、
- * 首页客流是「东营」），带后缀的那种拆出专名，再套当前语言的「{city}市」模板。
- * 组合串（「菏泽、济宁」「济南西站 / 青岛北站」「三孔（孔庙、孔府、孔林）」）逐段翻译后拼回。
- */
 function translateValue(value: string): string {
   const direct = lookup(localeState.current, value)
   if (direct) return direct
@@ -1223,7 +1160,6 @@ function translateValue(value: string): string {
       return tpl.split('{city}').join(base)
     }
   }
-  // 组合串：顿号分隔的地市（「东营、滨州沿海」）、斜杠分隔的并列项
   if (/[、/]/.test(value) && value.length <= 60) {
     const parts = value.split(/([、/])/)
     let changed = false
@@ -1237,18 +1173,11 @@ function translateValue(value: string): string {
   return value
 }
 
-/** 把当前语言写到 <html lang> / data-locale 上 */
 function applyHtmlAttrs() {
-  // 只挂 lang / data-locale：阿拉伯语等 RTL 文字仍按 LTR 排版，
-  // 以免整站布局（左侧导航、地图、图表）被镜像打乱
   document.documentElement.lang = localeState.current
   document.documentElement.dataset.locale = localeState.current
 }
 
-/**
- * 切换语言：先加载词典（失败也不阻塞），再切换状态、html 属性与本地存储。
- * 返回 Promise 便于调用方在切换完成后再做后续动作；等待期间界面保持原语言，不会闪中文。
- */
 export async function setLocale(id: LocaleId): Promise<void> {
   if (!isLocaleId(id) || id === localeState.current) return
   await ensureDict(id)
@@ -1258,14 +1187,9 @@ export async function setLocale(id: LocaleId): Promise<void> {
   try {
     window.localStorage.setItem(STORAGE_KEY, id)
   } catch {
-    // 存不下也不影响本次切换
   }
 }
 
-/**
- * 启动时加载并应用上次选择的语言。
- * 主入口等它完成后再 mount：首屏就是目标语言，不会先闪一下中文。
- */
 export async function initLocale(): Promise<void> {
   await ensureDict(localeState.current)
   applyHtmlAttrs()

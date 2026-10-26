@@ -1,6 +1,5 @@
 <template>
   <div class="opinion-analyze">
-    <!-- 预警等级 -->
     <div class="common-card warning-card">
       <div class="warning-main">
         <span class="warning-label">{{ t('当前范围「{scope}」舆情预警等级：', { scope: scopeLabel }) }}</span>
@@ -70,6 +69,7 @@ inject<FilterState>('filterState', {
   sentiment: 'all',
 })
 
+
 const maxChannelCount = computed(() => Math.max(...scopeNewsByChannel.value.map((c) => c.count), 1))
 
 const warningTag = computed(() => {
@@ -79,7 +79,7 @@ const warningTag = computed(() => {
   return map[scopeNewsWarning.value.level] ?? 'tag-blue'
 })
 
-// 情感分析饼图（真实值：按标题词表粗判，非人工标注；随范围过滤报道）
+
 const sentimentPieOption = computed<Record<string, unknown>>(() => ({
   tooltip: { trigger: 'item', formatter: '{b}: {c}%' },
   legend: { bottom: 0, textStyle: { color: themeLegend() } },
@@ -98,11 +98,9 @@ const sentimentPieOption = computed<Record<string, unknown>>(() => ({
   ],
 }))
 
-// 桑基图：来源渠道 → 情感倾向（左右两列真实计数）
 const sankeyOption = computed<Record<string, unknown>>(() => {
   const channels = scopeNewsByChannel.value
   const colorOf: Record<string, string> = { 正面: '#00A052', 中性: '#3A7BD5', 负面: '#D94F4F' }
-  // 情感节点的显示名按当前语言译出；key 保留原始中文，用于取色，也保证节点与连线两端对得上
   const nodes: { name: string; key: string }[] = [
     ...channels.map((c) => ({ name: tv(c.channel), key: c.channel })),
     { name: t('正面'), key: '正面' },

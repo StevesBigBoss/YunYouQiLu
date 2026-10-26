@@ -1,17 +1,3 @@
-/**
- * 数据源：文旅部「全国文化信息联播」，新华网山东频道，大众网文旅频道 / 山东频道。
- * 都是静态 HTML 列表页，robots.txt 均允许抓取（news.cn 明确 Allow: /，dzwww.com 与两个子域 Allow: /，
- * gov.cn 系 404 视为无约束）。
- * 抓到的标题即「舆情话题」的原始素材，另用词表做关键词频次与情感粗判，供词云/情感分布图使用。
- *
- * 筛法（省级页面本身只登本地稿，全国性页面必须按地名筛，否则会混进安徽、广西等外省稿）：
- *   filter: 'none'  → 整页收（页面本身就是山东的）
- *   filter: 'topic' → 标题含文旅相关词才收（本地综合频道里挑文旅稿）
- *   filter: 'region'→ 标题含山东 / 黄河相关词才收（全国性页面里挑山东稿）
- *
- * 说明：抖音、微博、微信没有可直接抓取的公开接口（要开放平台密钥或登录态，且其条款禁止抓取），
- * 因此平台维度的真实互动量无法从这里获得，这里只落地公开新闻侧的数据。
- */
 import { get } from '../lib/http.mjs'
 import { absoluteUrl, cleanText, dateFromUrl } from '../lib/util.mjs'
 import { writeRaw } from '../lib/store.mjs'
@@ -28,13 +14,8 @@ const PAGES = [
   { name: '大众网-山东频道', url: 'https://sd.dzwww.com/', filter: 'topic' },
 ]
 
-/** 文旅题材词：本地综合频道靠它挑出文旅稿 */
 const RELEVANT = ['黄河', '文旅', '文化和旅游', '文化', '旅游', '游客', '遗产', '非遗', '文物', '博物馆', '景区', '民宿', '研学', '生态', '湿地', '假期', '消费', '泉城', '泰山', '齐鲁', '沿黄']
 
-/**
- * 山东地名与黄河词：全国性页面、省级综合频道靠它挑出山东稿。
- * 市级之外补了常见县区/景点名，否则「台儿庄」「微山湖」这类只提县区的山东稿会被误杀。
- */
 const REGION = [
   '山东', '黄河', '齐鲁', '泉城', '泰山', '海岱', '沿黄', '儒家', '大运河', '齐长城',
   '济南', '青岛', '淄博', '枣庄', '东营', '烟台', '潍坊', '济宁', '泰安', '威海', '日照',
@@ -50,14 +31,12 @@ const REGION = [
 
 const NAV_NOISE = /^(首页|上一页|下一页|更多|返回|登录|注册|网站地图|联系我们|版权声明|关于我们|English|繁体|简体|无障碍|长者版)/
 
-/** 按筛选模式判断标题是否要收 */
 function keeps(title, mode) {
   if (mode === 'none') return true
   if (mode === 'region') return REGION.some((kw) => title.includes(kw))
   return RELEVANT.some((kw) => title.includes(kw))
 }
 
-/** 从列表页 HTML 里抽 <a> 标题与链接 */
 function extractLinks(html, base, mode) {
   const out = []
   const seen = new Set()

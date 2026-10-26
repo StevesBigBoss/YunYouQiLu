@@ -1,6 +1,5 @@
 <template>
   <div class="nature-page">
-    <!-- 左侧地图 70%：各市自然保护区数量热力图 -->
     <div class="map-side">
       <CityChoropleth
         :data="choroplethData"
@@ -13,7 +12,6 @@
         @select="onSelectCity"
         @point-select="onPointSelect"
       >
-        <!-- 图例里点上本页的点位说明：叶形标 = 保护区，圆环 = 物种监测点（等级色见右上「图层」） -->
         <template #legend-extra>
           <div class="map-mark-legend">
             <span class="map-mark-title">{{ t('叶形标 = 保护区（按等级着色）；圆环 = 物种监测点（与保护区同址布设，按物种等级着色）') }}</span>
@@ -22,10 +20,8 @@
       </CityChoropleth>
     </div>
 
-    <!-- 右侧数据面板 30% -->
     <div class="panel-side">
       <div class="panel-scroll">
-        <!-- 顶部统计 -->
         <div class="stat-row">
           <div class="stat-mini">
             <div class="stat-mini-value gold">{{ totalReserves }}</div>
@@ -37,7 +33,6 @@
           </div>
         </div>
 
-        <!-- 选中地市概况 -->
         <div v-if="selectedCity" class="common-card">
           <div class="card-title">
             {{ t('{city} · 保护区概况', { city: shortCity(selectedCity) }) }}
@@ -74,7 +69,6 @@
           <div v-if="!cityReserves.length" class="monitor-empty">{{ t('该市暂无接入监测的重点保护区') }}</div>
         </div>
 
-        <!-- 选中保护区详情 -->
         <div v-if="selectedReserve" class="common-card detail-card">
           <div class="card-title">
             {{ t('保护区详情') }}
@@ -93,10 +87,8 @@
           <div class="detail-row"><span>{{ t('最近监测') }}</span><b>{{ tv(selectedReserve.lastMonitor) }}</b></div>
         </div>
 
-        <!-- 等级分布饼图 -->
         <ChartCard :title="t('保护区等级分布')" :option="pieOption" height="220px" />
 
-        <!-- 重点保护物种 -->
         <div class="common-card">
           <div class="card-title">{{ t('重点保护物种分布 · {scope}', { scope: scopeLabel }) }}</div>
           <table class="common-table">
@@ -117,7 +109,6 @@
           </table>
         </div>
 
-        <!-- 人类活动干扰 -->
         <div class="common-card">
           <div class="card-title">
             {{ t('人类活动干扰点位 · {scope}', { scope: scopeLabel }) }}
@@ -130,7 +121,6 @@
           <div v-if="!conflictRows.length" class="monitor-empty">{{ t('当前范围内没有生态红线冲突点位') }}</div>
         </div>
 
-        <!-- 保护区实景配图：点缩略图看大图 -->
         <ImageGallery page="nature" :title="t('保护区实景图集')" />
       </div>
     </div>
@@ -156,12 +146,10 @@ import type { CityCountItem, MapPointGroup, MapSpotPoint, NatureReserve, Species
 const selectedCity = ref('')
 const selectedReserve = ref<NatureReserve | null>(null)
 
-/** 范围为具体城市时默认展开该市概况，省得再点地图 */
 watch(scopeCity, (city) => {
   selectedCity.value = city ? `${city}市` : ''
 }, { immediate: true })
 
-// 各市统计：只保留当前范围内的市；范围 = 单市时其余市不着色
 const scopeCityStats = computed(() => mockReserveCityStats.filter((c) => inScope(c.city)))
 
 const totalReserves = computed(() => scopeCityStats.value.reduce((s, c) => s + c.total, 0))
@@ -172,7 +160,6 @@ const selectedStat = computed(() =>
 )
 const cityReserves = computed(() => mockReserves.filter((r) => r.city === selectedCity.value))
 
-/** 选中市的县区分布：市级总量按县区权重折成整数（最大余数法，合计与市级总量一致），只保留 ≥1 处的县区 */
 const countyReserveRows = computed(() => {
   const stat = selectedStat.value
   if (!stat) return []
@@ -186,7 +173,6 @@ const countyReserveRows = computed(() => {
     .sort((a, b) => b.value - a.value)
 })
 
-// 各市保护区数量：total 由国家级/省级/市县级构成，明细直接展示在提示框与弹窗中
 const choroplethData = computed<CityCountItem[]>(() =>
   scopeCityStats.value.map((c) => ({
     city: c.city,
@@ -206,8 +192,6 @@ const pieOption = computed(() => {
   return {
     tooltip: { trigger: 'item', formatter: t('{b}: {c} 处 ({d}%)') },
     legend: { bottom: 0 },
-    // 这张卡只有 261×220，环一大外圈标注就放不下，ECharts 会直接不画（原先只剩"国家级"一个标注）。
-    // 缩小环并把标注贴边距离从默认 25% 放到 2%，三个等级名才都能显示
     series: [{
       type: 'pie',
       radius: ['36%', '58%'],
@@ -223,10 +207,6 @@ const pieOption = computed(() => {
   }
 })
 
-/**
- * 重点保护物种：按坐标归属过滤；
- * 范围内没有点位（非沿黄城市居多）时，用该市保护区的保护对象补齐，等级按名称固定分档。
- */
 const speciesRows = computed<SpeciesPoint[]>(() => {
   const inRange = mockSpeciesPoints.filter((s) => pointInScope(s.lng, s.lat))
   if (inRange.length) return inRange
@@ -245,7 +225,6 @@ const speciesRows = computed<SpeciesPoint[]>(() => {
   }))
 })
 
-/** 生态红线冲突点位：按资源点归属过滤 */
 const conflictRows = computed(() =>
   mockConflictList.filter((c) => {
     const res = mockResourceList.find((r) => r.name === c.name || r.id === c.id)
@@ -267,13 +246,11 @@ function speciesTagClass(level: string): string {
   return 'tag-blue'
 }
 
-/** 保护区等级 → 色板色（与「保护区等级分布」饼图同色） */
 function levelColor(level: string): string {
   const colors = themeColors()
   return level === '国家级' ? colors[0] : colors[1]
 }
 
-/** 物种保护等级 → 色板色：一级红、二级琥珀、三有蓝，与物种表的标签色对应 */
 function speciesColor(level: string): string {
   const colors = themeColors()
   if (level === '国家一级') return colors[5]
@@ -281,7 +258,6 @@ function speciesColor(level: string): string {
   return colors[1]
 }
 
-/** 确定性错开：物种监测点就布在保护区旁，完全叠住会点不到 */
 function dodged(id: string, lng: number, lat: number): { lng: number; lat: number } {
   return {
     lng: Number((lng + (stableJitter(`nature-dx-${id}`, 1) - 1) * 0.03).toFixed(4)),
@@ -289,11 +265,6 @@ function dodged(id: string, lng: number, lat: number): { lng: number; lat: numbe
   }
 }
 
-/**
- * 地图点位分组：国家级 / 省级 / 物种监测点各占右上「图层」里的一行，可单独显隐（与灾难监控页同款）。
- * 保护区用叶形标（按等级上色）跟着分析范围走，与右侧「保护区总数」口径一致；
- * 物种点用右侧同一份清单（按坐标归属过滤），小圆环按保护等级上色。
- */
 const natureGroups = computed<MapPointGroup[]>(() => {
   const reservesOf = (level: string): MapSpotPoint[] =>
     mockReserves
@@ -311,7 +282,6 @@ const natureGroups = computed<MapPointGroup[]>(() => {
           { label: t('最近监测'), value: r.lastMonitor },
         ],
       }))
-  // 由保护区保护对象补齐的行没有坐标（lng/lat = 0），只在右侧表格里出现，不上图
   const species: MapSpotPoint[] = speciesRows.value
     .filter((s) => s.lng || s.lat)
     .map((s) => ({
@@ -331,7 +301,6 @@ const natureGroups = computed<MapPointGroup[]>(() => {
   ].filter((g) => g.points.length > 0)
 })
 
-/** 地图上点保护区标记：直接打开右侧保护区详情 */
 function onPointSelect(id: string) {
   const r = mockReserves.find((item) => item.id === id)
   if (r) selectedReserve.value = r

@@ -1,20 +1,3 @@
-/**
- * 真实数据适配层：把爬虫产物（<项目根>/data/normalized/*.json）转成页面直接可用的结构。
- *
- * 数据由 `node scripts/crawler/crawl.mjs` 生成，重新抓取后前端热更新即可生效。
- * 这一层只做四件事，不改数据本身：
- *   1. 类型化（JSON 按 interface 收窄，避免 TS 从字面量推断出过于零碎的联合类型）；
- *   2. 市级归并（非遗名录只给「申报地区」，新闻标题只给地名，都归到 16 个地级市）；
- *   3. 阈值推导（气象预警没有公开可抓的预警接口，按中国气象局量级把实况/预报折算成预警）；
- *   4. 聚合统计（词频、情感分布、渠道分布、按日/按市计数）。
- *
- * 数据边界（页面上也会标注）：
- *   · 气象 = Open-Meteo 实况 + 2 日预报，16 市；
- *   · 地震 = USGS FDSN，山东及邻域 2015 年以来 M≥3，共 20 条；
- *   · 非遗 = 中国非物质文化遗产网国家级名录，山东省 190 项；
- *   · 报道 = 文旅部 / 新华网山东 / 大众网公开列表页，已过滤为山东题材。
- *   抖音、微博、微信需要开放平台密钥且条款禁止抓取，所以「平台互动量」类指标没有真实来源。
- */
 import weatherJson from '../../data/normalized/weather.json'
 import quakeJson from '../../data/normalized/quake.json'
 import heritageJson from '../../data/normalized/heritage.json'
@@ -24,9 +7,6 @@ import type { ShandongCity } from '../config/shandongRegions'
 import { keywordFrequency, keywordsOf, sentimentOf } from '../config/textRules'
 import type { Sentiment } from '../config/textRules'
 
-// =====================================================================
-// 原始 JSON 形状（只声明用到的字段）
-// =====================================================================
 
 interface RawWeatherReal {
   temp: number
@@ -126,11 +106,7 @@ interface RawNewsFile {
   sentiment: { total: number; positive: number; neutral: number; negative: number }
 }
 
-// =====================================================================
-// 数据更新时间
-// =====================================================================
 
-/** 各数据源最近一次抓取时间（页面脚注用，表明数据新鲜度） */
 export const dataFetchedAt = {
   weather: (weatherJson as unknown as RawWeatherFile).fetchedAt,
   quake: (quakeJson as unknown as RawQuakeFile).fetchedAt,
@@ -148,22 +124,17 @@ export const dataSources = {
   newsNote: (newsJson as unknown as RawNewsFile).note,
 }
 
-/** ISO 时间 → 「MM-DD HH:mm」 */
 export function shortTime(iso: string | null | undefined): string {
   if (!iso) return '—'
   const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/)
   return m ? `${m[2]}-${m[3]} ${m[4]}:${m[5]}` : iso
 }
 
-// =====================================================================
-// 一、气象实况（Open-Meteo，16 市）
-// =====================================================================
 
 export interface CityWeather {
   city: string
   lng: number
   lat: number
-  /** 实况气温 ℃ */
   temp: number
   humidity: number
   weather: string
@@ -171,12 +142,10 @@ export interface CityWeather {
   windDirection: string
   windSpeedKmh: number
   windLevel: string
-  /** 实况降水 mm */
   precipitation: number
   observedAt: string
   today: RawWeatherDay
   tomorrow: RawWeatherDay
-  /** 24 小时最低气温降幅（℃），寒潮判据用 */
   tempDrop: number
 }
 
@@ -202,19 +171,8 @@ export const cityWeather: CityWeather[] = weatherFile.cities.map((c) => ({
 
 export const weatherByCity = new Map(cityWeather.map((w) => [w.city, w]))
 
-/** 实况观测时间（全省同一个请求，取第一条即可） */
 export const weatherObservedAt = cityWeather[0]?.observedAt ?? ''
 
-/**
- * 气象预警阈值（按中国气象局预警信号量级折算到「日尺度」的简化口径，
- * 因为公开渠道没有可直接抓取的预警接口，只能由实况/预报反推）：
- *   暴雨 日累计降水 mm ≥ 50 / 100 / 150 / 200      → 蓝 / 黄 / 橙 / 红
- *   高温 日最高气温 ℃ ≥ 35 / 37 / 40               → 黄 / 橙 / 红
- *   大风 实况风速 km/h ≥ 39 / 62 / 88 / 118（6/8/10/12 级）→ 蓝 / 黄 / 橙 / 红
- *   寒潮 24 小时最低气温降幅 ℃ ≥ 8 / 10 / 12 / 16   → 蓝 / 黄 / 橙 / 红
- *   大雾 WMO 天气码 45 / 48                        → 黄
- *   雷电 WMO 天气码 95 / 96 / 99                   → 黄
- */
 export const WEATHER_ALERT_RULES = [
   '暴雨：日累计降水 ≥50mm 蓝、≥100mm 黄、≥150mm 橙、≥200mm 红',
   '高温：日最高气温 ≥35℃ 黄、≥37℃ 橙、≥40℃ 红',
@@ -236,13 +194,10 @@ export interface WeatherAlert {
   city: string
   type: string
   level: AlertLevel
-  /** 触发依据的模板（如「日累计降水 {n}mm」），渲染时按当前语言取值 */
   detailKey: string
-  /** 模板占位符取值，字符串值本身也会走词表 */
   detailVars: Record<string, string | number>
 }
 
-/** 由实况 + 预报实时推导的气象预警（今天无触发项时返回空数组） */
 export const weatherAlerts: WeatherAlert[] = []
 cityWeather.forEach((w) => {
   const push = (type: string, level: AlertLevel | null, detailKey: string, detailVars: Record<string, string | number>) => {
@@ -260,7 +215,6 @@ cityWeather.forEach((w) => {
   if ([95, 96, 99].includes(w.weatherCode)) push('雷电', '黄色', '实况天气：{weather}', { weather: w.weather })
 })
 
-/** 实况风险分：把真实气象折算成连续分值，供灾情地图着色（无预警时也能看出差异） */
 export function weatherScore(w: CityWeather): number {
   const rain = w.today.precipitation * 2 + w.precipitation * 4
   const wind = Math.max(0, w.windSpeedKmh - 20) * 0.4
@@ -270,9 +224,6 @@ export function weatherScore(w: CityWeather): number {
   return Math.round(rain + wind + heat + cold + drop)
 }
 
-// =====================================================================
-// 二、地震活动（USGS FDSN）
-// =====================================================================
 
 const COMPASS_CN: Record<string, string> = {
   N: '正北', NNE: '北东北', NE: '东北', ENE: '东东北', E: '正东', ESE: '东东南',
@@ -282,25 +233,18 @@ const COMPASS_CN: Record<string, string> = {
 
 export interface QuakeEvent {
   id: string
-  /** ISO 时间（UTC） */
   time: string
-  /** 换算到北京时间后的「YYYY-MM-DD HH:mm」 */
   timeCn: string
   magnitude: number
-  /** USGS 原始地名（英文罗马字） */
   place: string
-  /** 「23 km SSW of Qingnian, China」里的震中距（公里）与方位中文（正北 / 西南偏南…） */
   directionKm: number
   direction: string
   depthKm: number
   lng: number
   lat: number
   url: string
-  /** 距山东境内最近的地级市 */
   nearestCity: ShandongCity
-  /** 震中到该市中心的距离（公里） */
   nearestCityKm: number
-  /** 是否落在山东境内（按 16 市中心的 120km 内近似判断） */
   insideShandong: boolean
 }
 
@@ -324,7 +268,6 @@ function nearestShandongCity(lat: number, lng: number): { city: ShandongCity; km
 
 const quakeFile = quakeJson as unknown as RawQuakeFile
 
-/** 历史地震事件，按时间倒序 */
 export const quakeEvents: QuakeEvent[] = quakeFile.events
   .map((e) => {
     const near = nearestShandongCity(e.lat, e.lng)
@@ -356,34 +299,23 @@ export const quakeMaxMagnitude = quakeEvents.length
   ? Math.max(...quakeEvents.map((e) => e.magnitude))
   : 0
 
-// =====================================================================
-// 三、非遗名录（中国非物质文化遗产网，山东 190 项）
-// =====================================================================
 
 export interface HeritageRecord {
   id: string
   name: string
-  /** 十大类别之一（民间文学、传统音乐…） */
   category: string
-  /** 新增项目 / 扩展项目 */
   categoryKind: string
-  /** 国家级名录批次 */
   batch: string
   batchYear: number
-  /** 名录编号，如 Ⅰ-7 */
   num: string
-  /** 申报地区原文，如「山东省济宁市梁山县」 */
   area: string
-  /** 归并后的地级市；省级/机构申报的少数项目为 null */
   city: ShandongCity | null
-  /** 保护单位 */
   protectUnit: string
   desc: string
 }
 
 const heritageFile = heritageJson as unknown as RawHeritageFile
 
-/** 黄金角散列：同市项目绕市中心错开，避免地图上完全重叠（坐标本身是市级近似） */
 function spread(index: number): { dx: number; dy: number } {
   const angle = index * 2.399963
   const radius = 0.055 * Math.sqrt(index + 1)
@@ -394,7 +326,6 @@ function spread(index: number): { dx: number; dy: number } {
 }
 
 export const heritageItems: HeritageRecord[] = heritageFile.items.map((it) => {
-  // 申报地区多数到县，个别只写「山东省」或机构名，退回保护单位再判一次
   const city = cityOfArea(it.province) ?? cityOfArea(it.protectUnit)
   return {
     id: it.id,
@@ -414,7 +345,6 @@ export const heritageItems: HeritageRecord[] = heritageFile.items.map((it) => {
 export const heritageTotal = heritageFile.count
 export const heritageDeclaredTotal = heritageFile.declaredTotal
 
-/** 按地级市的非遗项目数（地图着色、标注与列表筛选都用它） */
 export const heritageByCity: { city: ShandongCity; count: number; items: HeritageRecord[] }[] = (
   Object.keys(CITY_CENTERS) as ShandongCity[]
 ).map((city) => {
@@ -422,11 +352,6 @@ export const heritageByCity: { city: ShandongCity; count: number; items: Heritag
   return { city, count: items.length, items }
 }).sort((a, b) => b.count - a.count)
 
-/**
- * 项目坐标表（id → [lat, lng]）。
- * 名录只给「申报地区」不给经纬度，这里按市政府驻地近似，并在市内做黄金角散列错开，
- * 同一项目每次取到的点位固定；未归并到市的省级项目不在表内。
- */
 export const heritageCoords = new Map<string, [number, number]>()
 heritageByCity.forEach(({ city, items }) => {
   const center = CITY_CENTERS[city]
@@ -436,7 +361,6 @@ heritageByCity.forEach(({ city, items }) => {
   })
 })
 
-/** 十大类别及项目数（按名录固有顺序，与官网一致） */
 const CATEGORY_ORDER = [
   '民间文学', '传统音乐', '传统舞蹈', '传统戏剧', '曲艺',
   '传统体育、游艺与杂技', '传统美术', '传统技艺', '传统医药', '民俗',
@@ -445,32 +369,23 @@ export const heritageCategories = CATEGORY_ORDER
   .map((name) => ({ name, count: heritageItems.filter((h) => h.category === name).length }))
   .filter((c) => c.count > 0)
 
-/** 批次及项目数（第一批…第五批） */
 export const heritageBatches = [...new Set(heritageItems.map((h) => h.batch))]
   .sort((a, b) => heritageItems.find((h) => h.batch === a)!.batchYear - heritageItems.find((h) => h.batch === b)!.batchYear)
   .map((batch) => ({ batch, count: heritageItems.filter((h) => h.batch === batch).length }))
 
-/** 未能归并到地级市的项目（省级单位申报），页面上单独说明 */
 export const heritageNoCity = heritageItems.filter((h) => !h.city)
 export const heritageMaxCityCount = Math.max(...heritageByCity.map((c) => c.count), 1)
 
-// =====================================================================
-// 四、公开报道（文旅部 / 新华网山东 / 大众网）
-// =====================================================================
 
 const newsFile = newsJson as unknown as RawNewsFile
 
 export interface NewsItem {
   title: string
   url: string
-  /** 列表页 URL 里解析出的发布日期，缺日期为 null */
   date: string | null
   channel: string
-  /** 标题命中的领域关键词 */
   keywords: string[]
-  /** 标题提到的山东城市 */
   cities: ShandongCity[]
-  /** 词表情感粗判 */
   sentiment: Sentiment
 }
 
@@ -487,17 +402,14 @@ export const newsItems: NewsItem[] = newsFile.items.map((it) => ({
 export const newsTotal = newsItems.length
 export const newsDatedCount = newsItems.filter((n) => n.date).length
 
-/** 报道里最早/最晚的日期（页面上说明数据覆盖区间） */
 const newsDates = newsItems.map((n) => n.date).filter((d): d is string => !!d).sort()
 export const newsDateRange = {
   from: newsDates[0] ?? '',
   to: newsDates[newsDates.length - 1] ?? '',
 }
 
-/** 词云用：标题词频（与爬虫 scripts/crawler/lib/zh.mjs 同口径） */
 export const newsKeywords = keywordFrequency(newsItems.map((n) => n.title), 40)
 
-/** 情感分布（百分比，和为 100）与计数 */
 const sentimentCount = { positive: 0, neutral: 0, negative: 0 }
 newsItems.forEach((n) => { sentimentCount[n.sentiment] += 1 })
 
@@ -509,16 +421,13 @@ export const newsSentiment = {
   negative: Math.max(0, 100 - Math.round((sentimentCount.positive / (newsTotal || 1)) * 100) - Math.round((sentimentCount.neutral / (newsTotal || 1)) * 100)),
 }
 
-/** 来源渠道分布（含各渠道的情感构成） */
 export interface NewsChannel {
   channel: string
-  /** 站点域名，如 sd.news.cn */
   host: string
   count: number
   positive: number
   neutral: number
   negative: number
-  /** 占全部报道的百分比 */
   percent: number
 }
 export const newsByChannel: NewsChannel[] = [...new Set(newsItems.map((n) => n.channel))]
@@ -542,10 +451,6 @@ export const newsByChannel: NewsChannel[] = [...new Set(newsItems.map((n) => n.c
   })
   .sort((a, b) => b.count - a.count)
 
-/**
- * 舆情预警等级：由头条负面报道占比反推（没有舆情平台的原始热度，只能按可得口径分级）。
- *   负面 ≥15% 或 ≥8 条 → 红色；≥8% 或 ≥4 条 → 橙色；≥3% 或 ≥2 条 → 黄色；其余 → 蓝色
- */
 export interface NewsWarning {
   level: 'blue' | 'yellow' | 'orange' | 'red'
   label: string
@@ -562,7 +467,6 @@ function warningOf(): NewsWarning {
 }
 export const newsWarning = warningOf()
 
-/** 近 N 日（以数据里最新日期为终点）逐日报道量，空缺日补 0 */
 export function newsDailyTrend(days = 7): { date: string; count: number; channels: number }[] {
   const end = newsDateRange.to
   if (!end) return []
@@ -576,13 +480,11 @@ export function newsDailyTrend(days = 7): { date: string; count: number; channel
   return out
 }
 
-/** 按提及城市统计报道量（标题里提到即计入；未提城市的记为「未标注」） */
 export interface NewsCityStat {
   city: ShandongCity
   count: number
   lng: number
   lat: number
-  /** 提及该市的报道标题（前若干条，供 tooltip 展示） */
   titles: string[]
 }
 export const newsByCity: NewsCityStat[] = (Object.keys(CITY_CENTERS) as ShandongCity[])
@@ -597,10 +499,8 @@ export const newsCityMax = Math.max(...newsByCity.map((c) => c.count), 1)
 export const newsNoCityCount = newsItems.filter((n) => n.cities.length === 0).length
 export const newsTopCity = newsByCity[0]
 
-/** 关键词命中数排序后的报道（舆情话题列表用，命中多的排前面） */
 export const newsByRelevance: NewsItem[] = [...newsItems].sort(
   (a, b) => b.keywords.length - a.keywords.length || String(b.date ?? '').localeCompare(String(a.date ?? '')),
 )
 
-/** 负面/风险类报道（标题命中负面词表） */
 export const newsNegativeItems = newsItems.filter((n) => n.sentiment === 'negative')

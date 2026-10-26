@@ -1,8 +1,3 @@
-/**
- * 数据源：中国非物质文化遗产网（www.ihchina.cn）国家级非遗代表性项目名录。
- * 接口：/Article/Index/getProject.html?province=370000&p=<页>&limit=<每页>（370000 = 山东省代码）
- * 该站 robots.txt 返回 404，按「无约束」处理，仍按 1.2s 间隔礼貌抓取。
- */
 import { get } from '../lib/http.mjs'
 import { absoluteUrl, cleanText } from '../lib/util.mjs'
 import { writeRaw } from '../lib/store.mjs'
@@ -20,11 +15,9 @@ function apiUrl(page) {
   return `${BASE}/Article/Index/getProject.html?province=${PROVINCE_CODE}&p=${page}&limit=${PER_PAGE}`
 }
 
-/** 不同版本的接口字段名不一致，这里做容错取值 */
 function mapItem(raw) {
   const text = (v) => (v == null ? null : String(v).trim())
   const link = text(raw.url || raw.link || raw.detail_url || raw.article_url)
-  // rx_time 形如 "2006</br>(第一批)"，拆成公布年份与批次名
   const rx = text(raw.rx_time) || ''
   const batchYear = /(\d{4})/.exec(rx)?.[1] ?? null
   const batchName = /[（(]([^）)]+)[）)]/.exec(rx)?.[1] ?? null

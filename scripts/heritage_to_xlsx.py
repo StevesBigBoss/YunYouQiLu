@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import csv, os
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
@@ -19,7 +18,6 @@ body_font = Font(name="微软雅黑", size=10)
 center = Alignment(horizontal="center", vertical="center", wrap_text=True)
 left = Alignment(horizontal="left", vertical="center", wrap_text=True)
 
-# ---- Sheet1 明细 ----
 ws = wb.active
 ws.title = "项目明细"
 cols = ["序号", "项目名称", "类别", "批次", "年份", "市", "县/区", "保护单位"]
@@ -43,7 +41,6 @@ for i, w in enumerate(widths, 1):
 ws.freeze_panes = "A2"
 ws.auto_filter.ref = f"A1:{get_column_letter(len(cols))}{ws.max_row}"
 
-# ---- Sheet2 按市汇总 ----
 ws2 = wb.create_sheet("按市汇总")
 from collections import Counter
 city_ct = Counter(r["市"] for r in rows)
@@ -60,7 +57,6 @@ for row in ws2.iter_rows(min_row=2, max_row=ws2.max_row, max_col=2):
 ws2.column_dimensions["A"].width = 22
 ws2.column_dimensions["B"].width = 10
 
-# ---- Sheet3 按类别汇总 ----
 ws3 = wb.create_sheet("按类别汇总")
 cat_ct = Counter(r["类别"] for r in rows)
 ws3.append(["类别", "项目数"])

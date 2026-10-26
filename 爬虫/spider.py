@@ -1,4 +1,3 @@
-
 import os
 from dotenv import load_dotenv
 import random
@@ -6,7 +5,6 @@ from faker import Faker
 import pymysql
 from datetime import datetime
 
-# 加载项目根目录下的 .env 环境变量（敏感配置不入库）
 load_dotenv()
 
 conn = pymysql.connect(host="127.0.0.1",port = 3306,user="root",password=os.getenv("DB_PASSWORD"),database="tiktok_blogger_web",charset="utf8mb4",)
@@ -39,7 +37,7 @@ content_li = ["帅哥","时尚","我","男神","美女","生活","美好","希�
               "大家","爱你","饭","野路子","闷声","太香了","努力","真的","日常","存钱","搬砖","今日","网站","整理"]
 f=Faker(locale='zh_CN')
 for i in range(3000):
-    nkname  = f.user_name()+f.word() #昵称
+    nkname  = f.user_name()+f.word()
     gender = random.choice(["男","女"])
     age = str(random.randint(18, 85))
     category = random.choice(category_li)
@@ -62,6 +60,5 @@ for i in range(3000):
     except Exception as e:
         print(e)
         pass
-#
 cursor.close()
 conn.close()

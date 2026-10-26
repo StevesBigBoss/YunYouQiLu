@@ -4,21 +4,18 @@ import { locale, t } from '../config/i18n'
 
 const routes: RouteRecordRaw[] = [
   {
-    // 整屏首页（仿 Modrinth）：大图标 + 平台名 + 功能词轮播 + 游客登录/登录
     path: '/',
     name: 'Landing',
     component: () => import('../views/LandingView.vue'),
     meta: { title: '首页', bare: true },
   },
   {
-    // 登录页同样整屏，不带左侧导航
     path: '/login',
     name: 'Login',
     component: () => import('../components/common/LoginScreen.vue'),
     meta: { title: '登录', bare: true },
   },
   {
-    // 原首页大地图，从现在起是登录/游客进入后的数据大屏
     path: '/dashboard',
     name: 'Home',
     component: () => import('../views/HomeMapView.vue'),
@@ -119,7 +116,6 @@ const router = createRouter({
 
 const PLATFORM_TITLE = '“云游齐鲁”山东沿黄文旅数智传播平台'
 
-/** 浏览器标签页标题：跟着当前路由与当前语言走 */
 function refreshDocumentTitle(page?: string) {
   const name = page ?? ((router.currentRoute.value.meta.title as string) || '')
   document.title = name ? `${t(name)} - ${t(PLATFORM_TITLE)}` : t(PLATFORM_TITLE)
@@ -130,7 +126,6 @@ router.beforeEach((to, _from, next) => {
   next()
 })
 
-// 换语言时标签页标题也要跟着变（路由没动，beforeEach 不会触发）
 watch(locale, () => {
   refreshDocumentTitle()
 })

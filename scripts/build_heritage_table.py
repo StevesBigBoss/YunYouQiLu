@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
-"""从 data/normalized/heritage.json 提取每条非遗项目，解析市/县/区/分类，输出 CSV 与汇总。"""
 import json, csv, re, os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "data", "normalized", "heritage.json")
 OUT_CSV = os.path.join(ROOT, "data", "normalized", "heritage_table.csv")
 
-# 行政区划代码前4位 -> 地级市
 CITY = {
     "3701": "济南市", "3702": "青岛市", "3703": "淄博市", "3704": "枣庄市",
     "3705": "东营市", "3706": "烟台市", "3707": "潍坊市", "3708": "济宁市",
@@ -17,28 +14,21 @@ CITY = {
 
 def parse_region(province: str, code: str):
     s = province.replace("山东省", "").strip()
-    # 省级
     if s in ("",):
         return "省直", "—（省级单位）"
-    # 特殊：省级艺术院团
     if "吕剧院" in s or s.endswith("院") and code == "370112":
         return "济南市", "省直单位（山东省吕剧院）"
-    # 自定义代码 990439 莱芜区
     if code == "990439":
         return "济南市", "莱芜区"
-    # 异常代码 320482 实际为山东博兴
     if code == "320482":
         return "滨州市", "博兴县"
-    # 形如 "济南市" / "济宁市"（市直）
     m = re.match(r"^(.+?市)$", s)
     if m and code.endswith("00"):
         city = m.group(1)
         return _fix_laiwu(city), "市辖区（市直）"
-    # 形如 "青岛市市南区" / "潍坊市寒亭区"
     m = re.match(r"^(.+?市)(.+)$", s)
     if m:
         return _fix_laiwu(m.group(1)), m.group(2)
-    # 形如 "莒县" / "滕州市" / "章丘市"（县级，无地级市前缀）-> 用代码前4位
     city = CITY.get(code[:4], "省直")
     return _fix_laiwu(city), s
 
@@ -69,7 +59,6 @@ def main():
         w.writeheader()
         w.writerows(rows)
 
-    # 汇总：按市
     from collections import Counter, defaultdict
     by_city = Counter(r["市"] for r in rows)
     by_cat = Counter(r["类别"] for r in rows)

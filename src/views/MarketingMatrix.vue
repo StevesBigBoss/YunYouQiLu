@@ -1,6 +1,5 @@
 <template>
   <div class="marketing-page">
-    <!-- 顶部筛选 -->
     <div class="filter-bar">
       <div class="filter-item">
         <label>{{ t('平台：') }}</label>
@@ -27,7 +26,6 @@
       <button class="btn btn-primary">{{ t('查询') }}</button>
     </div>
 
-    <!-- 账号矩阵 -->
     <div class="common-card">
       <div class="card-title">
         {{ t('账号矩阵 · {scope}', { scope: scopeLabel }) }}
@@ -52,7 +50,6 @@
     </div>
 
     <div class="two-col">
-      <!-- 话题热度 -->
       <div class="common-card">
         <div class="card-title">{{ t('话题热度 · {scope}', { scope: scopeLabel }) }}</div>
         <div class="topic-list">
@@ -80,11 +77,9 @@
         </div>
       </div>
 
-      <!-- 传播路径图 -->
       <ChartCard :title="t('传播路径图 · {scope}', { scope: scopeLabel })" :option="sankeyOption" height="320px" />
     </div>
 
-    <!-- 重点客源城市定向推广效果 -->
     <div class="common-card">
       <div class="card-title">{{ t('重点客源城市定向推广效果 · 投放目的地：{target}', { target: targetLabel }) }}</div>
       <div class="promo-wrap">
@@ -109,7 +104,6 @@
       </div>
     </div>
 
-    <!-- 品牌活动数据 -->
     <div class="common-card">
       <div class="card-title">{{ t('品牌活动 · {scope}', { scope: scopeLabel }) }}</div>
       <div class="event-grid">
@@ -125,7 +119,6 @@
       </div>
     </div>
 
-    <!-- 新媒体营销场景配图：点缩略图看大图 -->
     <ImageGallery page="marketing" :title="t('新媒体营销场景图集')" />
   </div>
 </template>
@@ -160,7 +153,6 @@ const platformIcons: Record<string, string> = {
   '微信': 'opinion',
   '微博': 'fire',
 }
-/** 平台名 → 自绘图标名（未收录的平台统一用手机图标） */
 function platformIcon(p: string) {
   return platformIcons[p] || 'phone'
 }
@@ -195,7 +187,6 @@ const groupedAccounts = computed<AccountGroup[]>(() => {
   const order = ['抖音', '微信', '微博']
   const map = new Map<string, AccountItem[]>()
   filtered.forEach(a => {
-    // 粉丝/互动按当前范围缩放（账号本身是省级矩阵账号，规模随范围变化）
     const rows = map.get(a.platform) ?? []
     rows.push({
       ...a,
@@ -207,7 +198,6 @@ const groupedAccounts = computed<AccountGroup[]>(() => {
   return order.filter(p => map.has(p)).map(p => ({ platform: p, list: map.get(p)! }))
 })
 
-// 话题阅读/讨论量随范围缩放
 const scopedTopics = computed(() =>
   mockMarketingTopics.map((t) => ({
     ...t,
@@ -216,10 +206,8 @@ const scopedTopics = computed(() =>
   })),
 )
 
-// 桑基图：传播路径（各段流量随范围缩放）
 const sankeyOption = computed<Record<string, unknown>>(() => {
   const nodes = new Set<string>()
-  // 节点名要与 links 的 source/target 完全一致，所以两边都取译名
   mockSpreadPath.forEach(p => { nodes.add(tv(p.from)); nodes.add(tv(p.to)) })
   return {
     tooltip: { trigger: 'item' },
@@ -239,7 +227,6 @@ const sankeyOption = computed<Record<string, unknown>>(() => {
   }
 })
 
-// 客源城市坐标（外部城市，mock 未提供）
 const PROMO_CITY_COORDS: Record<string, { lng: number; lat: number }> = {
   '北京': { lng: 116.40, lat: 39.90 },
   '天津': { lng: 117.20, lat: 39.13 },
@@ -249,7 +236,6 @@ const PROMO_CITY_COORDS: Record<string, { lng: number; lat: number }> = {
   '南京': { lng: 118.80, lat: 32.06 },
 }
 
-/** 定向推广目的地：单市范围投向该市，多市范围投向南岸核心（济南） */
 const promoTarget = computed<[number, number]>(() => {
   const city = scopeCity.value
   if (city) {
@@ -260,7 +246,6 @@ const promoTarget = computed<[number, number]>(() => {
 })
 const targetLabel = computed(() => (scopeCity.value ? t('{city}市', { city: scopeCity.value }) : t('山东沿黄（济南）')))
 
-/** 推广效果指数：随范围小幅浮动（0~100 的指数口径不变） */
 const scopedPromotion = computed(() =>
   mockCityPromotion.map((item) => ({
     ...item,
@@ -268,15 +253,12 @@ const scopedPromotion = computed(() =>
   })),
 )
 
-// 无瓦片底图底色：跟随当前风格（--map-bg），兜底为米白
 const PLAIN_BACKGROUND = 'var(--map-bg, radial-gradient(ellipse at 50% 42%, #FCFEFC 0%, #F1F6F1 46%, #E3EBE4 100%))'
 
 let promoMap: L.Map | null = null
 let promoLayer: L.LayerGroup | null = null
-/** 黄河干流：随全国底图常驻、常驻流动（本页点位在默认覆盖面板，河道压在它下面） */
 let promoRiver: L.LayerGroup | null = null
 
-/** 按当前范围绘制客源城市与投放方向 */
 function drawPromo() {
   if (!promoMap) return
   if (!promoLayer) promoLayer = L.layerGroup()
@@ -290,12 +272,10 @@ function drawPromo() {
     if (!c) return
     const latlng = L.latLng(c.lat, c.lng)
     spots.push(latlng)
-    // 定向投放方向：客源城市 → 当前范围目的地
     L.polyline([latlng, target], {
       color: themeAccent(), weight: 1.2, opacity: 0.5, dashArray: '4 6', interactive: false,
     }).addTo(promoLayer!)
     const marker = L.circleMarker(latlng, {
-      // 像素半径圆点：缩放动画期间隐去、落位后渐显（见 MapContainer 的 bindPixelDotFade）
       className: 'sd-px-dot',
       radius: Math.max(7, item.effect / 2.6),
       color: '#FFFFFF',
@@ -324,10 +304,8 @@ function drawPromo() {
 }
 
 async function onPromoMapReady(map: L.Map) {
-  // 全国底图（其他省份不聚焦）+ 山东聚焦：客源城市在省外，底图扩到全国才装得下
   const national = await setupNationalBase(map)
   promoMap = map
-  // 黄河流向图：省外段 + 山东段，压在底图之上、客源点之下；常驻流动，无入场画出动画
   ensureRiverPane(map, 385)
   promoRiver = buildYellowRiverLayer()
   bindRiverZoomEmphasis(map, promoRiver)
@@ -335,7 +313,6 @@ async function onPromoMapReady(map: L.Map) {
   drawPromo()
 
   map.setMaxBounds(national.bounds.pad(0.2))
-  // 由远及近：从全国视野飞入「投放目的地 + 重点客源城市」范围
   const spots: L.LatLng[] = []
   scopedPromotion.value.forEach(item => {
     const c = PROMO_CITY_COORDS[item.city]
@@ -346,15 +323,12 @@ async function onPromoMapReady(map: L.Map) {
     focus: L.latLngBounds([L.latLng(promoTarget.value), ...spots]),
     paddingTopLeft: [24, 24],
     paddingBottomRight: [24, 40],
-    // 推近时长与首页取齐（0.75s）
     duration: 750,
   })
 }
 
-// 范围切换：投放目的地随范围改，重画推广图层
 watch(promoTarget, () => drawPromo())
 
-/** 换语言：点位提示框与弹窗是建层时拼好的 HTML，整层重画换字（视野不动） */
 watch(locale, () => {
   promoMap?.closePopup()
   drawPromo()
@@ -373,7 +347,6 @@ const cityBarOption = computed<Record<string, unknown>>(() => ({
   }],
 }))
 
-// 品牌活动曝光/互动/收入按范围缩放，转化率按比例口径抖动
 const scopedEvents = computed(() =>
   mockBrandEvents.map((ev) => ({
     name: ev.name,

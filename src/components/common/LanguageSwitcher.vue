@@ -4,7 +4,6 @@
       <AppIcon name="global" :size="15" />
       <span class="lang-text">
         <span class="lang-native" dir="auto">{{ current.native }}</span>
-        <!-- 中文下面这行固定给英文提示词，任何语言下都认得出这是换语言的入口 -->
         <span class="lang-hint">language</span>
       </span>
       <span class="lang-caret" :class="{ open }"><AppIcon name="caret-down" :size="12" /></span>
@@ -38,6 +37,7 @@ import { LOCALES, currentLocaleMeta, locale, setLocale, t, type LocaleId } from 
 
 const open = ref(false)
 const rootRef = ref<HTMLElement | null>(null)
+
 const current = computed(() => currentLocaleMeta.value)
 
 function toggle() {
@@ -91,7 +91,6 @@ onBeforeUnmount(() => {
   border-color: var(--color-gold);
   color: var(--text-gold);
 }
-/* 两行小字：上行当前语言，下行固定的 language 提示 */
 .lang-text {
   display: flex;
   flex-direction: column;
@@ -127,7 +126,6 @@ onBeforeUnmount(() => {
   top: calc(100% + 10px);
   z-index: 3000;
   width: 236px;
-  /* 10 种语言一屏排完（约 480px），窗口再矮才出现滚动 */
   max-height: min(80vh, 500px);
   overflow-y: auto;
   padding: 10px;

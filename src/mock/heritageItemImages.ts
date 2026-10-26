@@ -1,203 +1,198 @@
-/* 非遗项目配图索引：取自 data/normalized 下的 heritage_image_map.json（实景代表图）与
-   heritage_ai_images.json（AI 配图），图片已压成 web 尺寸放进 public/images。
-   同名项目共用一张图（名录里同名的申报地区不同）。 */
 
 export interface HeritageItemImage {
-  /** 实景/代表图（public 下的绝对路径） */
   real?: string
-  /** AI 生成配图，展示时需标注「AI 生成」 */
   ai?: string
 }
 
 export const HERITAGE_ITEM_IMAGES: Record<string, HeritageItemImage> = {
-  '12190': { real: '/images/heritage-items/12190.jpg', ai: '/images/heritage-ai/12190.jpg' }, // 梁祝传说
-  '12192': { real: '/images/heritage-items/12192.jpg', ai: '/images/heritage-ai/12192.jpg' }, // 孟姜女传说
-  '12195': { real: '/images/heritage-items/12195.jpg', ai: '/images/heritage-ai/12192.jpg' }, // 孟姜女传说
-  '12196': { real: '/images/heritage-items/12196.jpg', ai: '/images/heritage-ai/12192.jpg' }, // 孟姜女传说
-  '12201': { real: '/images/heritage-items/12201.jpg', ai: '/images/heritage-ai/12201.jpg' }, // 董永传说
-  '12252': { real: '/images/heritage-items/12252.jpg', ai: '/images/heritage-ai/12252.jpg' }, // 尧的传说
-  '12254': { real: '/images/heritage-items/12254.jpg', ai: '/images/heritage-ai/12254.jpg' }, // 牛郎织女传说
-  '12265': { real: '/images/heritage-items/12265.jpg', ai: '/images/heritage-ai/12265.jpg' }, // 徐福传说
-  '12264': { real: '/images/heritage-items/12264.jpg', ai: '/images/heritage-ai/12265.jpg' }, // 徐福传说
-  '12266': { real: '/images/heritage-items/12266.jpg', ai: '/images/heritage-ai/12266.jpg' }, // 陶朱公传说
-  '12268': { real: '/images/heritage-items/12268.jpg', ai: '/images/heritage-ai/12268.jpg' }, // 麒麟传说
-  '12267': { real: '/images/heritage-items/12267.jpg', ai: '/images/heritage-ai/12268.jpg' }, // 麒麟传说
-  '12270': { real: '/images/heritage-items/12270.jpg', ai: '/images/heritage-ai/12270.jpg' }, // 鲁班传说
-  '12269': { real: '/images/heritage-items/12269.jpg', ai: '/images/heritage-ai/12270.jpg' }, // 鲁班传说
-  '12271': { real: '/images/heritage-items/12271.jpg', ai: '/images/heritage-ai/12271.jpg' }, // 八仙传说
-  '12272': { real: '/images/heritage-items/12272.jpg', ai: '/images/heritage-ai/12272.jpg' }, // 秃尾巴老李的传说
-  '12275': { real: '/images/heritage-items/12275.jpg', ai: '/images/heritage-ai/12272.jpg' }, // 秃尾巴老李的传说
-  '12274': { real: '/images/heritage-items/12274.jpg', ai: '/images/heritage-ai/12272.jpg' }, // 秃尾巴老李的传说
-  '12273': { real: '/images/heritage-items/12273.jpg', ai: '/images/heritage-ai/12272.jpg' }, // 秃尾巴老李的传说
-  '12287': { real: '/images/heritage-items/12287.jpg', ai: '/images/heritage-ai/12287.jpg' }, // 崂山民间故事
-  '12331': { real: '/images/heritage-items/12331.jpg', ai: '/images/heritage-ai/12331.jpg' }, // 舜的传说
-  '12336': { real: '/images/heritage-items/12336.jpg', ai: '/images/heritage-ai/12336.jpg' }, // 庄子传说
-  '12337': { real: '/images/heritage-items/12337.jpg', ai: '/images/heritage-ai/12337.jpg' }, // 柳毅传说
-  '12346': { real: '/images/heritage-items/12346.jpg', ai: '/images/heritage-ai/12346.jpg' }, // 牡丹传说
-  '12347': { real: '/images/heritage-items/12347.jpg', ai: '/images/heritage-ai/12347.jpg' }, // 泰山传说
-  '12384': { real: '/images/heritage-items/12384.jpg', ai: '/images/heritage-ai/12384.jpg' }, // 胡峄阳传说
-  '12385': { real: '/images/heritage-items/12385.jpg', ai: '/images/heritage-ai/12385.jpg' }, // 孟母教子传说
-  '12448': { real: '/images/heritage-items/12448.jpg', ai: '/images/heritage-ai/12448.jpg' }, // 聊斋俚曲
-  '12491': { real: '/images/heritage-items/12491.jpg', ai: '/images/heritage-ai/12491.jpg' }, // 古琴艺术（诸城派）
-  '12513': { real: '/images/heritage-items/12513.jpg', ai: '/images/heritage-ai/12513.jpg' }, // 唢呐艺术（邹城平派鼓吹乐）
-  '12544': { real: '/images/heritage-items/12544.jpg', ai: '/images/heritage-ai/12544.jpg' }, // 鲁西南鼓吹乐
-  '12545': { real: '/images/heritage-items/12545.jpg', ai: '/images/heritage-ai/12544.jpg' }, // 鲁西南鼓吹乐
-  '12547': { real: '/images/heritage-items/12547.jpg', ai: '/images/heritage-ai/12544.jpg' }, // 鲁西南鼓吹乐
-  '12546': { real: '/images/heritage-items/12546.jpg', ai: '/images/heritage-ai/12544.jpg' }, // 鲁西南鼓吹乐
-  '12629': { real: '/images/heritage-items/12629.jpg', ai: '/images/heritage-ai/12629.jpg' }, // 海洋号子（长岛渔号）
-  '12646': { real: '/images/heritage-items/12646.jpg', ai: '/images/heritage-ai/12646.jpg' }, // 鲁南五大调
-  '12645': { real: '/images/heritage-items/12645.jpg', ai: '/images/heritage-ai/12646.jpg' }, // 鲁南五大调
-  '12692': { real: '/images/heritage-items/12692.jpg', ai: '/images/heritage-ai/12692.jpg' }, // 古筝艺术（山东古筝乐）
-  '23648': { real: '/images/heritage-items/23648.jpg', ai: '/images/heritage-ai/23648.jpg' }, // 锣鼓艺术（临清驾鼓）
-  '12744': { real: '/images/heritage-items/12744.jpg', ai: '/images/heritage-ai/12744.jpg' }, // 佛教音乐（鱼山梵呗）
-  '12761': { real: '/images/heritage-items/12761.jpg', ai: '/images/heritage-ai/12761.jpg' }, // 道教音乐（崂山道教音乐）
-  '12763': { real: '/images/heritage-items/12763.jpg', ai: '/images/heritage-ai/12763.jpg' }, // 道教音乐（泰山道教音乐）
-  '12762': { real: '/images/heritage-items/12762.jpg', ai: '/images/heritage-ai/12762.jpg' }, // 道教音乐（胶东全真道教音乐）
-  '12764': { real: '/images/heritage-items/12764.jpg', ai: '/images/heritage-ai/12764.jpg' }, // 道教音乐（腊山道教音乐）
-  '12787': { real: '/images/heritage-items/12787.jpg', ai: '/images/heritage-ai/12787.jpg' }, // 弦索乐（菏泽弦索乐）
-  '12814': { real: '/images/heritage-items/12814.jpg', ai: '/images/heritage-ai/12814.jpg' }, // 秧歌（鼓子秧歌）
-  '12815': { real: '/images/heritage-items/12815.jpg', ai: '/images/heritage-ai/12815.jpg' }, // 秧歌（胶州秧歌）
-  '12816': { real: '/images/heritage-items/12816.jpg', ai: '/images/heritage-ai/12816.jpg' }, // 秧歌（海阳大秧歌）
-  '12821': { real: '/images/heritage-items/12821.jpg', ai: '/images/heritage-ai/12821.jpg' }, // 秧歌（济阳鼓子秧歌）
-  '12824': { real: '/images/heritage-items/12824.jpg', ai: '/images/heritage-ai/12824.jpg' }, // 秧歌（阳信鼓子秧歌）
-  '12855': { real: '/images/heritage-items/12855.jpg', ai: '/images/heritage-ai/12855.jpg' }, // 龙舞（龙灯扛阁）
-  '12910': { real: '/images/heritage-items/12910.jpg', ai: '/images/heritage-ai/12910.jpg' }, // 高跷（独杆跷）
-  '12992': { real: '/images/heritage-items/12992.jpg', ai: '/images/heritage-ai/12992.jpg' }, // 鼓舞（陈官短穗花鼓）
-  '12994': { real: '/images/heritage-items/12994.jpg', ai: '/images/heritage-ai/12994.jpg' }, // 鼓舞（柳林花鼓）
-  '12991': { real: '/images/heritage-items/12991.jpg', ai: '/images/heritage-ai/12991.jpg' }, // 鼓舞（花鞭鼓舞）
-  '12993': { real: '/images/heritage-items/12993.jpg', ai: '/images/heritage-ai/12993.jpg' }, // 鼓舞（八卦鼓舞）
-  '13029': { real: '/images/heritage-items/13029.jpg', ai: '/images/heritage-ai/13029.jpg' }, // 商羊舞
-  '23472': { real: '/images/heritage-items/23472.jpg', ai: '/images/heritage-ai/23472.jpg' }, // 阴阳板
-  '13194': { real: '/images/heritage-items/13194.jpg', ai: '/images/heritage-ai/13194.jpg' }, // 大平调
-  '13193': { real: '/images/heritage-items/13193.jpg', ai: '/images/heritage-ai/13194.jpg' }, // 大平调
-  '13195': { real: '/images/heritage-items/13195.jpg', ai: '/images/heritage-ai/13194.jpg' }, // 大平调
-  '13206': { real: '/images/heritage-items/13206.jpg', ai: '/images/heritage-ai/13206.jpg' }, // 京剧
-  '13238': { real: '/images/heritage-items/13238.jpg', ai: '/images/heritage-ai/13238.jpg' }, // 柳子戏
-  '13242': { real: '/images/heritage-items/13242.jpg', ai: '/images/heritage-ai/13242.jpg' }, // 大弦戏
-  '13253': { real: '/images/heritage-items/13253.jpg', ai: '/images/heritage-ai/13253.jpg' }, // 四平调
-  '13254': { real: '/images/heritage-items/13254.jpg', ai: '/images/heritage-ai/13253.jpg' }, // 四平调
-  '13287': { real: '/images/heritage-items/13287.jpg', ai: '/images/heritage-ai/13287.jpg' }, // 柳琴戏
-  '13289': { real: '/images/heritage-items/13289.jpg', ai: '/images/heritage-ai/13287.jpg' }, // 柳琴戏
-  '13298': { real: '/images/heritage-items/13298.jpg', ai: '/images/heritage-ai/13298.jpg' }, // 五音戏
-  '13300': { real: '/images/heritage-items/13300.jpg', ai: '/images/heritage-ai/13300.jpg' }, // 茂腔
-  '13299': { real: '/images/heritage-items/13299.jpg', ai: '/images/heritage-ai/13300.jpg' }, // 茂腔
-  '23675': { real: '/images/heritage-items/23675.jpg', ai: '/images/heritage-ai/13300.jpg' }, // 茂腔
-  '13319': { real: '/images/heritage-items/13319.jpg', ai: '/images/heritage-ai/13319.jpg' }, // 道情戏（蓝关戏）
-  '13323': { real: '/images/heritage-items/13323.jpg', ai: '/images/heritage-ai/13323.jpg' }, // 道情戏（沾化渔鼓戏）
-  '13347': { real: '/images/heritage-items/13347.jpg', ai: '/images/heritage-ai/13347.jpg' }, // 一勾勾
-  '13411': { real: '/images/heritage-items/13411.jpg', ai: '/images/heritage-ai/13411.jpg' }, // 皮影戏（泰山皮影戏）
-  '13410': { real: '/images/heritage-items/13410.jpg', ai: '/images/heritage-ai/13410.jpg' }, // 皮影戏（济南皮影戏）
-  '13412': { real: '/images/heritage-items/13412.jpg', ai: '/images/heritage-ai/13412.jpg' }, // 皮影戏（定陶皮影）
-  '13509': { real: '/images/heritage-items/13509.jpg', ai: '/images/heritage-ai/13509.jpg' }, // 二夹弦
-  '13515': { real: '/images/heritage-items/13515.jpg', ai: '/images/heritage-ai/13515.jpg' }, // 吕剧
-  '13514': { real: '/images/heritage-items/13514.jpg', ai: '/images/heritage-ai/13515.jpg' }, // 吕剧
-  '13517': { real: '/images/heritage-items/13517.jpg', ai: '/images/heritage-ai/13515.jpg' }, // 吕剧
-  '13516': { real: '/images/heritage-items/13516.jpg', ai: '/images/heritage-ai/13515.jpg' }, // 吕剧
-  '13518': { real: '/images/heritage-items/13518.jpg', ai: '/images/heritage-ai/13515.jpg' }, // 吕剧
-  '13519': { real: '/images/heritage-items/13519.jpg', ai: '/images/heritage-ai/13519.jpg' }, // 柳腔
-  '13522': { real: '/images/heritage-items/13522.jpg', ai: '/images/heritage-ai/13522.jpg' }, // 山东梆子
-  '13521': { real: '/images/heritage-items/13521.jpg', ai: '/images/heritage-ai/13522.jpg' }, // 山东梆子
-  '13520': { real: '/images/heritage-items/13520.jpg', ai: '/images/heritage-ai/13522.jpg' }, // 山东梆子
-  '13523': { real: '/images/heritage-items/13523.jpg', ai: '/images/heritage-ai/13523.jpg' }, // 莱芜梆子
-  '13524': { real: '/images/heritage-items/13524.jpg', ai: '/images/heritage-ai/13524.jpg' }, // 枣梆
-  '13560': { real: '/images/heritage-items/13560.jpg', ai: '/images/heritage-ai/13560.jpg' }, // 鹧鸪戏
-  '13588': { real: '/images/heritage-items/13588.jpg', ai: '/images/heritage-ai/13588.jpg' }, // 山东大鼓
-  '13606': { real: '/images/heritage-items/13606.jpg', ai: '/images/heritage-ai/13606.jpg' }, // 胶东大鼓
-  '13607': { real: '/images/heritage-items/13607.jpg', ai: '/images/heritage-ai/13606.jpg' }, // 胶东大鼓
-  '13623': { real: '/images/heritage-items/13623.jpg', ai: '/images/heritage-ai/13623.jpg' }, // 山东琴书
-  '13624': { real: '/images/heritage-items/13624.jpg', ai: '/images/heritage-ai/13623.jpg' }, // 山东琴书
-  '13625': { real: '/images/heritage-items/13625.jpg', ai: '/images/heritage-ai/13623.jpg' }, // 山东琴书
-  '13655': { real: '/images/heritage-items/13655.jpg', ai: '/images/heritage-ai/13655.jpg' }, // 山东快书
-  '13696': { real: '/images/heritage-items/13696.jpg', ai: '/images/heritage-ai/13696.jpg' }, // 莺歌柳书
-  '13726': { real: '/images/heritage-items/13726.jpg', ai: '/images/heritage-ai/13726.jpg' }, // 山东落子
-  '13727': { real: '/images/heritage-items/13727.jpg', ai: '/images/heritage-ai/13726.jpg' }, // 山东落子
-  '13760': { real: '/images/heritage-items/13760.jpg', ai: '/images/heritage-ai/13760.jpg' }, // 端鼓腔
-  '13759': { real: '/images/heritage-items/13759.jpg', ai: '/images/heritage-ai/13760.jpg' }, // 端鼓腔
-  '13768': { real: '/images/heritage-items/13768.jpg', ai: '/images/heritage-ai/13768.jpg' }, // 山东花鼓
-  '13775': { real: '/images/heritage-items/13775.jpg', ai: '/images/heritage-ai/13775.jpg' }, // 聊城杂技
-  '23693': { real: '/images/heritage-items/23693.jpg', ai: '/images/heritage-ai/23693.jpg' }, // 梅花拳（梁山梅花拳）
-  '13810': { real: '/images/heritage-items/13810.jpg', ai: '/images/heritage-ai/13810.jpg' }, // 蹴鞠
-  '13835': { real: '/images/heritage-items/13835.jpg', ai: '/images/heritage-ai/13835.jpg' }, // 查拳
-  '13836': { real: '/images/heritage-items/13836.jpg', ai: '/images/heritage-ai/13836.jpg' }, // 螳螂拳
-  '13838': { real: '/images/heritage-items/13838.jpg', ai: '/images/heritage-ai/13836.jpg' }, // 螳螂拳
-  '13837': { real: '/images/heritage-items/13837.jpg', ai: '/images/heritage-ai/13836.jpg' }, // 螳螂拳
-  '13839': { real: '/images/heritage-items/13839.jpg', ai: '/images/heritage-ai/13836.jpg' }, // 螳螂拳
-  '13860': { real: '/images/heritage-items/13860.jpg', ai: '/images/heritage-ai/13860.jpg' }, // 宁津杂技
-  '13870': { real: '/images/heritage-items/13870.jpg', ai: '/images/heritage-ai/13870.jpg' }, // 佛汉拳
-  '13871': { real: '/images/heritage-items/13871.jpg', ai: '/images/heritage-ai/13871.jpg' }, // 孙膑拳
-  '13872': { real: '/images/heritage-items/13872.jpg', ai: '/images/heritage-ai/13871.jpg' }, // 孙膑拳
-  '13873': { real: '/images/heritage-items/13873.jpg', ai: '/images/heritage-ai/13873.jpg' }, // 肘捶
-  '13884': { real: '/images/heritage-items/13884.jpg', ai: '/images/heritage-ai/13884.jpg' }, // 花毽
-  '13894': { real: '/images/heritage-items/13894.jpg', ai: '/images/heritage-ai/13894.jpg' }, // 徐家拳
-  '13904': { real: '/images/heritage-items/13904.jpg', ai: '/images/heritage-ai/13904.jpg' }, // 杨家埠木版年画
-  '13905': { real: '/images/heritage-items/13905.jpg', ai: '/images/heritage-ai/13905.jpg' }, // 高密扑灰年画
-  '13923': { real: '/images/heritage-items/13923.jpg', ai: '/images/heritage-ai/13923.jpg' }, // 内画（鲁派内画）
-  '13955': { real: '/images/heritage-items/13955.jpg', ai: '/images/heritage-ai/13955.jpg' }, // 剪纸（莒县过门笺）
-  '20152': { real: '/images/heritage-items/20152.jpg', ai: '/images/heritage-ai/13955.jpg' }, // 剪纸（莒县过门笺）
-  '13956': { real: '/images/heritage-items/13956.jpg', ai: '/images/heritage-ai/13956.jpg' }, // 剪纸（滨州民间剪纸）
-  '20151': { real: '/images/heritage-items/20151.jpg', ai: '/images/heritage-ai/13956.jpg' }, // 剪纸（滨州民间剪纸）
-  '13954': { real: '/images/heritage-items/13954.jpg', ai: '/images/heritage-ai/13954.jpg' }, // 剪纸（高密剪纸）
-  '20153': { real: '/images/heritage-items/20153.jpg', ai: '/images/heritage-ai/13954.jpg' }, // 剪纸（高密剪纸）
-  '13953': { real: '/images/heritage-items/13953.jpg', ai: '/images/heritage-ai/13953.jpg' }, // 剪纸（烟台剪纸）
-  '20154': { real: '/images/heritage-items/20154.jpg', ai: '/images/heritage-ai/13953.jpg' }, // 剪纸（烟台剪纸）
-  '14046': { real: '/images/heritage-items/14046.jpg', ai: '/images/heritage-ai/14046.jpg' }, // 泥塑（聂家庄泥塑）
-  '14051': { real: '/images/heritage-items/14051.jpg', ai: '/images/heritage-ai/14051.jpg' }, // 泥塑（惠民泥塑）
-  '14087': { real: '/images/heritage-items/14087.jpg', ai: '/images/heritage-ai/14087.jpg' }, // 面人（曹州面人）
-  '14088': { real: '/images/heritage-items/14088.jpg', ai: '/images/heritage-ai/14088.jpg' }, // 面人（曹县江米人）
-  '14094': { real: '/images/heritage-items/14094.jpg', ai: '/images/heritage-ai/14094.jpg' }, // 面花（郎庄面塑）
-  '14100': { real: '/images/heritage-items/14100.jpg', ai: '/images/heritage-ai/14100.jpg' }, // 草编（莱州草辫）
-  '14108': { real: '/images/heritage-items/14108.jpg', ai: '/images/heritage-ai/14108.jpg' }, // 柳编（博兴柳编）
-  '14109': { real: '/images/heritage-items/14109.jpg', ai: '/images/heritage-ai/14109.jpg' }, // 柳编（曹县柳编）
-  '23724': { real: '/images/heritage-items/23724.jpg', ai: '/images/heritage-ai/23724.jpg' }, // 柳编（临沭柳编）
-  '14113': { real: '/images/heritage-items/14113.jpg', ai: '/images/heritage-ai/14113.jpg' }, // 石雕（嘉祥石雕）
-  '14112': { real: '/images/heritage-items/14112.jpg', ai: '/images/heritage-ai/14112.jpg' }, // 石雕（掖县滑石雕刻）
-  '14131': { real: '/images/heritage-items/14131.jpg', ai: '/images/heritage-ai/14131.jpg' }, // 木雕（曲阜楷木雕刻）
-  '23730': { real: '/images/heritage-items/23730.jpg', ai: '/images/heritage-ai/23730.jpg' }, // 木雕（曹县木雕）
-  '14143': { real: '/images/heritage-items/14143.jpg', ai: '/images/heritage-ai/14143.jpg' }, // 核雕（潍坊核雕）
-  '14147': { real: '/images/heritage-items/14147.jpg', ai: '/images/heritage-ai/14147.jpg' }, // 葫芦雕刻（东昌葫芦雕刻）
-  '14149': { real: '/images/heritage-items/14149.jpg', ai: '/images/heritage-ai/14149.jpg' }, // 锡雕
-  '14157': { real: '/images/heritage-items/14157.jpg', ai: '/images/heritage-ai/14157.jpg' }, // 木版年画（东昌府木版年画）
-  '14158': { real: '/images/heritage-items/14158.jpg', ai: '/images/heritage-ai/14158.jpg' }, // 木版年画（张秋木版年画）
-  '14203': { real: '/images/heritage-items/14203.jpg', ai: '/images/heritage-ai/14203.jpg' }, // 砖塑（鄄城砖塑）
-  '14253': { real: '/images/heritage-items/14253.jpg', ai: '/images/heritage-ai/14253.jpg' }, // 传统玩具（郯城木旋玩具）
-  '23544': { real: '/images/heritage-items/23544.jpg', ai: '/images/heritage-ai/23544.jpg' }, // 鲁绣
-  '14434': { real: '/images/heritage-items/14434.jpg', ai: '/images/heritage-ai/14434.jpg' }, // 风筝制作技艺（潍坊风筝）
-  '14445': { real: '/images/heritage-items/14445.jpg', ai: '/images/heritage-ai/14445.jpg' }, // 琉璃烧制技艺
-  '14446': { real: '/images/heritage-items/14446.jpg', ai: '/images/heritage-ai/14445.jpg' }, // 琉璃烧制技艺
-  '14447': { real: '/images/heritage-items/14447.jpg', ai: '/images/heritage-ai/14447.jpg' }, // 临清贡砖烧制技艺
-  '14466': { real: '/images/heritage-items/14466.jpg', ai: '/images/heritage-ai/14466.jpg' }, // 陶器烧制技艺（德州黑陶烧制技艺）
-  '14489': { real: '/images/heritage-items/14489.jpg', ai: '/images/heritage-ai/14489.jpg' }, // 鲁锦织造技艺
-  '14488': { real: '/images/heritage-items/14488.jpg', ai: '/images/heritage-ai/14489.jpg' }, // 鲁锦织造技艺
-  '14513': { real: '/images/heritage-items/14513.jpg', ai: '/images/heritage-ai/14513.jpg' }, // 黄金溜槽堆石砌灶冶炼技艺
-  '14548': { real: '/images/heritage-items/14548.jpg', ai: '/images/heritage-ai/14548.jpg' }, // 漆器髹饰技艺（潍坊嵌银髹漆技艺）
-  '23774': { real: '/images/heritage-items/23774.jpg', ai: '/images/heritage-ai/23774.jpg' }, // 蒸馏酒传统酿造技艺（景芝酒传统酿造技艺）
-  '14633': { real: '/images/heritage-items/14633.jpg', ai: '/images/heritage-ai/14633.jpg' }, // 晒盐技艺（卤水制盐技艺）
-  '14649': { real: '/images/heritage-items/14649.jpg', ai: '/images/heritage-ai/14649.jpg' }, // 周村烧饼制作技艺
-  '14665': { real: '/images/heritage-items/14665.jpg', ai: '/images/heritage-ai/14665.jpg' }, // 酱肉制作技艺（亓氏酱香源肉食酱制技艺）
-  '14706': { real: '/images/heritage-items/14706.jpg', ai: '/images/heritage-ai/14706.jpg' }, // 淄博陶瓷烧制技艺
-  '14727': { real: '/images/heritage-items/14727.jpg', ai: '/images/heritage-ai/14727.jpg' }, // 孔府菜烹饪技艺
-  '23813': { real: '/images/heritage-items/23813.jpg', ai: '/images/heritage-ai/23813.jpg' }, // 豆腐传统制作技艺
-  '14758': { real: '/images/heritage-items/14758.jpg', ai: '/images/heritage-ai/14758.jpg' }, // 德州扒鸡制作技艺
-  '14759': { real: '/images/heritage-items/14759.jpg', ai: '/images/heritage-ai/14759.jpg' }, // 龙口粉丝传统制作技艺
-  '23561': { real: '/images/heritage-items/23561.jpg', ai: '/images/heritage-ai/23561.jpg' }, // 丝绸染织技艺（周村丝绸染织技艺）
-  '14801': { real: '/images/heritage-items/14801.jpg', ai: '/images/heritage-ai/14801.jpg' }, // 中医传统制剂方法（东阿阿胶制作技艺）
-  '14800': { real: '/images/heritage-items/14800.jpg', ai: '/images/heritage-ai/14801.jpg' }, // 中医传统制剂方法（东阿阿胶制作技艺）
-  '14829': { real: '/images/heritage-items/14829.jpg', ai: '/images/heritage-ai/14829.jpg' }, // 中医传统制剂方法（二仙膏制作技艺）
-  '14850': { real: '/images/heritage-items/14850.jpg', ai: '/images/heritage-ai/14850.jpg' }, // 中医正骨疗法（新泰孟氏正骨疗法）
-  '23844': { real: '/images/heritage-items/23844.jpg', ai: '/images/heritage-ai/23844.jpg' }, // 中医正骨疗法（徐氏中医正骨）
-  '23854': { real: '/images/heritage-items/23854.jpg', ai: '/images/heritage-ai/23854.jpg' }, // 传统中医药文化（宏济堂中医药文化）
-  '14982': { real: '/images/heritage-items/14982.jpg', ai: '/images/heritage-ai/14982.jpg' }, // 祭孔大典
-  '15017': { real: '/images/heritage-items/15017.jpg', ai: '/images/heritage-ai/15017.jpg' }, // 泰山石敢当习俗
-  '15035': { real: '/images/heritage-items/15035.jpg', ai: '/images/heritage-ai/15035.jpg' }, // 胡集书会
-  '15087': { real: '/images/heritage-items/15087.jpg', ai: '/images/heritage-ai/15087.jpg' }, // 元宵节（淄博花灯会）
-  '15092': { real: '/images/heritage-items/15092.jpg', ai: '/images/heritage-ai/15092.jpg' }, // 渔民开洋、谢洋节
-  '15093': { real: '/images/heritage-items/15093.jpg', ai: '/images/heritage-ai/15092.jpg' }, // 渔民开洋、谢洋节
-  '15091': { real: '/images/heritage-items/15091.jpg', ai: '/images/heritage-ai/15092.jpg' }, // 渔民开洋、谢洋节
-  '15110': { real: '/images/heritage-items/15110.jpg', ai: '/images/heritage-ai/15110.jpg' }, // 灯会（渔灯节）
-  '15124': { real: '/images/heritage-items/15124.jpg', ai: '/images/heritage-ai/15124.jpg' }, // 庙会（泰山东岳庙会）
-  '15165': { real: '/images/heritage-items/15165.jpg', ai: '/images/heritage-ai/15165.jpg' }, // 民间信俗（东镇沂山祭仪）
-  '15198': { real: '/images/heritage-items/15198.jpg', ai: '/images/heritage-ai/15198.jpg' }, // 抬阁（芯子、铁枝、飘色）（阁子里芯子）
-  '15199': { real: '/images/heritage-items/15199.jpg', ai: '/images/heritage-ai/15199.jpg' }, // 抬阁（芯子、铁枝、飘色）（周村芯子）
-  '15197': { real: '/images/heritage-items/15197.jpg', ai: '/images/heritage-ai/15197.jpg' }, // 抬阁（芯子、铁枝、飘色）（章丘芯子）
-  '23896': { real: '/images/heritage-items/23896.jpg', ai: '/images/heritage-ai/23896.jpg' }, // 中元节（莱芜中元节习俗）
+  '12190': { real: '/images/heritage-items/12190.jpg', ai: '/images/heritage-ai/12190.jpg' },
+  '12192': { real: '/images/heritage-items/12192.jpg', ai: '/images/heritage-ai/12192.jpg' },
+  '12195': { real: '/images/heritage-items/12195.jpg', ai: '/images/heritage-ai/12192.jpg' },
+  '12196': { real: '/images/heritage-items/12196.jpg', ai: '/images/heritage-ai/12192.jpg' },
+  '12201': { real: '/images/heritage-items/12201.jpg', ai: '/images/heritage-ai/12201.jpg' },
+  '12252': { real: '/images/heritage-items/12252.jpg', ai: '/images/heritage-ai/12252.jpg' },
+  '12254': { real: '/images/heritage-items/12254.jpg', ai: '/images/heritage-ai/12254.jpg' },
+  '12265': { real: '/images/heritage-items/12265.jpg', ai: '/images/heritage-ai/12265.jpg' },
+  '12264': { real: '/images/heritage-items/12264.jpg', ai: '/images/heritage-ai/12265.jpg' },
+  '12266': { real: '/images/heritage-items/12266.jpg', ai: '/images/heritage-ai/12266.jpg' },
+  '12268': { real: '/images/heritage-items/12268.jpg', ai: '/images/heritage-ai/12268.jpg' },
+  '12267': { real: '/images/heritage-items/12267.jpg', ai: '/images/heritage-ai/12268.jpg' },
+  '12270': { real: '/images/heritage-items/12270.jpg', ai: '/images/heritage-ai/12270.jpg' },
+  '12269': { real: '/images/heritage-items/12269.jpg', ai: '/images/heritage-ai/12270.jpg' },
+  '12271': { real: '/images/heritage-items/12271.jpg', ai: '/images/heritage-ai/12271.jpg' },
+  '12272': { real: '/images/heritage-items/12272.jpg', ai: '/images/heritage-ai/12272.jpg' },
+  '12275': { real: '/images/heritage-items/12275.jpg', ai: '/images/heritage-ai/12272.jpg' },
+  '12274': { real: '/images/heritage-items/12274.jpg', ai: '/images/heritage-ai/12272.jpg' },
+  '12273': { real: '/images/heritage-items/12273.jpg', ai: '/images/heritage-ai/12272.jpg' },
+  '12287': { real: '/images/heritage-items/12287.jpg', ai: '/images/heritage-ai/12287.jpg' },
+  '12331': { real: '/images/heritage-items/12331.jpg', ai: '/images/heritage-ai/12331.jpg' },
+  '12336': { real: '/images/heritage-items/12336.jpg', ai: '/images/heritage-ai/12336.jpg' },
+  '12337': { real: '/images/heritage-items/12337.jpg', ai: '/images/heritage-ai/12337.jpg' },
+  '12346': { real: '/images/heritage-items/12346.jpg', ai: '/images/heritage-ai/12346.jpg' },
+  '12347': { real: '/images/heritage-items/12347.jpg', ai: '/images/heritage-ai/12347.jpg' },
+  '12384': { real: '/images/heritage-items/12384.jpg', ai: '/images/heritage-ai/12384.jpg' },
+  '12385': { real: '/images/heritage-items/12385.jpg', ai: '/images/heritage-ai/12385.jpg' },
+  '12448': { real: '/images/heritage-items/12448.jpg', ai: '/images/heritage-ai/12448.jpg' },
+  '12491': { real: '/images/heritage-items/12491.jpg', ai: '/images/heritage-ai/12491.jpg' },
+  '12513': { real: '/images/heritage-items/12513.jpg', ai: '/images/heritage-ai/12513.jpg' },
+  '12544': { real: '/images/heritage-items/12544.jpg', ai: '/images/heritage-ai/12544.jpg' },
+  '12545': { real: '/images/heritage-items/12545.jpg', ai: '/images/heritage-ai/12544.jpg' },
+  '12547': { real: '/images/heritage-items/12547.jpg', ai: '/images/heritage-ai/12544.jpg' },
+  '12546': { real: '/images/heritage-items/12546.jpg', ai: '/images/heritage-ai/12544.jpg' },
+  '12629': { real: '/images/heritage-items/12629.jpg', ai: '/images/heritage-ai/12629.jpg' },
+  '12646': { real: '/images/heritage-items/12646.jpg', ai: '/images/heritage-ai/12646.jpg' },
+  '12645': { real: '/images/heritage-items/12645.jpg', ai: '/images/heritage-ai/12646.jpg' },
+  '12692': { real: '/images/heritage-items/12692.jpg', ai: '/images/heritage-ai/12692.jpg' },
+  '23648': { real: '/images/heritage-items/23648.jpg', ai: '/images/heritage-ai/23648.jpg' },
+  '12744': { real: '/images/heritage-items/12744.jpg', ai: '/images/heritage-ai/12744.jpg' },
+  '12761': { real: '/images/heritage-items/12761.jpg', ai: '/images/heritage-ai/12761.jpg' },
+  '12763': { real: '/images/heritage-items/12763.jpg', ai: '/images/heritage-ai/12763.jpg' },
+  '12762': { real: '/images/heritage-items/12762.jpg', ai: '/images/heritage-ai/12762.jpg' },
+  '12764': { real: '/images/heritage-items/12764.jpg', ai: '/images/heritage-ai/12764.jpg' },
+  '12787': { real: '/images/heritage-items/12787.jpg', ai: '/images/heritage-ai/12787.jpg' },
+  '12814': { real: '/images/heritage-items/12814.jpg', ai: '/images/heritage-ai/12814.jpg' },
+  '12815': { real: '/images/heritage-items/12815.jpg', ai: '/images/heritage-ai/12815.jpg' },
+  '12816': { real: '/images/heritage-items/12816.jpg', ai: '/images/heritage-ai/12816.jpg' },
+  '12821': { real: '/images/heritage-items/12821.jpg', ai: '/images/heritage-ai/12821.jpg' },
+  '12824': { real: '/images/heritage-items/12824.jpg', ai: '/images/heritage-ai/12824.jpg' },
+  '12855': { real: '/images/heritage-items/12855.jpg', ai: '/images/heritage-ai/12855.jpg' },
+  '12910': { real: '/images/heritage-items/12910.jpg', ai: '/images/heritage-ai/12910.jpg' },
+  '12992': { real: '/images/heritage-items/12992.jpg', ai: '/images/heritage-ai/12992.jpg' },
+  '12994': { real: '/images/heritage-items/12994.jpg', ai: '/images/heritage-ai/12994.jpg' },
+  '12991': { real: '/images/heritage-items/12991.jpg', ai: '/images/heritage-ai/12991.jpg' },
+  '12993': { real: '/images/heritage-items/12993.jpg', ai: '/images/heritage-ai/12993.jpg' },
+  '13029': { real: '/images/heritage-items/13029.jpg', ai: '/images/heritage-ai/13029.jpg' },
+  '23472': { real: '/images/heritage-items/23472.jpg', ai: '/images/heritage-ai/23472.jpg' },
+  '13194': { real: '/images/heritage-items/13194.jpg', ai: '/images/heritage-ai/13194.jpg' },
+  '13193': { real: '/images/heritage-items/13193.jpg', ai: '/images/heritage-ai/13194.jpg' },
+  '13195': { real: '/images/heritage-items/13195.jpg', ai: '/images/heritage-ai/13194.jpg' },
+  '13206': { real: '/images/heritage-items/13206.jpg', ai: '/images/heritage-ai/13206.jpg' },
+  '13238': { real: '/images/heritage-items/13238.jpg', ai: '/images/heritage-ai/13238.jpg' },
+  '13242': { real: '/images/heritage-items/13242.jpg', ai: '/images/heritage-ai/13242.jpg' },
+  '13253': { real: '/images/heritage-items/13253.jpg', ai: '/images/heritage-ai/13253.jpg' },
+  '13254': { real: '/images/heritage-items/13254.jpg', ai: '/images/heritage-ai/13253.jpg' },
+  '13287': { real: '/images/heritage-items/13287.jpg', ai: '/images/heritage-ai/13287.jpg' },
+  '13289': { real: '/images/heritage-items/13289.jpg', ai: '/images/heritage-ai/13287.jpg' },
+  '13298': { real: '/images/heritage-items/13298.jpg', ai: '/images/heritage-ai/13298.jpg' },
+  '13300': { real: '/images/heritage-items/13300.jpg', ai: '/images/heritage-ai/13300.jpg' },
+  '13299': { real: '/images/heritage-items/13299.jpg', ai: '/images/heritage-ai/13300.jpg' },
+  '23675': { real: '/images/heritage-items/23675.jpg', ai: '/images/heritage-ai/13300.jpg' },
+  '13319': { real: '/images/heritage-items/13319.jpg', ai: '/images/heritage-ai/13319.jpg' },
+  '13323': { real: '/images/heritage-items/13323.jpg', ai: '/images/heritage-ai/13323.jpg' },
+  '13347': { real: '/images/heritage-items/13347.jpg', ai: '/images/heritage-ai/13347.jpg' },
+  '13411': { real: '/images/heritage-items/13411.jpg', ai: '/images/heritage-ai/13411.jpg' },
+  '13410': { real: '/images/heritage-items/13410.jpg', ai: '/images/heritage-ai/13410.jpg' },
+  '13412': { real: '/images/heritage-items/13412.jpg', ai: '/images/heritage-ai/13412.jpg' },
+  '13509': { real: '/images/heritage-items/13509.jpg', ai: '/images/heritage-ai/13509.jpg' },
+  '13515': { real: '/images/heritage-items/13515.jpg', ai: '/images/heritage-ai/13515.jpg' },
+  '13514': { real: '/images/heritage-items/13514.jpg', ai: '/images/heritage-ai/13515.jpg' },
+  '13517': { real: '/images/heritage-items/13517.jpg', ai: '/images/heritage-ai/13515.jpg' },
+  '13516': { real: '/images/heritage-items/13516.jpg', ai: '/images/heritage-ai/13515.jpg' },
+  '13518': { real: '/images/heritage-items/13518.jpg', ai: '/images/heritage-ai/13515.jpg' },
+  '13519': { real: '/images/heritage-items/13519.jpg', ai: '/images/heritage-ai/13519.jpg' },
+  '13522': { real: '/images/heritage-items/13522.jpg', ai: '/images/heritage-ai/13522.jpg' },
+  '13521': { real: '/images/heritage-items/13521.jpg', ai: '/images/heritage-ai/13522.jpg' },
+  '13520': { real: '/images/heritage-items/13520.jpg', ai: '/images/heritage-ai/13522.jpg' },
+  '13523': { real: '/images/heritage-items/13523.jpg', ai: '/images/heritage-ai/13523.jpg' },
+  '13524': { real: '/images/heritage-items/13524.jpg', ai: '/images/heritage-ai/13524.jpg' },
+  '13560': { real: '/images/heritage-items/13560.jpg', ai: '/images/heritage-ai/13560.jpg' },
+  '13588': { real: '/images/heritage-items/13588.jpg', ai: '/images/heritage-ai/13588.jpg' },
+  '13606': { real: '/images/heritage-items/13606.jpg', ai: '/images/heritage-ai/13606.jpg' },
+  '13607': { real: '/images/heritage-items/13607.jpg', ai: '/images/heritage-ai/13606.jpg' },
+  '13623': { real: '/images/heritage-items/13623.jpg', ai: '/images/heritage-ai/13623.jpg' },
+  '13624': { real: '/images/heritage-items/13624.jpg', ai: '/images/heritage-ai/13623.jpg' },
+  '13625': { real: '/images/heritage-items/13625.jpg', ai: '/images/heritage-ai/13623.jpg' },
+  '13655': { real: '/images/heritage-items/13655.jpg', ai: '/images/heritage-ai/13655.jpg' },
+  '13696': { real: '/images/heritage-items/13696.jpg', ai: '/images/heritage-ai/13696.jpg' },
+  '13726': { real: '/images/heritage-items/13726.jpg', ai: '/images/heritage-ai/13726.jpg' },
+  '13727': { real: '/images/heritage-items/13727.jpg', ai: '/images/heritage-ai/13726.jpg' },
+  '13760': { real: '/images/heritage-items/13760.jpg', ai: '/images/heritage-ai/13760.jpg' },
+  '13759': { real: '/images/heritage-items/13759.jpg', ai: '/images/heritage-ai/13760.jpg' },
+  '13768': { real: '/images/heritage-items/13768.jpg', ai: '/images/heritage-ai/13768.jpg' },
+  '13775': { real: '/images/heritage-items/13775.jpg', ai: '/images/heritage-ai/13775.jpg' },
+  '23693': { real: '/images/heritage-items/23693.jpg', ai: '/images/heritage-ai/23693.jpg' },
+  '13810': { real: '/images/heritage-items/13810.jpg', ai: '/images/heritage-ai/13810.jpg' },
+  '13835': { real: '/images/heritage-items/13835.jpg', ai: '/images/heritage-ai/13835.jpg' },
+  '13836': { real: '/images/heritage-items/13836.jpg', ai: '/images/heritage-ai/13836.jpg' },
+  '13838': { real: '/images/heritage-items/13838.jpg', ai: '/images/heritage-ai/13836.jpg' },
+  '13837': { real: '/images/heritage-items/13837.jpg', ai: '/images/heritage-ai/13836.jpg' },
+  '13839': { real: '/images/heritage-items/13839.jpg', ai: '/images/heritage-ai/13836.jpg' },
+  '13860': { real: '/images/heritage-items/13860.jpg', ai: '/images/heritage-ai/13860.jpg' },
+  '13870': { real: '/images/heritage-items/13870.jpg', ai: '/images/heritage-ai/13870.jpg' },
+  '13871': { real: '/images/heritage-items/13871.jpg', ai: '/images/heritage-ai/13871.jpg' },
+  '13872': { real: '/images/heritage-items/13872.jpg', ai: '/images/heritage-ai/13871.jpg' },
+  '13873': { real: '/images/heritage-items/13873.jpg', ai: '/images/heritage-ai/13873.jpg' },
+  '13884': { real: '/images/heritage-items/13884.jpg', ai: '/images/heritage-ai/13884.jpg' },
+  '13894': { real: '/images/heritage-items/13894.jpg', ai: '/images/heritage-ai/13894.jpg' },
+  '13904': { real: '/images/heritage-items/13904.jpg', ai: '/images/heritage-ai/13904.jpg' },
+  '13905': { real: '/images/heritage-items/13905.jpg', ai: '/images/heritage-ai/13905.jpg' },
+  '13923': { real: '/images/heritage-items/13923.jpg', ai: '/images/heritage-ai/13923.jpg' },
+  '13955': { real: '/images/heritage-items/13955.jpg', ai: '/images/heritage-ai/13955.jpg' },
+  '20152': { real: '/images/heritage-items/20152.jpg', ai: '/images/heritage-ai/13955.jpg' },
+  '13956': { real: '/images/heritage-items/13956.jpg', ai: '/images/heritage-ai/13956.jpg' },
+  '20151': { real: '/images/heritage-items/20151.jpg', ai: '/images/heritage-ai/13956.jpg' },
+  '13954': { real: '/images/heritage-items/13954.jpg', ai: '/images/heritage-ai/13954.jpg' },
+  '20153': { real: '/images/heritage-items/20153.jpg', ai: '/images/heritage-ai/13954.jpg' },
+  '13953': { real: '/images/heritage-items/13953.jpg', ai: '/images/heritage-ai/13953.jpg' },
+  '20154': { real: '/images/heritage-items/20154.jpg', ai: '/images/heritage-ai/13953.jpg' },
+  '14046': { real: '/images/heritage-items/14046.jpg', ai: '/images/heritage-ai/14046.jpg' },
+  '14051': { real: '/images/heritage-items/14051.jpg', ai: '/images/heritage-ai/14051.jpg' },
+  '14087': { real: '/images/heritage-items/14087.jpg', ai: '/images/heritage-ai/14087.jpg' },
+  '14088': { real: '/images/heritage-items/14088.jpg', ai: '/images/heritage-ai/14088.jpg' },
+  '14094': { real: '/images/heritage-items/14094.jpg', ai: '/images/heritage-ai/14094.jpg' },
+  '14100': { real: '/images/heritage-items/14100.jpg', ai: '/images/heritage-ai/14100.jpg' },
+  '14108': { real: '/images/heritage-items/14108.jpg', ai: '/images/heritage-ai/14108.jpg' },
+  '14109': { real: '/images/heritage-items/14109.jpg', ai: '/images/heritage-ai/14109.jpg' },
+  '23724': { real: '/images/heritage-items/23724.jpg', ai: '/images/heritage-ai/23724.jpg' },
+  '14113': { real: '/images/heritage-items/14113.jpg', ai: '/images/heritage-ai/14113.jpg' },
+  '14112': { real: '/images/heritage-items/14112.jpg', ai: '/images/heritage-ai/14112.jpg' },
+  '14131': { real: '/images/heritage-items/14131.jpg', ai: '/images/heritage-ai/14131.jpg' },
+  '23730': { real: '/images/heritage-items/23730.jpg', ai: '/images/heritage-ai/23730.jpg' },
+  '14143': { real: '/images/heritage-items/14143.jpg', ai: '/images/heritage-ai/14143.jpg' },
+  '14147': { real: '/images/heritage-items/14147.jpg', ai: '/images/heritage-ai/14147.jpg' },
+  '14149': { real: '/images/heritage-items/14149.jpg', ai: '/images/heritage-ai/14149.jpg' },
+  '14157': { real: '/images/heritage-items/14157.jpg', ai: '/images/heritage-ai/14157.jpg' },
+  '14158': { real: '/images/heritage-items/14158.jpg', ai: '/images/heritage-ai/14158.jpg' },
+  '14203': { real: '/images/heritage-items/14203.jpg', ai: '/images/heritage-ai/14203.jpg' },
+  '14253': { real: '/images/heritage-items/14253.jpg', ai: '/images/heritage-ai/14253.jpg' },
+  '23544': { real: '/images/heritage-items/23544.jpg', ai: '/images/heritage-ai/23544.jpg' },
+  '14434': { real: '/images/heritage-items/14434.jpg', ai: '/images/heritage-ai/14434.jpg' },
+  '14445': { real: '/images/heritage-items/14445.jpg', ai: '/images/heritage-ai/14445.jpg' },
+  '14446': { real: '/images/heritage-items/14446.jpg', ai: '/images/heritage-ai/14445.jpg' },
+  '14447': { real: '/images/heritage-items/14447.jpg', ai: '/images/heritage-ai/14447.jpg' },
+  '14466': { real: '/images/heritage-items/14466.jpg', ai: '/images/heritage-ai/14466.jpg' },
+  '14489': { real: '/images/heritage-items/14489.jpg', ai: '/images/heritage-ai/14489.jpg' },
+  '14488': { real: '/images/heritage-items/14488.jpg', ai: '/images/heritage-ai/14489.jpg' },
+  '14513': { real: '/images/heritage-items/14513.jpg', ai: '/images/heritage-ai/14513.jpg' },
+  '14548': { real: '/images/heritage-items/14548.jpg', ai: '/images/heritage-ai/14548.jpg' },
+  '23774': { real: '/images/heritage-items/23774.jpg', ai: '/images/heritage-ai/23774.jpg' },
+  '14633': { real: '/images/heritage-items/14633.jpg', ai: '/images/heritage-ai/14633.jpg' },
+  '14649': { real: '/images/heritage-items/14649.jpg', ai: '/images/heritage-ai/14649.jpg' },
+  '14665': { real: '/images/heritage-items/14665.jpg', ai: '/images/heritage-ai/14665.jpg' },
+  '14706': { real: '/images/heritage-items/14706.jpg', ai: '/images/heritage-ai/14706.jpg' },
+  '14727': { real: '/images/heritage-items/14727.jpg', ai: '/images/heritage-ai/14727.jpg' },
+  '23813': { real: '/images/heritage-items/23813.jpg', ai: '/images/heritage-ai/23813.jpg' },
+  '14758': { real: '/images/heritage-items/14758.jpg', ai: '/images/heritage-ai/14758.jpg' },
+  '14759': { real: '/images/heritage-items/14759.jpg', ai: '/images/heritage-ai/14759.jpg' },
+  '23561': { real: '/images/heritage-items/23561.jpg', ai: '/images/heritage-ai/23561.jpg' },
+  '14801': { real: '/images/heritage-items/14801.jpg', ai: '/images/heritage-ai/14801.jpg' },
+  '14800': { real: '/images/heritage-items/14800.jpg', ai: '/images/heritage-ai/14801.jpg' },
+  '14829': { real: '/images/heritage-items/14829.jpg', ai: '/images/heritage-ai/14829.jpg' },
+  '14850': { real: '/images/heritage-items/14850.jpg', ai: '/images/heritage-ai/14850.jpg' },
+  '23844': { real: '/images/heritage-items/23844.jpg', ai: '/images/heritage-ai/23844.jpg' },
+  '23854': { real: '/images/heritage-items/23854.jpg', ai: '/images/heritage-ai/23854.jpg' },
+  '14982': { real: '/images/heritage-items/14982.jpg', ai: '/images/heritage-ai/14982.jpg' },
+  '15017': { real: '/images/heritage-items/15017.jpg', ai: '/images/heritage-ai/15017.jpg' },
+  '15035': { real: '/images/heritage-items/15035.jpg', ai: '/images/heritage-ai/15035.jpg' },
+  '15087': { real: '/images/heritage-items/15087.jpg', ai: '/images/heritage-ai/15087.jpg' },
+  '15092': { real: '/images/heritage-items/15092.jpg', ai: '/images/heritage-ai/15092.jpg' },
+  '15093': { real: '/images/heritage-items/15093.jpg', ai: '/images/heritage-ai/15092.jpg' },
+  '15091': { real: '/images/heritage-items/15091.jpg', ai: '/images/heritage-ai/15092.jpg' },
+  '15110': { real: '/images/heritage-items/15110.jpg', ai: '/images/heritage-ai/15110.jpg' },
+  '15124': { real: '/images/heritage-items/15124.jpg', ai: '/images/heritage-ai/15124.jpg' },
+  '15165': { real: '/images/heritage-items/15165.jpg', ai: '/images/heritage-ai/15165.jpg' },
+  '15198': { real: '/images/heritage-items/15198.jpg', ai: '/images/heritage-ai/15198.jpg' },
+  '15199': { real: '/images/heritage-items/15199.jpg', ai: '/images/heritage-ai/15199.jpg' },
+  '15197': { real: '/images/heritage-items/15197.jpg', ai: '/images/heritage-ai/15197.jpg' },
+  '23896': { real: '/images/heritage-items/23896.jpg', ai: '/images/heritage-ai/23896.jpg' },
 }

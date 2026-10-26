@@ -1,12 +1,7 @@
 <template>
-  <!-- 首页与登录页共用的整屏底图（仿 Modrinth 首页）：
-       近白底铺浅绿等距立体块阵列，右上角一组绿色同心圆环（最内圈留缺口、缓慢旋转），
-       衬柔和光晕。纯矢量内联，颜色跟当前主题主色走，离线可用、任意分辨率不糊。 -->
   <div class="auth-bg" aria-hidden="true">
     <svg class="bg-art" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
       <defs>
-        <!-- 等距立体块：顶面/左面/右面三层极淡主色叠出体积感；
-             同一形状再上移一格画一遍，纵向拼缝无缝 -->
         <pattern id="auth-iso" width="64" height="32" patternUnits="userSpaceOnUse">
           <path class="iso-top" d="M32 0 L64 16 L32 32 L0 16 Z" />
           <path class="iso-left" d="M0 16 L32 32 L32 48 L0 32 Z" />
@@ -20,10 +15,8 @@
         </radialGradient>
       </defs>
 
-      <!-- 立体块阵列铺底 -->
       <rect class="art-iso-field" x="0" y="0" width="1440" height="900" fill="url(#auth-iso)" />
 
-      <!-- 圆环组：呼应 Modrinth 的环形标志；窄屏整体左移，避免被 slice 裁掉 -->
       <g class="ring-cluster">
         <ellipse class="art-halo" cx="1150" cy="300" rx="430" ry="430" fill="url(#auth-halo)" />
         <g class="art-rings">
@@ -48,7 +41,6 @@
   pointer-events: none;
   overflow: hidden;
 }
-/* 矢量底图铺满：slice 保证任何宽高比都不留白、不拉伸变形 */
 .bg-art {
   position: absolute;
   inset: 0;
@@ -57,7 +49,6 @@
   display: block;
 }
 
-/* 立体块阵列：三层极淡主色叠出体积感（顶面最亮、右面最暗） */
 .art-iso-field {
   opacity: 0.9;
 }
@@ -71,13 +62,11 @@
   fill: rgba(var(--rgb-gold), 0.02);
 }
 
-/* 圆环组：主色由外到内渐次加浓，最内圈留缺口、缓慢旋转 */
 .ring-cluster {
   transform-box: view-box;
   transform-origin: 1150px 300px;
 }
 @media (max-width: 760px) {
-  /* 窄屏 slice 会裁掉右侧，把圆环挪到画面中部 */
   .ring-cluster {
     transform: translate(-330px, 40px);
   }
@@ -127,7 +116,6 @@
   }
 }
 
-/* 光晕：右上环组泛光 + 左下淡绿托底 */
 .bg-glow {
   position: absolute;
   inset: 0;

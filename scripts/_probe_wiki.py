@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
 import urllib.request, ssl, json, urllib.parse
+
 ctx = ssl.create_default_context(); ctx.check_hostname=False; ctx.verify_mode=ssl.CERT_NONE
+
 UA={'User-Agent':'TikTokBloggerBot/1.0 (educational project; contact@example.com)'}
 
 def wiki_summary(title):

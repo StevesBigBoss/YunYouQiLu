@@ -1,6 +1,5 @@
 <template>
   <div class="industry-analysis">
-    <!-- KPI 卡片行 -->
     <div class="grid grid-4">
       <StatCard
         :title="t('文旅总收入 · {scope}', { scope: scopeLabel })"
@@ -33,7 +32,6 @@
       />
     </div>
 
-    <!-- 时间维度切换 -->
     <div class="common-card dim-bar">
       <div class="btn-group">
         <button
@@ -47,7 +45,6 @@
       <span class="dim-tip">{{ t('当前统计口径：{period} · {scope}', { period: periodLabel, scope: scopeLabel }) }}</span>
     </div>
 
-    <!-- 中部四图表 -->
     <div class="grid grid-2">
       <ChartCard :title="incomeTitle" :option="cityIncomeOption" height="300px" />
       <ChartCard :title="t('文旅消费结构 · {scope}', { scope: scopeLabel })" :option="consumeStructOption" height="300px" />
@@ -55,7 +52,6 @@
       <ChartCard :title="t('文旅供给能力 · {scope}', { scope: scopeLabel })" :option="supplyOption" height="300px" />
     </div>
 
-    <!-- 研判报告区 -->
     <div class="common-card">
       <div class="card-title">
         <span>{{ t('研判报告') }}</span>
@@ -84,7 +80,6 @@
       </table>
     </div>
 
-    <!-- 文旅产业场景配图：点缩略图看大图 -->
     <ImageGallery page="industry" :title="t('文旅产业场景图集')" />
   </div>
 </template>
@@ -117,15 +112,12 @@ import type { ReportItem } from '../types'
 const dimension = ref('月度')
 const dimensions = ['月度', '季度', '年度']
 
-/** 当前统计口径文案（月度 / 季度 / 年度） */
 const periodLabel = computed(() =>
   dimension.value === '月度' ? t('本月（2026-09）') : dimension.value === '季度' ? t('本季度（2026-Q3）') : t('本年度（2026）'),
 )
 
-/** 时间维度系数：把年度口径拆到月/季 */
 const DIM_FACTOR: Record<string, number> = { 月度: 1 / 12, 季度: 1 / 4, 年度: 1 }
 
-/** KPI：先按范围缩放，再按所选时间维度折算 */
 const kpi = computed(() => {
   const f = DIM_FACTOR[dimension.value]
   return {
@@ -136,7 +128,6 @@ const kpi = computed(() => {
   }
 })
 
-/** 范围粒度：多市时是各市收入，单市时展开成县区收入 */
 const incomeRows = computed(() => {
   const total = scaleVal(mockIndustryKpi.income, 'ind-income-axis', 1)
   return scopeUnits.value.map((u) => ({ name: tv(u.label), value: unitValue(total, u, 'ind-unit', 1) }))
@@ -148,7 +139,6 @@ const incomeTitle = computed(() =>
     : t('各市文旅收入对比（亿元）'),
 )
 
-// 收入柱状图：范围为单市时横轴是县区，多市时是范围内的市
 const cityIncomeOption = computed<Record<string, unknown>>(() => ({
   tooltip: { trigger: 'axis' },
   grid: { left: 50, right: 20, top: 20, bottom: 30 },
@@ -173,7 +163,6 @@ const cityIncomeOption = computed<Record<string, unknown>>(() => ({
   ],
 }))
 
-// 消费结构饼图
 const consumeStructOption = computed<Record<string, unknown>>(() => ({
   tooltip: { trigger: 'item', formatter: '{b}: {c}% ({d}%)' },
   legend: { bottom: 0, type: 'scroll' },
@@ -191,7 +180,6 @@ const consumeStructOption = computed<Record<string, unknown>>(() => ({
   ],
 }))
 
-// 投资趋势折线
 const investTrendOption = computed<Record<string, unknown>>(() => ({
   tooltip: { trigger: 'axis' },
   grid: { left: 50, right: 20, top: 20, bottom: 30 },
@@ -208,7 +196,6 @@ const investTrendOption = computed<Record<string, unknown>>(() => ({
   ],
 }))
 
-// 供给能力柱状图
 const supplyOption = computed<Record<string, unknown>>(() => ({
   tooltip: { trigger: 'axis' },
   grid: { left: 50, right: 20, top: 20, bottom: 40 },
@@ -223,6 +210,7 @@ const supplyOption = computed<Record<string, unknown>>(() => ({
     },
   ],
 }))
+
 
 function showMsg(msg: string) { alert(msg) }
 function exportPdf(r: ReportItem) {

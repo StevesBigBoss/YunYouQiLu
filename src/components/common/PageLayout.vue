@@ -1,6 +1,5 @@
 <template>
   <div class="page-layout" :class="{ collapsed: isCollapsed }">
-    <!-- 左侧导航 -->
     <aside class="sidebar">
       <div class="sidebar-header">
         <BrandLogo :size="28" />
@@ -8,7 +7,6 @@
       </div>
       <nav class="nav-menu">
         <template v-for="item in menuItems" :key="item.path">
-          <!-- 无子菜单 -->
           <div
             v-if="!item.children"
             class="nav-item"
@@ -18,7 +16,6 @@
             <AppIcon :name="item.icon" :size="17" />
             <span v-if="!isCollapsed" class="nav-text">{{ t(item.title) }}</span>
           </div>
-          <!-- 有子菜单 -->
           <div v-else>
             <div
               class="nav-item"
@@ -49,16 +46,13 @@
       </div>
     </aside>
 
-    <!-- 主区域 -->
     <div class="main-area">
-      <!-- 顶栏 -->
       <header class="topbar">
         <div class="topbar-left">
           <span class="platform-title" :title="t('“云游齐鲁”山东沿黄文旅数智传播平台')">
             {{ t('“云游齐鲁”山东沿黄文旅数智传播平台') }}
           </span>
         </div>
-        <!-- 全局分析范围：整机模块级筛选，首页与左侧功能区所有页面都按它重算 -->
         <CityScopeBar class="topbar-scope" />
         <div class="topbar-right">
           <span class="update-time">{{ t('数据更新：{time}', { time: updateTime }) }}</span>
@@ -68,7 +62,6 @@
         </div>
       </header>
 
-      <!-- 内容区 -->
       <main class="content-area">
         <slot />
       </main>
@@ -102,7 +95,6 @@ const updateTime = computed(() => {
 interface MenuChild { path: string; title: string }
 interface MenuItem { path: string; title: string; icon: string; children?: MenuChild[] }
 
-// 菜单顺序：首页（数据大屏）→ 旅游景点图 → 饮食文化 → 齐鲁文化遗产数字化，其余按原顺序排在其后
 const menuItems: MenuItem[] = [
   { path: '/dashboard', title: '首页', icon: 'home' },
   { path: '/scenic', title: '旅游景点图', icon: 'scenic' },
@@ -137,7 +129,6 @@ function navigate(path: string) {
   router.push(path)
 }
 
-/* 带子菜单的父项：点一下既进它的总览页，也把子菜单展开（不然只展开不跳转，像点了没反应） */
 function openParent(path: string) {
   if (!expandedMenus.value.includes(path)) expandedMenus.value.push(path)
   navigate(path)
@@ -151,7 +142,6 @@ function openParent(path: string) {
   height: 100%;
 }
 
-/* 侧边栏 */
 .sidebar {
   width: var(--sidebar-width);
   min-width: var(--sidebar-width);
@@ -208,10 +198,7 @@ function openParent(path: string) {
   color: var(--text-gold);
   border-right: 3px solid var(--color-gold);
 }
-/* 折叠态只剩图标，居中排布 */
 .page-layout.collapsed .nav-item { justify-content: center; gap: 0; padding-left: 0; padding-right: 0; }
-/* 中文菜单项最多 9 个字，一行放得下；英俄等语言长得多，允许折成两行，
-   避免 220px 的侧栏出现横向滚动条（条目高度自己会长，导航区照旧可滚动） */
 .nav-text { flex: 1; font-size: 13px; line-height: 1.35; white-space: normal; }
 .nav-arrow {
   display: inline-flex;
@@ -246,7 +233,6 @@ function openParent(path: string) {
 }
 .sidebar-footer:hover { color: var(--text-gold); }
 
-/* 主区域 */
 .main-area {
   flex: 1;
   display: flex;
@@ -254,7 +240,6 @@ function openParent(path: string) {
   overflow: hidden;
 }
 
-/* 顶栏 */
 .topbar {
   height: var(--topbar-height);
   background: var(--bg-topbar);
@@ -266,10 +251,7 @@ function openParent(path: string) {
   flex-shrink: 0;
 }
 .topbar-left { flex: 0 1 auto; min-width: 0; }
-/* 范围筛选器居中：左右 auto 边距把剩余空间平分 */
 .topbar-scope { margin: 0 auto; }
-/* 平台名各语言长短差很多（俄语、阿拉伯语尤其长），一行显示、放不下就省略号，
-   不让它把右侧的语言/风格/账号按钮挤出屏幕 */
 .platform-title {
   display: block;
   max-width: 100%;
@@ -283,7 +265,6 @@ function openParent(path: string) {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-/* 顶栏去掉全局搜索后只剩品牌名与右侧工具组，右侧靠 auto 外边距顶到最右 */
 .topbar-right {
   margin-left: auto;
   display: flex;
@@ -293,7 +274,6 @@ function openParent(path: string) {
 }
 .update-time { font-size: 12px; color: var(--text-muted); }
 
-/* 内容区 */
 .content-area {
   flex: 1;
   overflow: auto;

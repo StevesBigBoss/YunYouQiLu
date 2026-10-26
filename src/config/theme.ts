@@ -1,10 +1,8 @@
 import * as echarts from 'echarts'
 
-/** 图表统一使用的 ECharts 主题名，风格切换时按新色板重新注册 */
 export const CHART_THEME_NAME = 'appTheme'
 
 export interface ChartPalette {
-  /** 系列配色（柱/线/饼循环取色） */
   colors: string[]
   text: string
   title: string
@@ -16,12 +14,10 @@ export interface ChartPalette {
   axisLine: string
   splitLine: string
   axisLabel: string
-  /** 饼图/环形图的分隔描边色，跟随卡片底色 */
   pieBorder: string
 }
 
 const PALETTES: Record<string, ChartPalette> = {
-  // 默认清爽浅绿
   cream: {
     colors: ['#00AF5C', '#3A7BD5', '#E8A838', '#00BD3C', '#4CD08A', '#D94F4F', '#8E7CC3', '#5BA3D9', '#E07B39', '#2FC57E'],
     text: '#3A3F45',
@@ -36,7 +32,6 @@ const PALETTES: Record<string, ChartPalette> = {
     axisLabel: '#484D54',
     pieBorder: '#FFFFFF',
   },
-  // 简约蓝白色
   bluewhite: {
     colors: ['#2B6CB0', '#3FA9C9', '#4C86D9', '#1F8A8A', '#5B7FD9', '#2E9E7E', '#7AA5E0', '#38B2C9', '#6C8FD6', '#4FB3A0'],
     text: '#33475B',
@@ -51,7 +46,6 @@ const PALETTES: Record<string, ChartPalette> = {
     axisLabel: '#5A6E85',
     pieBorder: '#FFFFFF',
   },
-  // Hello Kitty 粉
   hellokitty: {
     colors: ['#F06292', '#FF9EB5', '#FFB74D', '#B39DDB', '#4DD0E1', '#F48FB1', '#AED581', '#FF8A65', '#90CAF9', '#CE93D8'],
     text: '#6B4A55',
@@ -66,7 +60,6 @@ const PALETTES: Record<string, ChartPalette> = {
     axisLabel: '#8A6172',
     pieBorder: '#FFFFFF',
   },
-  // 夜晚科技
   night: {
     colors: ['#C8A45C', '#4CAF7D', '#3A7BD5', '#E8A838', '#5BA3D9', '#D94F4F', '#8E7CC3', '#6BC5A0', '#E07B39', '#4A90D9'],
     text: '#DCE6F5',
@@ -81,7 +74,6 @@ const PALETTES: Record<string, ChartPalette> = {
     axisLabel: '#8FA3BF',
     pieBorder: '#0F1F38',
   },
-  // 赛博炫彩
   cyber: {
     colors: ['#22D3EE', '#7C3AED', '#F472B6', '#38BDF8', '#A3E635', '#FBBF24', '#E879F9', '#2DD4BF', '#818CF8', '#FB7185'],
     text: '#D6E4FF',
@@ -96,7 +88,6 @@ const PALETTES: Record<string, ChartPalette> = {
     axisLabel: '#8B9BD6',
     pieBorder: '#090B1A',
   },
-  // 夜晚护眼色
   eyecare: {
     colors: ['#D9A13B', '#6FA07C', '#7BA7C9', '#C9A227', '#8FBF9F', '#C97F6B', '#A8A0D0', '#7FBFA8', '#C99A5B', '#9BBF8F'],
     text: '#C9D6C9',
@@ -115,7 +106,6 @@ const PALETTES: Record<string, ChartPalette> = {
 
 let active = PALETTES.cream
 
-/** 按当前风格注册（覆盖）ECharts 主题；切换风格后页面重建，图表会读到这里的新色板 */
 export function registerChartTheme(themeId: string) {
   active = PALETTES[themeId] ?? PALETTES.cream
   echarts.registerTheme(CHART_THEME_NAME, {
@@ -167,20 +157,14 @@ export function registerChartTheme(themeId: string) {
   })
 }
 
-/** 当前风格的图表配色，供词云等自行上色的地方取用 */
 export function themeColors(): string[] {
   return active.colors
 }
 
-/**
- * 当前风格的主强调色（= 色板第一个颜色，与 CSS 的 --color-gold 同色）。
- * ECharts / Leaflet 在 canvas、SVG 上作画，读不到 CSS 变量，这些地方统一从这里取色。
- */
 export function themeAccent(): string {
   return active.colors[0]
 }
 
-/** 主强调色的半透明版本，用于面积填充、浅底徽标等 */
 export function themeAccentAlpha(alpha: number): string {
   const hex = active.colors[0].replace('#', '')
   const r = Number.parseInt(hex.slice(0, 2), 16)
@@ -189,17 +173,14 @@ export function themeAccentAlpha(alpha: number): string {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
 
-/** 当前风格的标题 / 饼图与桑基图标签文字色 */
 export function themeTitle(): string {
   return active.title
 }
 
-/** 当前风格的图例文字色 */
 export function themeLegend(): string {
   return active.legend
 }
 
-/** 默认（米白）色板，作为不依赖当前风格时的兜底 */
 export const THEME_COLORS = PALETTES.cream.colors
 
 export { echarts }

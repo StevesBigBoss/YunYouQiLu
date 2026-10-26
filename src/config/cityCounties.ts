@@ -1,13 +1,6 @@
-/**
- * 各市县区名与中心点（由 public/geo/counties/*.json 抽取生成，勿手改）。
- *
- * 首页的县界图层按需 fetch 同源 GeoJSON；其余功能页需要「市 → 县区」静态清单来
- * 做县区粒度的折算，这里把清单与中心点内联，避免为了几个名字去请求几何数据。
- */
 import type { ShandongCity } from './shandongRegions'
 
 export interface CountyCenter {
-  /** 县区全名，与 DataV 县界 properties.name 一致 */
   name: string
   lng: number
   lat: number
@@ -184,7 +177,6 @@ export const CITY_COUNTIES: Record<ShandongCity, CountyCenter[]> = {
   ],
 }
 
-/** 市行政中心（取各县区中心的均值，粗略够用：点位归属判定、地图取景） */
 export const CITY_CENTERS: Record<ShandongCity, { lng: number; lat: number }> = {
   济南: { lng: 117.1346, lat: 36.6237 },
   青岛: { lng: 120.2963, lat: 36.293 },
@@ -204,7 +196,6 @@ export const CITY_CENTERS: Record<ShandongCity, { lng: number; lat: number }> = 
   菏泽: { lng: 115.6901, lat: 35.1903 },
 }
 
-/** 某市的县区名列表（县区粒度折算的默认顺序） */
 export function countyNames(city: ShandongCity): string[] {
   return CITY_COUNTIES[city].map((c) => c.name)
 }

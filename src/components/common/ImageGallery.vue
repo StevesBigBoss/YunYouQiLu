@@ -1,10 +1,4 @@
 <script setup lang="ts">
-/**
- * 功能区配图卡片：三张缩略图 + 点击打开图片查看器（灯箱）。
- *
- * 图片清单来自 src/config/siteImages.ts（键与功能区页面一一对应），
- * 文件在 public/images/<page>/ 下；找不到配图时整张卡片不渲染，不影响其它模块。
- */
 import { computed, ref } from 'vue'
 import AppIcon from './AppIcon.vue'
 import ImageViewer from './ImageViewer.vue'
@@ -13,12 +7,9 @@ import { SITE_IMAGES } from '../../config/siteImages'
 import { t, tv } from '../../config/i18n'
 
 const props = withDefaults(defineProps<{
-  /** 图集键：home / scenic / food / heritage / nature / flow / industry / resource / opinion / marketing / disaster */
   page: string
   title?: string
-  /** 卡片内一行说明，缺省给出通用提示 */
   hint?: string
-  /** 无卡片外壳：嵌在浮层/列表里时用，避免卡片套卡片 */
   plain?: boolean
 }>(), {
   title: '功能区配图',
@@ -31,7 +22,6 @@ const items = computed<ViewImage[]>(() => (SITE_IMAGES[props.page] ?? []).map((i
   src: `${import.meta.env.BASE_URL}${im.src}`,
 })))
 
-/** 查看器打开到第几张，-1 = 关闭 */
 const viewerIndex = ref(-1)
 </script>
 
@@ -84,7 +74,6 @@ const viewerIndex = ref(-1)
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
-/* 双列面板很窄时两列更耐看 */
 @media (max-width: 1500px) {
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
 }

@@ -1,6 +1,5 @@
 <template>
   <div class="scenic-page">
-    <!-- 左侧地图 70%：各市 A 级景区数量热力图 -->
     <div class="map-side">
       <CityChoropleth
         :data="choroplethData"
@@ -13,7 +12,6 @@
         @select="onSelectCity"
         @point-select="onSelectSpot"
       >
-        <!-- 图例里点上本页的点位说明：圆点 = 重点监测景点，圈色 = 景区等级（见右上「图层」） -->
         <template #legend-extra>
           <div class="map-mark-legend">
             <span class="map-mark-title">{{ t('圆点 = 重点监测景点（圈色按景区等级区分）') }}</span>
@@ -22,16 +20,13 @@
       </CityChoropleth>
     </div>
 
-    <!-- 右侧数据面板 30% -->
     <div class="panel-side">
       <div class="panel-scroll">
-        <!-- 顶部统计 -->
         <div class="stat-row">
           <StatCard :title="t('A级景区总数')" :value="totalScenic" :unit="t('处')" />
           <StatCard :title="t('今日接待量')" :value="todayFlow" :unit="t('人次')" :yoy="12.5" :mom="8.3" />
         </div>
 
-        <!-- 搜索景点：按名称 / 城市 / 等级检索范围内的景点，行内「查看图片」把实景图顶到下方详情卡 -->
         <div class="common-card">
           <div class="card-title">{{ t('搜索景点 · {scope}', { scope: scopeLabel }) }}</div>
           <div class="spot-search">
@@ -71,7 +66,6 @@
           </div>
         </div>
 
-        <!-- 选中地市概况 -->
         <div v-if="selectedCity" class="common-card">
           <div class="card-title">
             {{ t('{city} · 景区概况', { city: shortCity(selectedCity) }) }}
@@ -108,10 +102,8 @@
           <div v-if="!citySpots.length" class="monitor-empty">{{ t('该市暂无接入监测的重点景点') }}</div>
         </div>
 
-        <!-- 热门 TOP10 柱状图 -->
         <ChartCard :title="topTitle" :option="topOption" height="280px" />
 
-        <!-- 客流预警列表 -->
         <div class="common-card">
           <div class="card-title">{{ t('客流预警景点 · {scope}', { scope: scopeLabel }) }}</div>
           <div v-for="w in warningSpots" :key="w.id" class="warn-item" :class="{ over: w.flow / w.capacity > 0.8 }">
@@ -127,7 +119,6 @@
           <div v-if="!warningSpots.length" class="monitor-empty">{{ t('当前范围内没有承载量预警景点') }}</div>
         </div>
 
-        <!-- 选中景点详情 -->
         <div v-if="selectedSpot" ref="spotDetailEl" class="common-card">
           <div class="card-title">
             {{ t('{name} · 客流画像', { name: selectedSpot.name }) }}
@@ -138,7 +129,6 @@
             <span class="tag tag-blue">{{ tv(selectedSpot.type) }}</span>
             <span class="cur-flow">{{ t('实时客流 {n}', { n: formatNum(selectedSpot.flow) }) }}</span>
           </div>
-          <!-- 配图模式：搜索列表点「查看图片」进入，用景区实景图顶掉文字简介；双击图片灯箱放大 -->
           <div v-if="spotImg" class="spot-figure">
             <img
               class="spot-figure-img"
@@ -186,7 +176,6 @@
           </div>
         </div>
 
-        <!-- 景区实景配图：点缩略图看大图 -->
         <ImageGallery page="scenic" :title="t('重点景区实景图集')" />
       </div>
     </div>
@@ -219,26 +208,20 @@ import type { CityCountItem, MapPointGroup, MapSpotPoint, ScenicSpot } from '../
 
 const router = useRouter()
 
+
 const selectedCity = ref('')
 const selectedSpot = ref<ScenicSpot | null>(null)
 
-// 搜索景点：关键词过滤 + 「查看图片」配图模式（点景点行 = 文字简介，点按钮 = 实景图）
 const spotKeyword = ref('')
 const spotFigure = ref(false)
 const spotDetailEl = ref<HTMLElement | null>(null)
 
-// 范围为具体城市时默认展开该市概况
 watch(scopeCity, (city) => {
   selectedCity.value = city ? `${city}市` : ''
 }, { immediate: true })
 
-// 各市景区数量：只保留当前范围内的市
 const scopeCityStats = computed(() => mockScenicCityStats.filter((c) => inScope(c.city)))
 
-/**
- * 范围内的景点：先用景点普查数据；
- * 非沿黄城市没有普查清单时，用首页资源点补齐，保证每个市都有可分析的景点。
- */
 const scopeSpots = computed<ScenicSpot[]>(() => {
   const inRange = filterByCity(mockScenicSpots)
   if (inRange.length) return inRange
@@ -277,10 +260,6 @@ const scopeSpots = computed<ScenicSpot[]>(() => {
 const totalScenic = computed(() => scopeCityStats.value.reduce((s, c) => s + c.total, 0))
 const todayFlow = computed(() => scopeSpots.value.reduce((s, x) => s + x.flow, 0))
 
-/**
- * 地图点位分组：按景区等级分组，右上「图层」可逐组显隐（与灾难监控页同款）。
- * 圆点描边色 = 等级色，点击弹窗看名称、客流与承载量。
- */
 const LEVEL_COLOR_INDEX: Record<string, number> = { '5A': 2, '4A': 1, '3A': 0 }
 const LEVEL_ORDER = ['5A', '4A', '3A', '2A', '1A']
 
@@ -310,7 +289,6 @@ const spotGroups = computed<MapPointGroup[]>(() => {
     })
     grouped.set(s.level, list)
   })
-  // 5A → 4A → 其它，等级高的排在前面
   return [...grouped.entries()]
     .sort((a, b) => (order.get(a[0]) ?? 99) - (order.get(b[0]) ?? 99))
     .map(([level, points]) => ({
@@ -321,19 +299,16 @@ const spotGroups = computed<MapPointGroup[]>(() => {
     }))
 })
 
-/** 点击地图上的景点点位：右侧同步展开该景点的客流画像 */
 function onSelectSpot(id: string) {
   const spot = scopeSpots.value.find((s) => s.id === id)
   if (spot) focusSpot(spot, false)
 }
 
-/** 该景点的配图；没有配图返回 null（列表里的「查看图片」按钮据此置灰） */
 function spotImage(id: string): ScenicSpotImage | null {
   const raw = SCENIC_SPOT_IMAGES[id]
   return raw && (raw.real || raw.ai) ? raw : null
 }
 
-/** 搜索列表：按名称 / 城市 / 等级 / 类型过滤，等级高的排前面、同级客流大的靠前 */
 const searchSpots = computed<ScenicSpot[]>(() => {
   const kw = spotKeyword.value.trim()
   const order = new Map(LEVEL_ORDER.map((level, i) => [level, i]))
@@ -347,7 +322,6 @@ const searchSpots = computed<ScenicSpot[]>(() => {
     .sort((a, b) => (order.get(a.level) ?? 99) - (order.get(b.level) ?? 99) || b.flow - a.flow)
 })
 
-/** 当前景点配图与展示态：spotImg 非空时详情卡用图顶掉文字简介 */
 const spotView = computed<ScenicSpotImage | null>(() =>
   selectedSpot.value ? spotImage(selectedSpot.value.id) : null,
 )
@@ -356,7 +330,6 @@ const spotImg = computed(() => {
   return spotFigure.value && view ? view.real || view.ai || '' : ''
 })
 
-/** 列表点选：选中景点看客流画像；带看图标记时换成配图并把详情卡滚进视野 */
 function focusSpot(spot: ScenicSpot, showImage: boolean) {
   selectedSpot.value = spot
   spotFigure.value = showImage && !!spotImage(spot.id)
@@ -370,6 +343,7 @@ function closeSpot() {
   spotFigure.value = false
 }
 
+
 const selectedStat = computed(() =>
   mockScenicCityStats.find((c) => c.city === selectedCity.value && inScope(c.city)),
 )
@@ -377,10 +351,8 @@ const otherLevelCount = computed(() => {
   const s = selectedStat.value
   return s ? s.total - s.a5 - s.a4 : 0
 })
-// 资源点补齐的景点 city 不带「市」后缀，比较前统一归一
 const citySpots = computed(() => scopeSpots.value.filter((s) => normCity(s.city) === normCity(selectedCity.value)))
 
-/** 选中市的县区分布：A 级景区数量按县区权重折成整数（最大余数法，合计与市级总量一致） */
 const countyScenicRows = computed(() => {
   const stat = selectedStat.value
   if (!stat) return []
@@ -394,7 +366,6 @@ const countyScenicRows = computed(() => {
     .sort((a, b) => b.value - a.value)
 })
 
-// 各市 A 级景区数量：total 由 5A/4A/其它构成，明细直接展示在提示框与弹窗中
 const choroplethData = computed<CityCountItem[]>(() =>
   scopeCityStats.value.map((c) => ({
     city: c.city,
@@ -408,10 +379,10 @@ const choroplethData = computed<CityCountItem[]>(() =>
   })),
 )
 
-/** 承载量预警：按使用率取当前范围里的景点（未过载的排后面） */
 const warningSpots = computed(() =>
   [...scopeSpots.value].sort((a, b) => b.flow / b.capacity - a.flow / a.capacity).slice(0, 6),
 )
+
 
 const topTitle = computed(() =>
   scopeCity.value
@@ -426,7 +397,6 @@ const topOption = computed(() => {
     grid: { left: 70, right: 30, top: 10, bottom: 24 },
     xAxis: {
       type: 'value',
-      // 面板较窄，横轴用「万」单位避免刻度文字相互重叠
       axisLabel: { fontSize: 10, formatter: (v: number) => (v >= 10000 ? t('{n}万', { n: v / 10000 }) : `${v}`) },
     },
     yAxis: {
@@ -459,6 +429,7 @@ const trendOption = computed(() => {
     }],
   }
 })
+
 
 function shortCity(name: string): string {
   return name.replace(/市$/, '')
@@ -553,7 +524,6 @@ function onSelectCity(city: string) {
 }
 .monitor-empty { font-size: 12px; color: var(--text-muted); padding: 4px 0; }
 
-/* 搜索景点 */
 .spot-search { padding-bottom: 8px; }
 .spot-search input {
   width: 100%;
@@ -604,7 +574,6 @@ function onSelectCity(city: string) {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-/* 「查看图片」：平时低调，悬停/选中行里才提亮，避免列表被按钮抢注意力 */
 .item-img-btn {
   flex-shrink: 0;
   display: inline-flex;
@@ -627,7 +596,6 @@ function onSelectCity(city: string) {
   color: var(--text-gold);
   border-color: rgba(var(--rgb-gold), 0.55);
 }
-/* 暂无配图的景点：按钮置灰，说明原因，避免点开还是文字简介 */
 .item-img-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .spot-result-meta { display: flex; align-items: center; gap: 6px; }
 .spot-result-city {
@@ -673,14 +641,12 @@ function onSelectCity(city: string) {
   gap: 8px;
   margin-bottom: 10px;
 }
-/* 景点简介：与地图点位弹窗里是同一段文案 */
 .spot-intro {
   margin: 0 0 10px;
   font-size: 12px;
   line-height: 1.7;
   color: var(--text-secondary);
 }
-/* 景区配图：顶掉文字简介的位置，图注下方保留来源署名（CC BY / BY-SA 要求） */
 .spot-figure { margin: 0 0 10px; }
 .spot-figure-img {
   display: block;

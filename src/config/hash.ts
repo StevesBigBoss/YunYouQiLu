@@ -1,13 +1,4 @@
-/**
- * 同步 SHA-256 加盐哈希工具（演示项目本地账户脱敏用）。
- *
- * 背景：本项目是演示系统，注册账号与密码保存在浏览器 localStorage 中，
- * 为避免明文密码落盘，这里用加盐 SHA-256 摘要替代明文。
- * 说明：浏览器本地哈希仅用于避免明文泄露，不作为服务端高安全认证方案；
- * 生产环境请使用服务端标准密码哈希（如 Django PBKDF2 / bcrypt）。
- */
 
-/** SHA-256 轮常量（FIPS 180-4） */
 const K = [
   0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
   0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
@@ -28,7 +19,6 @@ function rotr(x: number, n: number): number {
   return (x >>> n) | (x << (32 - n))
 }
 
-/** 将字符串按 UTF-8 编码为字节数组（正确处理代理对） */
 function utf8Bytes(input: string): number[] {
   const bytes: number[] = []
   for (let i = 0; i < input.length; i++) {
@@ -47,17 +37,14 @@ function utf8Bytes(input: string): number[] {
         bytes.push(0xef, 0xbf, 0xbd)
       }
     } else if (code >= 0xdc00 && code <= 0xdfff) {
-      // 孤立低代理 → U+FFFD
       bytes.push(0xef, 0xbf, 0xbd)
     } else {
-      // BMP 非代理字符（0x800..0xd7ff / 0xe000..0xffff）→ 3 字节
       bytes.push(0xe0 | (code >> 12), 0x80 | ((code >> 6) & 0x3f), 0x80 | (code & 0x3f))
     }
   }
   return bytes
 }
 
-/** 同步计算 SHA-256 十六进制摘要（FIPS 180-4） */
 export function sha256Sync(input: string): string {
   const bytes = utf8Bytes(input)
   const bitLenHi = Math.floor((bytes.length * 8) / 0x100000000)
@@ -114,7 +101,6 @@ export function sha256Sync(input: string): string {
   return h.map((v) => v.toString(16).padStart(8, '0')).join('')
 }
 
-/** 生成 8 字节随机盐（16 位十六进制） */
 function randomSalt(): string {
   try {
     const arr = new Uint8Array(8)
@@ -127,19 +113,13 @@ function randomSalt(): string {
   }
 }
 
-/** 密码存储格式：sha256:<盐>:<摘要> */
 export const HASH_PREFIX = 'sha256:'
 
-/** 生成密码哈希存储串（加盐 SHA-256） */
 export function makePasswordHash(password: string): string {
   const salt = randomSalt()
   return `${HASH_PREFIX}${salt}:${sha256Sync(salt + password)}`
 }
 
-/**
- * 校验明文密码与存储串是否匹配。
- * 兼容历史明文数据：存储串不含 sha256: 前缀时按明文直接比较。
- */
 export function verifyPasswordHash(password: string, stored: string): boolean {
   if (!stored) return false
   if (stored.startsWith(HASH_PREFIX)) {
@@ -150,7 +130,6 @@ export function verifyPasswordHash(password: string, stored: string): boolean {
   return password === stored
 }
 
-/** 该存储串是否仍是旧版明文（需要升级为哈希） */
 export function isLegacyPlaintext(stored: string): boolean {
   return !!stored && !stored.startsWith(HASH_PREFIX)
 }

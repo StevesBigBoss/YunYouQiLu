@@ -60,7 +60,7 @@ inject<FilterState>('filterState', {
   sentiment: 'all',
 })
 
-// 按 count 降序
+
 const sortedWords = computed(() => [...scopeNewsKeywords.value].sort((a, b) => b.count - a.count))
 const maxCount = computed(() => sortedWords.value[0]?.count || 1)
 const totalCount = computed(() => sortedWords.value.reduce((s, w) => s + w.count, 0))

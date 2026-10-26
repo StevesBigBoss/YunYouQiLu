@@ -33,7 +33,6 @@
       </div>
     </transition>
 
-    <!-- 更改头像 -->
     <Teleport to="body">
       <div v-if="avatarOpen" class="dialog-mask" @click.self="closeAvatarDialog">
         <div class="dialog" role="dialog" :aria-label="t('更改头像')">
@@ -61,7 +60,6 @@
       </div>
     </Teleport>
 
-    <!-- 更改密码 -->
     <Teleport to="body">
       <div v-if="passwordOpen" class="dialog-mask" @click.self="closePasswordDialog">
         <form class="dialog" role="dialog" :aria-label="t('更改密码')" @submit.prevent="submitPassword">
@@ -105,7 +103,6 @@
       </div>
     </Teleport>
 
-    <!-- 退出登陆 -->
     <Teleport to="body">
       <div v-if="logoutOpen" class="dialog-mask" @click.self="logoutOpen = false">
         <div class="dialog" role="dialog" :aria-label="t('退出登陆')">
@@ -141,7 +138,6 @@ import {
   verifyPassword,
 } from '../../config/userProfile'
 
-/** 头像上的首字：跟随语言取译名首字（管理员 → Administrator → A） */
 const avatarLetter = computed(() => t(userName.value).slice(0, 1))
 
 const router = useRouter()
@@ -180,7 +176,6 @@ function pickFile() {
   fileRef.value?.click()
 }
 
-/** 裁成方形并压缩到 256px，避免大图把本地存储撑爆 */
 function toSquareDataUrl(img: HTMLImageElement): string {
   const size = 256
   const canvas = document.createElement('canvas')
@@ -289,7 +284,6 @@ function askLogout() {
 function confirmLogout() {
   logoutOpen.value = false
   logout()
-  // 退出后回到整屏首页，由首页决定游客登录还是走登录页
   void router.push('/')
 }
 
@@ -431,7 +425,6 @@ onBeforeUnmount(() => {
   margin: 6px 4px;
   background: var(--border-color);
 }
-/* 游客身份下没有可管理的账号项，用一行说明替代 */
 .guest-note {
   margin: 0 4px 6px;
   padding: 8px 10px;
@@ -452,7 +445,6 @@ onBeforeUnmount(() => {
   transform: translateY(-6px);
 }
 
-/* 弹窗 */
 .dialog-mask {
   position: fixed;
   inset: 0;

@@ -1,6 +1,5 @@
 <template>
   <div class="opinion-parent">
-    <!-- 顶部统一筛选器 -->
     <FilterBar
       :model-value="filterState"
       show-platform
@@ -9,7 +8,6 @@
       @change="onFilterChange"
     />
 
-    <!-- 总览指标卡片 -->
     <div class="stat-row">
       <StatCard :title="t('报道条数（{scope}）', { scope: scopeLabel })" :value="scopeNewsTotal" :unit="t('条')" icon="news" />
       <StatCard :title="t('正面占比')" :value="scopeNewsSentiment.positive" :unit="t('%')" icon="happy" />
@@ -17,7 +15,6 @@
       <StatCard :title="t('负面占比')" :value="scopeNewsSentiment.negative" :unit="t('%')" icon="sad" />
     </div>
 
-    <!-- 总览视图（无子路由时展示） -->
     <template v-if="isOverview">
       <div class="chart-grid">
         <ChartCard :title="t('情感倾向分布（词表口径）· {scope}', { scope: scopeLabel })" :option="sentimentPieOption" height="280px" />
@@ -51,10 +48,8 @@
       </div>
     </template>
 
-    <!-- 子路由视图 -->
     <router-view v-else />
 
-    <!-- 生态环境治理场景配图：点缩略图看大图（4 个舆情子页共用同一套图） -->
     <ImageGallery page="opinion" :title="t('生态环境治理场景图集')" />
   </div>
 </template>
@@ -85,7 +80,7 @@ import type { FilterState } from '../../types'
 
 const route = useRoute()
 
-// 统一筛选状态（提升到父级，provide 给子分支）
+
 const filterState = reactive<FilterState>({
   timeRange: '7d',
   region: 'all',
@@ -98,19 +93,18 @@ function onFilterUpdate(val: FilterState | undefined) {
   if (val) Object.assign(filterState, val)
 }
 function onFilterChange() {
-  // 占位：筛选条件变化后触发数据刷新
 }
 
 const isOverview = computed(() => route.path === '/opinion')
 
-// 近 7 日窗口（以范围内数据里最新日期为终点，空缺日补 0）
+
 const trend = scopeNewsDailyTrend(7)
 const trendWindow = computed(() => ({
   from: trend.value[0]?.date ?? '—',
   to: trend.value[trend.value.length - 1]?.date ?? '—',
 }))
 
-// 情感倾向饼图（真实值：按标题词表粗判，随范围过滤报道）
+
 const sentimentPieOption = computed<Record<string, unknown>>(() => ({
   tooltip: { trigger: 'item', formatter: '{b}: {c}%' },
   legend: { bottom: 0, textStyle: { color: themeLegend() } },
@@ -129,7 +123,6 @@ const sentimentPieOption = computed<Record<string, unknown>>(() => ({
   ],
 }))
 
-// 逐日发布量折线（空缺日补 0，故图上会出现 0 值断点，是真实情况）
 const trendLineOption = computed<Record<string, unknown>>(() => ({
   tooltip: { trigger: 'axis' },
   grid: { left: 55, right: 20, top: 20, bottom: 30 },
@@ -154,7 +147,6 @@ const trendLineOption = computed<Record<string, unknown>>(() => ({
   ],
 }))
 
-// 来源渠道分布柱状图（真实计数；不用百分比，条数更直观）
 const platformBarOption = computed<Record<string, unknown>>(() => ({
   tooltip: { trigger: 'axis', formatter: t('{b}<br/>报道 {c} 条') },
   grid: { left: 45, right: 20, top: 20, bottom: 44 },
@@ -175,11 +167,9 @@ const platformBarOption = computed<Record<string, unknown>>(() => ({
   ],
 }))
 
-// 报道提及地区地图：真实按市计数；circleMarker 半径按提及条数
-// 无瓦片底图底色跟随当前风格（--map-bg），兜底为米白
+
 const PLAIN_BACKGROUND = 'var(--map-bg, radial-gradient(ellipse at 50% 42%, #FCFEFC 0%, #F1F6F1 46%, #E3EBE4 100%))'
 
-/** 口径说明随范围变：范围口径 = 属地报道 + 省级综合稿，两个数字都披露 */
 const scopeFilterNote = computed(() =>
   scope.value === 'all'
     ? t('{n} 条为省级 / 综合报道，标题未点明城市，不计入地图。', { n: scopeNewsNoCityCount.value })
@@ -189,10 +179,8 @@ const scopeFilterNote = computed(() =>
 let opinionMap: L.Map | null = null
 let cityLayer: L.LayerGroup | null = null
 let chinaBounds: L.LatLngBounds | null = null
-/** 黄河干流：随全国底图常驻；常驻流动，无入场画出动画 */
 let riverLayer: L.LayerGroup | null = null
 
-/** 按当前范围绘制提及城市：范围切换时只重画点，不重播全国飞入动画 */
 function drawCityMentions(map: L.Map, animate: boolean) {
   if (!cityLayer) cityLayer = L.layerGroup()
   cityLayer.clearLayers()
@@ -204,7 +192,6 @@ function drawCityMentions(map: L.Map, animate: boolean) {
     const latlng = L.latLng(g.lat, g.lng)
     spots.push(latlng)
     L.circleMarker(latlng, {
-      // 像素半径圆点：缩放动画期间隐去、落位后渐显（见 MapContainer 的 bindPixelDotFade）
       className: 'sd-px-dot',
       radius: 10 + ratio * 26,
       fillColor: themeAccent(),
@@ -216,7 +203,6 @@ function drawCityMentions(map: L.Map, animate: boolean) {
       .bindTooltip(t('{city}市：{n} 条报道提及', { city: g.city, n: g.count }), { className: 'sd-tooltip', direction: 'top', offset: [0, -4] })
       .bindPopup(`<b>${t('{city}市', { city: g.city })}</b><br/>${t('标题提及该市的报道：{n} 条', { n: g.count })}`)
   })
-  // 单市范围只有一个点，退化包围盒没法取景，手工撑开一点
   const bounds = L.latLngBounds(spots)
   if (spots.length === 1) {
     bounds.extend([spots[0].lat - 0.35, spots[0].lng - 0.35]).extend([spots[0].lat + 0.35, spots[0].lng + 0.35])
@@ -227,7 +213,6 @@ function drawCityMentions(map: L.Map, animate: boolean) {
       focus: spots.length ? bounds.pad(0.35) : bounds,
       paddingTopLeft: [16, 16],
       paddingBottomRight: [16, 16],
-      // 推近时长与首页取齐（0.75s）
       duration: 750,
     })
   }
@@ -238,21 +223,18 @@ async function onMapReady(map: L.Map) {
   opinionMap = map
   chinaBounds = national.bounds
   map.setMaxBounds(national.bounds.pad(0.2))
-  // 黄河流向图：河道压在底图之上、提及城市圆点（默认覆盖面板）之下；常驻流动，无入场画出动画
   ensureRiverPane(map, 385)
   riverLayer = buildYellowRiverLayer()
   bindRiverZoomEmphasis(map, riverLayer)
   riverLayer.addTo(map)
-  // 由远及近：从全国视野飞入山东（报道提及的市全部分布在省内）
   drawCityMentions(map, true)
 }
 
-// 范围切换：重画提及城市（不重播飞入动画）
+
 watch(scope, () => {
   if (opinionMap) drawCityMentions(opinionMap, false)
 })
 
-/** 换语言：提及城市的提示框与弹窗是建层时拼好的 HTML，重画一遍换字（视野不动） */
 watch(locale, () => {
   opinionMap?.closePopup()
   if (opinionMap) drawCityMentions(opinionMap, false)

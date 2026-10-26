@@ -27,7 +27,6 @@ import { t } from '../../config/i18n'
 const scope = computed<ScopeId>(() => scopeState.current)
 const selectValue = computed(() => (isCityScope(scope.value) ? scope.value : ''))
 
-/** 地名 + 「市」后缀按当前语言合成（中文「济南市」，外语「Jinan City」） */
 function cityOptionLabel(city: string) {
   return t('{city}市', { city })
 }

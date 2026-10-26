@@ -1,16 +1,4 @@
 #!/usr/bin/env node
-/**
- * 数据采集入口。
- *
- *   node scripts/crawler/crawl.mjs               # 跑全部数据源
- *   node scripts/crawler/crawl.mjs weather quake # 只跑指定数据源
- *   node scripts/crawler/crawl.mjs --list        # 列出数据源
- *
- * 产出：
- *   data/raw/<源>/...            原始响应快照（便于排查解析问题、可复现）
- *   data/normalized/<源>.json    整理后的数据（前端可直接取用）
- *   data/manifest.json           抓取清单：来源、条数、文件、时间
- */
 import { readManifest, writeManifest, writeNormalized, PROJECT_ROOT } from './lib/store.mjs'
 import { sleep } from './lib/util.mjs'
 import * as weather from './sources/weather.mjs'

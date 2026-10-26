@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-"""在多图版Excel基础上追加3列AI生成图片。"""
 import json, os, urllib.request, hashlib
 import openpyxl
 from openpyxl.drawing.image import Image as XLImage
@@ -38,17 +36,14 @@ def download_img(url):
 wb = openpyxl.load_workbook(SRC)
 ws = wb["项目明细"]
 
-# 现有列: A-H(8列数据) + I-M(5列真实图片) = 13列
-# 新增: N, O, P 三列AI配图
-start_col = ws.max_column + 1  # 14
+start_col = ws.max_column + 1
 
 hdr_font = Font(bold=True, size=11, color="FFFFFF")
-hdr_fill = PatternFill("solid", fgColor="C00000")  # 红色表头区分AI图
+hdr_fill = PatternFill("solid", fgColor="C00000")
 center = Alignment(horizontal="center", vertical="center", wrap_text=True)
 thin = Side(style="thin", color="BFBFBF")
 border = Border(left=thin, right=thin, top=thin, bottom=thin)
 
-# 写3个AI配图表头
 for i in range(NUM_AI_COLS):
     col_idx = start_col + i
     col_letter = get_column_letter(col_idx)
@@ -59,16 +54,14 @@ for i in range(NUM_AI_COLS):
     c.border = border
     ws.column_dimensions[col_letter].width = 20
 
-# 遍历数据行，匹配项目名，嵌入AI图
 embedded = 0
 missing = 0
 for row_num in range(2, ws.max_row + 1):
     ws.row_dimensions[row_num].height = ROW_HEIGHT
-    name = ws.cell(row=row_num, column=2).value  # B列=项目名称
+    name = ws.cell(row=row_num, column=2).value
     if not name:
         continue
 
-    # AI图URL列表（每个项目3张）
     ai_urls = AI_IMG.get(name, [])
 
     for img_idx in range(NUM_AI_COLS):
@@ -100,7 +93,6 @@ wb.save(OUT)
 print(f"Saved: {OUT}")
 print(f"AI images embedded: {embedded}, rows missing AI: {missing}")
 
-# 清理临时文件
 for f in os.listdir(CACHE_DIR):
     if "_a" in f and f.endswith(".png"):
         try:

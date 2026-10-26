@@ -2,7 +2,6 @@
   <div class="login-screen">
     <AuthBackdrop />
 
-    <!-- 顶栏：左侧品牌点一下即以游客身份进入，右侧保留换语言、回首页与登录入口 -->
     <header class="login-topbar">
       <button
         class="login-brand"
@@ -88,7 +87,6 @@
         </div>
       </div>
 
-      <!-- 不想登录的话，从这里以游客身份直接进平台 -->
       <div class="login-more">
         <span class="login-more-text">{{ t('暂不登录') }}</span>
         <button class="link-btn" type="button" @click="enterGuest">{{ t('以游客身份进入 →') }}</button>
@@ -114,6 +112,7 @@ import {
   verifyAccount,
 } from '../../config/userProfile'
 
+
 type Mode = 'login' | 'register'
 
 const MODE_TABS: { key: Mode; label: string }[] = [
@@ -121,16 +120,18 @@ const MODE_TABS: { key: Mode; label: string }[] = [
   { key: 'register', label: '注册' },
 ]
 
+
 const router = useRouter()
+
 
 const mode = ref<Mode>('login')
 const isRegister = computed(() => mode.value === 'register')
 
-// 退出登录后再进来，账号默认带出上次登录的那个
 const account = ref(currentAccount.value)
 const password = ref('')
 const error = ref('')
 const note = ref('')
+
 
 const regAccount = ref('')
 const regName = ref('')
@@ -138,9 +139,11 @@ const regPassword = ref('')
 const regConfirm = ref('')
 const regError = ref('')
 
+
 const accountInput = ref<HTMLInputElement | null>(null)
 const cardPulse = ref(false)
 let pulseTimer: number | undefined
+
 
 function switchMode(next: Mode) {
   if (mode.value === next) return
@@ -148,7 +151,6 @@ function switchMode(next: Mode) {
   error.value = ''
   note.value = ''
   regError.value = ''
-  // 切到注册时清空表单，避免带着登录时输的内容继续注册
   if (next === 'register') {
     regAccount.value = ''
     regName.value = ''
@@ -179,7 +181,7 @@ function submit() {
   void router.push('/dashboard')
 }
 
-/** 注册账号的格式要求：与「更改密码」里最少 6 位保持一致 */
+
 const ACCOUNT_PATTERN = /^[A-Za-z0-9_]{3,20}$/
 
 function submitRegister() {
@@ -204,13 +206,11 @@ function submitRegister() {
     regError.value = t('两次输入的密码不一致')
     return
   }
-  // 查重放在这里做：userProfile 里返回的提示语是中文常量，走 t() 才能跟着语言变
   if (isAccountTaken(name)) {
     regError.value = t('该账号已被注册，换一个试试')
     return
   }
   registerAccount({ account: name, name: regName.value, password: regPassword.value })
-  // 注册成功后回到登录表单：账号填好、密码留空，接着就能用新账号登录
   regAccount.value = ''
   regName.value = ''
   regPassword.value = ''
@@ -223,14 +223,11 @@ function submitRegister() {
   note.value = t('账号 {name} 注册成功，请使用新密码登录', { name })
 }
 
+
 function goHome() {
   void router.push('/')
 }
 
-/**
- * 右上角「登录」：不管当前停在哪个分页，都把注意力带回卡片——
- * 切回登录表单、聚焦账号输入框，卡片轻闪一圈作提示
- */
 async function focusLogin() {
   if (isRegister.value) switchMode('login')
   await nextTick()
@@ -244,9 +241,9 @@ async function focusLogin() {
   }, 1000)
 }
 
+
 onBeforeUnmount(() => window.clearTimeout(pulseTimer))
 
-/** 登录页也能以游客身份直接进平台（等同首页的「游客登录」） */
 function enterGuest() {
   enterAsGuest()
   void router.push('/dashboard')
@@ -265,7 +262,6 @@ function enterGuest() {
   background: linear-gradient(162deg, var(--bg-primary) 0%, var(--bg-secondary) 54%, var(--bg-primary) 100%);
 }
 
-/* 顶栏：左侧品牌（点击即游客进入）、右侧回首页与登录入口 */
 .login-topbar {
   position: absolute;
   top: 18px;
@@ -326,7 +322,6 @@ function enterGuest() {
 .login-home-link:hover {
   color: var(--text-gold);
 }
-/* 右上角白色「登录」框：与卡片里的主按钮区分开，白底 + 主题绿悬停 */
 .login-entry {
   padding: 8px 20px;
   background: #FFFFFF;
@@ -370,7 +365,6 @@ function enterGuest() {
   box-shadow: var(--shadow-card), 0 16px 40px rgba(0, 0, 0, 0.08);
   overflow: hidden;
 }
-/* 顶部一道主题色金线，与背景的晨曦呼应 */
 .login-card::before {
   content: '';
   position: absolute;
@@ -379,7 +373,6 @@ function enterGuest() {
   background: var(--gradient-gold);
 }
 
-/* 点右上角「登录」时卡片轻闪一圈，把视线带回到表单 */
 .login-card.pulse {
   animation: loginCardPulse 1s ease;
 }
@@ -411,7 +404,6 @@ function enterGuest() {
   font-size: 15px;
   font-weight: 700;
   color: var(--text-gold);
-  /* 标题偏长时会折行，均分两行，免得行尾只剩一个字 */
   text-wrap: balance;
 }
 .login-sub {
@@ -419,7 +411,6 @@ function enterGuest() {
   color: var(--text-muted);
 }
 
-/* 卡片下方的游客入口 */
 .login-more {
   display: flex;
   align-items: center;
@@ -440,7 +431,6 @@ function enterGuest() {
   text-decoration: underline;
 }
 
-/* 登录 / 注册 切换 */
 .mode-tabs {
   display: flex;
   gap: 4px;

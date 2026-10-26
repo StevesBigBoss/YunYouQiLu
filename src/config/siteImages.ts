@@ -1,18 +1,7 @@
-/**
- * 各功能区配图（整理自维基共享资源，脚本生成，勿手改）。
- *
- * 图片已下载到 public/images/<page>/，src 为相对 public 的路径，
- * 使用时请拼上 import.meta.env.BASE_URL（见 ImageGallery.vue）。
- * credit 为来源与授权信息，图片查看器里展示，请勿删除。
- */
 export interface SiteImage {
-  /** 相对 public 的图片路径 */
   src: string
-  /** 图片标题 */
   title: string
-  /** 一句话说明 */
   caption: string
-  /** 来源与授权（维基共享资源 + 许可协议 + 作者） */
   credit: string
 }
 

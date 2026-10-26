@@ -1,10 +1,4 @@
-/**
- * 中文处理：领域词表分词 + 关键词频次 + 情感倾向打分。
- * 说明：这里的分词是「领域词表 + 二元组」的轻量方案（不引入分词库），
- * 情感倾向是按正负面词表打分得到的粗判，用于给前端做分布类图表，不能当成精确的人工标注结果。
- */
 
-/** 文旅领域词表：命中即作为一个词，长的优先 */
 export const DOMAIN_WORDS = [
   '黄河流域生态保护和高质量发展', '黄河国家文化公园', '黄河入海口', '黄河三角洲',
   '沿黄', '黄河', '齐鲁', '山东', '泰山', '济南', '青岛', '淄博', '枣庄', '东营', '烟台',
@@ -19,7 +13,6 @@ export const DOMAIN_WORDS = [
   '泉城', '泉水', '明湖', '趵突泉', '千佛山', '三孔', '齐长城', '大运河', '海岱',
 ]
 
-/** 情感词表（粗判用） */
 const POSITIVE = ['增长', '提升', '火热', '热力', '升温', '丰富', '创新', '优质', '好评', '欢迎', '热销', '亮眼', '新高的', '突破', '获奖', '入选', '成功', '启动', '亮相', '惠民', '免费', '火爆', '同比增长', '创下', '位居前列', '示范', '复苏', '强劲']
 const NEGATIVE = ['下降', '减少', '投诉', '隐患', '事故', '处罚', '违规', '滞留', '拥堵', '暴雨', '大风', '高温', '洪水', '预警', '风险', '整改', '受损', '关闭', '暂停', '取消', '纠纷', '差评', '亏损', '同比下降', '疫情', '台风', '地震', '滑坡']
 
@@ -31,9 +24,6 @@ function normalize(text) {
     .replace(/[^\u4e00-\u9fa5A-Za-z0-9]+/g, ' ')
 }
 
-/**
- * 词表最长匹配：命中返回该词，否则返回 null。
- */
 function matchWord(cleaned, pos, sorted) {
   for (const word of sorted) {
     if (cleaned.startsWith(word, pos)) return word
@@ -41,12 +31,6 @@ function matchWord(cleaned, pos, sorted) {
   return null
 }
 
-/**
- * 分词：先按领域词表最长匹配切词，剩余片段按 2-gram 兜底。
- * 兜底时向前最多看 3 个字，若中间有词表词就先停下再对齐，
- * 否则「个博物馆」会被切成「个博」「物馆」这种碎片。
- * @returns {string[]}
- */
 export function tokenize(text) {
   const cleaned = normalize(text)
   const tokens = []
@@ -74,7 +58,6 @@ export function tokenize(text) {
   return tokens
 }
 
-/** 词频统计，只保留领域词表命中的词与出现 2 次以上的二字组 */
 export function keywordFrequency(texts, limit = 40) {
   const counter = new Map()
   const domain = new Set(DOMAIN_WORDS)
@@ -82,7 +65,7 @@ export function keywordFrequency(texts, limit = 40) {
     const seen = new Set()
     for (const token of tokenize(text)) {
       if (STOP.has(token) || token.length < 2) continue
-      if (/\d/.test(token)) continue // 日期、编号之类的数字片段不算词
+      if (/\d/.test(token)) continue
       if (!domain.has(token) && token.length !== 2) continue
       if (seen.has(token)) continue
       seen.add(token)
@@ -95,7 +78,6 @@ export function keywordFrequency(texts, limit = 40) {
     .slice(0, limit)
 }
 
-/** 情感倾向粗判：正负词命中数比较，打平算中性 */
 export function sentimentOf(text) {
   const raw = String(text || '')
   let pos = 0
@@ -107,7 +89,6 @@ export function sentimentOf(text) {
   return 'neutral'
 }
 
-/** 汇总一批文本的情感分布（百分比，和为 100） */
 export function sentimentDistribution(texts) {
   const stat = { positive: 0, neutral: 0, negative: 0 }
   for (const t of texts) stat[sentimentOf(t)] += 1

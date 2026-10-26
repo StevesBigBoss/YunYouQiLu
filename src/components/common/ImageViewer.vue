@@ -1,5 +1,4 @@
 <script lang="ts">
-/** 查看器入参：src 需是可直接访问的地址（由调用方拼上 BASE_URL） */
 export interface ViewImage {
   src: string
   title: string
@@ -9,23 +8,13 @@ export interface ViewImage {
 </script>
 
 <script setup lang="ts">
-/**
- * 图片查看器（灯箱）：点缩略图后全屏看大图。
- *
- * - 关闭：点背景 / 右上角 × / Esc
- * - 切换：左右按钮 / ← → 键（首尾循环），只有一张图时不显示切图入口
- * - 放大：点大图在「适应窗口」与 1.8 倍之间切换，放大以点击位置为中心
- * - 打开期间锁住页面滚动，关闭后恢复
- * - 刚打开的一瞬间忽略点击：双击缩略图放大的第二下会落在新出现的遮罩/大图上，
- *   不该被当成「关灯箱」或「切换放大」
- */
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import AppIcon from './AppIcon.vue'
 import { t, tv } from '../../config/i18n'
 
+
 const props = defineProps<{
   items: ViewImage[]
-  /** 当前显示第几张 */
   index: number
 }>()
 
@@ -34,6 +23,7 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
+
 const loaded = ref(false)
 const failed = ref(false)
 const zoomed = ref(false)
@@ -41,9 +31,9 @@ const origin = ref('50% 50%')
 
 const current = computed(() => props.items[props.index])
 
-/** 灯箱打开时刻 + 宽限期：双击放大的第二下落在遮罩上时不算关闭/放大 */
 const openedAt = Date.now()
 const CLICK_GRACE = 400
+
 
 function closeByBackdrop() {
   if (Date.now() - openedAt < CLICK_GRACE) return
@@ -56,7 +46,6 @@ function step(delta: number) {
   emit('update:index', (props.index + delta + total) % total)
 }
 
-/** 放大以点击位置为中心：换算成百分比作为 transform-origin */
 function toggleZoom(e: MouseEvent) {
   if (Date.now() - openedAt < CLICK_GRACE) return
   const el = e.currentTarget as HTMLElement
@@ -79,7 +68,7 @@ function onKey(e: KeyboardEvent) {
   if (e.key === 'ArrowLeft') step(-1)
 }
 
-// 切图或关闭放大状态，并回到加载中
+
 watch(() => props.index, () => {
   zoomed.value = false
   loaded.value = false
@@ -101,7 +90,6 @@ onBeforeUnmount(() => {
 <template>
   <Teleport to="body">
     <div class="image-viewer" @click.self="closeByBackdrop">
-      <!-- 上一张 / 下一张 -->
       <button v-if="items.length > 1" class="viewer-nav prev" :title="t('上一张（←）')" @click.stop="step(-1)">
         <AppIcon name="chevrons-left" :size="18" />
       </button>

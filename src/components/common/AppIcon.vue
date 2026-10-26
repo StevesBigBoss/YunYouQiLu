@@ -2,7 +2,6 @@
 import { computed } from 'vue'
 import { ICONS } from '../../config/icons'
 
-/** 全站统一图标：名称取自 config/icons.ts 的自绘图库 */
 const props = withDefaults(defineProps<{ name: string; size?: number }>(), { size: 16 })
 
 const prims = computed(() => ICONS[props.name] ?? [])

@@ -1,9 +1,7 @@
 <template>
   <div class="flow-monitor">
-    <!-- 顶部筛选 -->
     <FilterBar v-model="filter" :show-platform="false" :show-sentiment="false" />
 
-    <!-- 第一行：实时客流 + 来源地 + 年龄分布 -->
     <div class="grid grid-3">
       <StatCard
         :title="t('实时客流（今日）')"
@@ -17,7 +15,6 @@
       <ChartCard :title="t('游客年龄分布 · {scope}', { scope: scopeLabel })" :option="ageOption" height="260px" />
     </div>
 
-    <!-- 第二行：承载量预警 + 消费偏好 -->
     <div class="grid grid-2">
       <div class="common-card">
         <div class="card-title">
@@ -59,7 +56,6 @@
       <ChartCard :title="t('游客消费偏好 · {scope}', { scope: scopeLabel })" :option="consumeOption" height="300px" />
     </div>
 
-    <!-- 底部趋势图 -->
     <ChartCard :title="t('客流趋势 · {scope}', { scope: scopeLabel })" :option="trendOption" height="300px">
       <template #extra>
         <div class="btn-group">
@@ -74,7 +70,6 @@
       </template>
     </ChartCard>
 
-    <!-- 迁入迁出 + 过夜游 -->
     <div class="grid grid-2">
       <ChartCard :title="t('迁入迁出客流对比 · {scope}', { scope: scopeLabel })" :option="migrationOption" height="280px" />
       <StatCard
@@ -86,7 +81,6 @@
       />
     </div>
 
-    <!-- 客流监测场景配图：点缩略图看大图 -->
     <ImageGallery page="flow" :title="t('客流监测场景图集')" />
   </div>
 </template>
@@ -120,7 +114,6 @@ import type { FlowWarning } from '../types'
 
 const filter = ref({ timeRange: '7d', region: 'all', platform: 'all', sentiment: 'all' })
 
-// ===== 按顶栏分析范围重算：总量缩放，占比类抖动后重新归一化 =====
 const realtime = computed(() => ({
   total: scaleNum(mockRealtimeFlow.total, 'flow-total'),
   yoy: scalePercent(mockRealtimeFlow.yoy, 'flow-yoy', 0.25),
@@ -135,11 +128,6 @@ const profile = computed(() => ({
 
 const overnightRate = computed(() => scalePercent(mockOvernightRate, 'flow-overnight', 0.2))
 
-/**
- * 承载量预警：按当前范围取景区（景点普查 + 首页资源点）。
- * 客流与承载量都是「单个景区」的量，不随范围缩放；范围只决定名单。
- * 资源点的承载量按固定使用率（62%×0.72~1.28）反推，等级与使用率同源，保证表内自洽。
- */
 const ALL_SPOTS = [
   ...mockScenicSpots.map((s) => ({ name: s.name, city: s.city, flow: s.flow, capacity: s.capacity })),
   ...mockHomeData.resourcePoints.map((r) => ({
@@ -169,9 +157,7 @@ const flowWarnings = computed<FlowWarning[]>(() =>
     .slice(0, 6),
 )
 
-// 来源地饼图
-// 这张卡只有 298×260，7 个来源里 6 个挤在左半圈：环一大标注就放不下，ECharts 会丢掉放不下的、
-// 截断放得下的（之前只画出 4 个，"天津"还变成"天..."）。缩小环、标注贴边从默认 25% 放到 2%、引线缩短后可全部显示
+
 const sourceOption = computed<Record<string, unknown>>(() => ({
   tooltip: { trigger: 'item', formatter: '{b}: {c}% ({d}%)' },
   legend: { bottom: 0, type: 'scroll' },
@@ -187,7 +173,6 @@ const sourceOption = computed<Record<string, unknown>>(() => ({
   ],
 }))
 
-// 年龄柱状图
 const ageOption = computed<Record<string, unknown>>(() => ({
   tooltip: { trigger: 'axis' },
   grid: { left: 40, right: 20, top: 20, bottom: 30 },
@@ -196,7 +181,6 @@ const ageOption = computed<Record<string, unknown>>(() => ({
   series: [{ type: 'bar', barWidth: '45%', data: profile.value.age.map((a) => a.value) }],
 }))
 
-// 消费偏好饼图
 const consumeOption = computed<Record<string, unknown>>(() => ({
   tooltip: { trigger: 'item', formatter: '{b}: {c}% ({d}%)' },
   legend: { bottom: 0, type: 'scroll' },
@@ -211,7 +195,6 @@ const consumeOption = computed<Record<string, unknown>>(() => ({
   ],
 }))
 
-// 趋势切换
 type TrendMode = 'day' | 'week' | 'month'
 const trendMode = ref<TrendMode>('day')
 const trendModes: { label: string; value: TrendMode }[] = [
@@ -242,7 +225,6 @@ const trendOption = computed<Record<string, unknown>>(() => {
   }
 })
 
-// 迁入迁出对比（合并城市；数值随范围缩放，城市结构保持不变）
 const migrationOption = computed<Record<string, unknown>>(() => {
   const cities = Array.from(
     new Set([...mockMigration.in.map((i) => i.city), ...mockMigration.out.map((o) => o.city)]),
@@ -262,7 +244,7 @@ const migrationOption = computed<Record<string, unknown>>(() => {
   }
 })
 
-// 预警等级 tag 样式
+
 function levelTag(level: FlowWarning['level']): string {
   switch (level) {
     case '正常':

@@ -13,7 +13,6 @@ import type {
   FoodItem,
 } from '../types'
 
-// 沿黄九市坐标（大致中心）
 const CITY_COORDS: Record<string, { lng: number; lat: number }> = {
   '菏泽': { lng: 115.48, lat: 35.23 },
   '济宁': { lng: 116.59, lat: 35.41 },
@@ -26,10 +25,7 @@ const CITY_COORDS: Record<string, { lng: number; lat: number }> = {
   '东营': { lng: 118.67, lat: 37.43 },
 }
 
-// ========== 首页数据 ==========
 export const mockHomeData: HomeData = {
-  // 16 市旅游口径：heat = 近30日旅游热度指数（万人次）；flow = 实时客流（人次）；
-  // warn = 今日预警（条）。沿黄九市与原有数值保持一致，便于「沿黄河流域」范围复用。
   cityTourism: [
     { city: '济南', heat: 328.5, flow: 328500, warn: 2 },
     { city: '青岛', heat: 306.4, flow: 306400, warn: 3 },
@@ -49,7 +45,6 @@ export const mockHomeData: HomeData = {
     { city: '菏泽', heat: 65.8, flow: 65800, warn: 0 },
   ],
   resourcePoints: [
-    // 沿黄九市
     { id: 'r001', name: '趵突泉景区', type: 'A级景区', city: '济南', lng: 117.01, lat: 36.66, flow: 18500, status: '繁忙' },
     { id: 'r002', name: '泰山风景区', type: 'A级景区', city: '泰安', lng: 117.10, lat: 36.25, flow: 32000, status: '预警' },
     { id: 'r003', name: '曲阜三孔', type: '文博场馆', city: '济宁', lng: 116.99, lat: 35.59, flow: 15200, status: '正常' },
@@ -71,7 +66,6 @@ export const mockHomeData: HomeData = {
     { id: 'r019', name: '夏津黄河故道森林公园', type: '湿地公园', city: '德州', lng: 116.00, lat: 36.95, flow: 3800, status: '正常' },
     { id: 'r020', name: '曹州牡丹园', type: 'A级景区', city: '菏泽', lng: 115.43, lat: 35.29, flow: 9600, status: '繁忙' },
     { id: 'r021', name: '水浒好汉城', type: 'A级景区', city: '菏泽', lng: 115.94, lat: 35.60, flow: 5400, status: '正常' },
-    // 非沿黄城市（补齐市级覆盖，资源点随分析范围过滤）
     { id: 'r022', name: '栈桥', type: 'A级景区', city: '青岛', lng: 120.32, lat: 36.06, flow: 21000, status: '繁忙' },
     { id: 'r023', name: '崂山风景区', type: 'A级景区', city: '青岛', lng: 120.62, lat: 36.19, flow: 18400, status: '预警' },
     { id: 'r024', name: '青岛啤酒博物馆', type: '文博场馆', city: '青岛', lng: 120.34, lat: 36.08, flow: 7600, status: '正常' },
@@ -96,7 +90,6 @@ export const mockHomeData: HomeData = {
   ],
 }
 
-// 黄河山东段干流走向（示意简化，东明入境 → 东营入海）
 export const mockYellowRiverCourse: [number, number][] = [
   [35.26, 115.09],
   [35.40, 115.45],
@@ -111,51 +104,49 @@ export const mockYellowRiverCourse: [number, number][] = [
   [37.76, 119.05],
 ]
 
-// 黄河全流域干流走向（示意简化：源头 → 渤海入海口），首页入场动画「由源头流向入海口」用
 export const mockYellowRiverFullCourse: [number, number][] = [
-  [34.60, 96.20], // 源头（巴颜喀拉山北麓）
+  [34.60, 96.20],
   [34.92, 97.60],
   [34.85, 98.20],
   [33.75, 99.70],
   [33.40, 101.50],
-  [34.00, 102.10], // 玛曲（天下黄河第一弯）
+  [34.00, 102.10],
   [34.60, 102.50],
   [35.00, 102.90],
   [35.90, 103.20],
-  [36.06, 103.80], // 兰州
+  [36.06, 103.80],
   [36.50, 104.20],
-  [37.50, 105.20], // 中卫
+  [37.50, 105.20],
   [37.50, 105.70],
   [37.90, 106.00],
-  [38.50, 106.30], // 银川
-  [39.20, 106.40], // 石嘴山
-  [39.66, 106.80], // 乌海
-  [40.30, 107.00], // 磴口
-  [40.75, 107.40], // 河套（巴彦淖尔）
-  [40.55, 109.80], // 包头
-  [40.28, 111.20], // 托克托（几字弯回头）
+  [38.50, 106.30],
+  [39.20, 106.40],
+  [39.66, 106.80],
+  [40.30, 107.00],
+  [40.75, 107.40],
+  [40.55, 109.80],
+  [40.28, 111.20],
   [39.60, 111.20],
-  [39.38, 111.15], // 河曲
-  [37.50, 110.75], // 吴堡（晋陕峡谷）
-  [35.48, 110.45], // 韩城
-  [34.60, 110.30], // 潼关（转东）
+  [39.38, 111.15],
+  [37.50, 110.75],
+  [35.48, 110.45],
+  [34.60, 110.30],
   [34.50, 110.90],
-  [34.80, 111.40], // 三门峡
-  [34.83, 112.40], // 孟津
-  [34.90, 113.60], // 郑州花园口
-  [34.80, 114.30], // 开封
-  [34.85, 114.80], // 兰考
-  [35.30, 115.10], // 东明（入鲁）
-  [35.70, 115.00], // 濮阳
-  [36.30, 116.20], // 东阿
-  [36.70, 116.80], // 济南
+  [34.80, 111.40],
+  [34.83, 112.40],
+  [34.90, 113.60],
+  [34.80, 114.30],
+  [34.85, 114.80],
+  [35.30, 115.10],
+  [35.70, 115.00],
+  [36.30, 116.20],
+  [36.70, 116.80],
   [37.00, 117.20],
-  [37.40, 117.90], // 滨州
-  [37.60, 118.30], // 利津
-  [37.80, 118.95], // 东营入海（渤海）
+  [37.40, 117.90],
+  [37.60, 118.30],
+  [37.80, 118.95],
 ]
 
-// ========== 自然保护区数据 ==========
 export const mockReserves: NatureReserve[] = [
   { id: 'n001', name: '黄河三角洲国家级自然保护区', level: '国家级', city: '东营市', area: 153000, lng: 118.95, lat: 37.78, species: ['东方白鹳', '黑嘴鸥', '丹顶鹤', '黄河刀鱼'], manager: '山东黄河三角洲国家级自然保护区管理委员会', lastMonitor: '2026-09-20' },
   { id: 'n002', name: '南四湖省级自然保护区', level: '省级', city: '济宁市', area: 127500, lng: 117.22, lat: 34.78, species: ['大天鹅', '鸳鸯', '中华秋沙鸭'], manager: '济宁市自然资源和规划局', lastMonitor: '2026-09-18' },
@@ -163,7 +154,6 @@ export const mockReserves: NatureReserve[] = [
   { id: 'n004', name: '滨州贝壳堤岛与湿地国家级自然保护区', level: '国家级', city: '滨州市', area: 43500, lng: 117.88, lat: 38.20, species: ['文蛤', '四角蛤蜊', '黑嘴鸥'], manager: '滨州市自然资源和规划局', lastMonitor: '2026-09-15' },
   { id: 'n005', name: '东阿黄河国家湿地公园', level: '省级', city: '聊城市', area: 2860, lng: 116.24, lat: 36.32, species: ['白鹭', '苍鹭', '斑嘴鸭'], manager: '东阿县自然资源和规划局', lastMonitor: '2026-09-19' },
   { id: 'n006', name: '齐河黄河水乡国家湿地公园', level: '省级', city: '德州市', area: 3200, lng: 116.76, lat: 36.78, species: ['东方白鹳', '大天鹅', '灰鹤'], manager: '齐河县自然资源和规划局', lastMonitor: '2026-09-21' },
-  // 非沿黄城市：与首页「资源点/保护区随分析范围过滤」配套，保证每个市都有演示数据
   { id: 'n007', name: '崂山省级自然保护区', level: '省级', city: '青岛市', area: 44000, lng: 120.60, lat: 36.20, species: ['赤松', '黑松', '崂山百合'], manager: '青岛市自然资源和规划局', lastMonitor: '2026-09-17' },
   { id: 'n008', name: '长岛国家级自然保护区', level: '国家级', city: '烟台市', area: 5300, lng: 120.73, lat: 37.95, species: ['斑海豹', '黄嘴白鹭', '蝮蛇'], manager: '长岛国家级自然保护区管理处', lastMonitor: '2026-09-16' },
   { id: 'n009', name: '昆嵛山国家级自然保护区', level: '国家级', city: '烟台市', area: 15400, lng: 121.75, lat: 37.30, species: ['赤松', '蝮蛇', '中华秋沙鸭'], manager: '昆嵛山国家级自然保护区管理局', lastMonitor: '2026-09-20' },
@@ -178,7 +168,6 @@ export const mockReserves: NatureReserve[] = [
   { id: 'n018', name: '菏泽黄河故道省级自然保护区', level: '省级', city: '菏泽市', area: 8900, lng: 115.72, lat: 34.85, species: ['白鹭', '苍鹭', '芦苇'], manager: '菏泽市自然资源和规划局', lastMonitor: '2026-09-18' },
 ]
 
-// 各市自然保护区数量（普查口径）：total = national + provincial + county
 export const mockReserveCityStats: ReserveCityStat[] = [
   { city: '青岛市', total: 12, national: 1, provincial: 3, county: 8 },
   { city: '烟台市', total: 11, national: 2, provincial: 3, county: 6 },
@@ -209,7 +198,6 @@ export const mockSpeciesPoints: SpeciesPoint[] = [
   { name: '灰鹤', lng: 116.76, lat: 36.78, level: '国家二级' },
 ]
 
-// 生态保护红线（简化 GeoJSON）
 export const mockRedLineGeoJson = {
   type: 'FeatureCollection',
   features: [
@@ -232,7 +220,6 @@ export const mockRedLineGeoJson = {
   ],
 }
 
-// ========== 旅游景点数据 ==========
 export const mockScenicSpots: ScenicSpot[] = [
   { id: 's001', name: '趵突泉景区', level: '5A', type: 'A级景区', city: '济南市', lng: 117.01, lat: 36.66, intro: '济南三大名胜之首，趵突泉居七十二名泉之冠，三窟并发、四季恒温，素有「天下第一泉」之称。', flow: 18500, capacity: 30000, trend: [12000, 14500, 16800, 18500, 17200, 15000, 13000], profile: { age: { '18-25': 25, '26-35': 35, '36-45': 25, '46+': 15 }, source: ['济南本地', '北京', '天津', '河北'] } },
   { id: 's002', name: '泰山风景区', level: '5A', type: 'A级景区', city: '泰安市', lng: 117.10, lat: 36.25, intro: '五岳之首，世界文化与自然双遗产，主峰玉皇顶海拔 1545 米，历代帝王封禅告祭之地。', flow: 32000, capacity: 35000, trend: [20000, 24000, 28000, 32000, 30000, 26000, 22000], profile: { age: { '18-25': 30, '26-35': 40, '36-45': 20, '46+': 10 }, source: ['山东', '北京', '江苏', '河南'] } },
@@ -246,7 +233,6 @@ export const mockScenicSpots: ScenicSpot[] = [
   { id: 's010', name: '孙子兵法城', level: '4A', type: '文博场馆', city: '滨州市', lng: 117.58, lat: 37.38, intro: '以《孙子兵法》为主题的仿古建筑群，位于兵圣孙武故里惠民县，是鲁北文旅地标。', flow: 3200, capacity: 8000, trend: [2000, 2500, 3000, 3200, 3000, 2600, 2200], profile: { age: { '18-25': 15, '26-35': 25, '36-45': 35, '46+': 25 }, source: ['滨州', '东营', '德州'] } },
 ]
 
-// 各市 A 级旅游景区数量（普查口径）：total = a5 + a4 + 其它 A 级
 export const mockScenicCityStats: ScenicCityStat[] = [
   { city: '青岛市', total: 68, a5: 1, a4: 30 },
   { city: '烟台市', total: 62, a5: 2, a4: 28 },
@@ -283,7 +269,6 @@ export const mockWarningList: WarningSpot[] = [
   { id: 's005', name: '大明湖景区', flow: 22000, capacity: 40000 },
 ]
 
-// ========== 客流监测数据 ==========
 export const mockRealtimeFlow: RealtimeFlow = {
   total: 1286453,
   yoy: 12.5,
@@ -351,7 +336,6 @@ export const mockMigration: MigrationData = {
 
 export const mockOvernightRate = 42.6
 
-// ========== 文旅产业数据 ==========
 export const mockIndustryKpi: IndustryKpi = {
   income: 1286.5,
   visitors: 2.86,
@@ -399,7 +383,6 @@ export const mockReports: ReportItem[] = [
   { id: 'rep004', title: '2025年度沿黄文旅产业发展白皮书', period: '2025-Annual', url: '#' },
 ]
 
-// ========== 文旅资源管理数据 ==========
 export const mockResourceTree: ResourceTreeNode[] = [
   { type: 'A级景区', children: [{ name: '5A级', count: 12 }, { name: '4A级', count: 86 }, { name: '3A级', count: 188 }] },
   { type: '文博场馆', children: [{ name: '博物馆', count: 98 }, { name: '纪念馆', count: 45 }, { name: '文化馆', count: 43 }] },
@@ -427,7 +410,6 @@ export const mockConflictList: ConflictItem[] = [
   { id: 'res008', name: '阿胶制作技艺工坊', reason: '工坊扩建区域涉及生态保护红线缓冲带' },
 ]
 
-// ========== 舆情数据 ==========
 export const mockOpinionTotal = 286453
 export const mockSentiment: SentimentData = { positive: 45, neutral: 38, negative: 17 }
 export const mockTrend7d: TrendItem[] = days.map((d, i) => ({ date: d, value: 35000 + i * 2000 + Math.floor(Math.random() * 5000) }))
@@ -507,7 +489,6 @@ export const mockCommentHeat: CommentHeat = {
   })),
 }
 
-// ========== 智慧营销数据 ==========
 export const mockAccounts: AccountItem[] = [
   { platform: '抖音', name: '黄河文旅官方', fans: 2850000, interaction: 156000 },
   { platform: '抖音', name: '山东文旅发布', fans: 1920000, interaction: 98000 },
@@ -548,7 +529,6 @@ export const mockBrandEvents: BrandEvent[] = [
   { name: '山东非遗购物节', data: { 曝光量: 150000000, 互动量: 420000, 转化率: 4.1, 带动收入: 3800 } },
 ]
 
-// ========== 灾难监控数据 ==========
 export const mockWaterInfo: WaterInfo = { level: 42.6, flow: 2850, flood: '正常' }
 
 export const mockWeatherWarn: WeatherWarn[] = [
@@ -594,7 +574,6 @@ export const mockDisasterWarnings: DisasterWarning[] = [
   { id: 'w005', level: '橙色', location: '济南、淄博', type: '高温预警', measure: '景区增设遮阳点和饮水站，调整户外作业时间' },
 ]
 
-// ========== 文化遗产数据 ==========
 export const mockHeritageList: HeritageItem[] = [
   { id: 'h001', name: '泰山', type: '不可移动文物', era: '世界自然与文化双重遗产', level: '世界遗产', lng: 117.10, lat: 36.25, desc: '泰山是中国五岳之首，有"天下第一山"之称，是世界文化与自然双重遗产。', images: [], model3d: undefined },
   { id: 'h002', name: '三孔（孔庙、孔府、孔林）', type: '不可移动文物', era: '春秋至清', level: '世界文化遗产', lng: 116.99, lat: 35.59, desc: '曲阜三孔是中国历代纪念孔子、推崇儒学的表征，以丰厚的文化积淀、悠久历史、宏大规模、丰富文物珍藏著称。', images: [], model3d: undefined },
@@ -608,8 +587,6 @@ export const mockHeritageList: HeritageItem[] = [
   { id: 'h010', name: '山东大鼓', type: '非遗项目', era: '传统曲艺', level: '国家级非遗', lng: 116.98, lat: 36.45, desc: '山东大鼓是北方大鼓之鼻祖，中国北方地区现存最早的传统曲艺鼓书暨鼓曲形式。', images: [], model3d: undefined },
 ]
 
-// ========== 饮食文化 ==========
-// 每市 2~3 项，county 与 config/cityCounties.ts 的县区全名一致：点击列表项目即可定位到该县区
 export const mockFoodList: FoodItem[] = [
   { id: 'f001', name: '把子肉', category: '地方名吃', city: '济南', county: '历下区', flavor: '咸鲜浓香、酱香厚重', dishes: ['把子肉配米饭', '四喜丸子', '虎皮鸡蛋'], desc: '把子肉是济南传统名吃，用蒲草捆扎五花肉加酱油慢炖，肥而不腻、入口即化，是泉城人最日常的一口荤香。' },
   { id: 'f002', name: '甜沫', category: '地方名吃', city: '济南', county: '市中区', flavor: '咸香微辣、糊香浓郁', dishes: ['甜沫配油条', '甜沫配油旋'], desc: '名为甜沫实为咸粥，小米面熬底，加花生、粉条、豆腐皮与胡椒，是济南早餐的代表，与油旋、油条最相配。' },
@@ -656,11 +633,8 @@ export const mockThemeRoutes: ThemeRoute[] = [
   { name: '大河印记·水工智慧之旅', spots: ['戴村坝', '黄河大堤', '南旺分水枢纽'] },
 ]
 
-// 导出城市坐标供地图使用
 export { CITY_COORDS }
 
-// ========== 评论热力：沿黄九市分级数据 ==========
-// 山东沿黄九市：济南、淄博、东营、济宁、泰安、德州、聊城、滨州、菏泽
 export const mockCityComment: { city: string; value: number }[] = [
   { city: '济南', value: 2860 },
   { city: '泰安', value: 2140 },

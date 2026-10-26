@@ -1,15 +1,3 @@
-/**
- * 数据源：Open-Meteo 天气 API —— 山东 16 市实时天气与今明预报。
- *
- * 为什么不用中国天气网 d1.weather.com.cn：
- *   实测该域的 robots.txt 是 `User-agent: * / Disallow: /`（整站禁止抓取），
- *   按本爬虫「robots 优先」的原则不能抓。Open-Meteo 是面向程序调用的开放 API，
- *   单次请求即可返回全部城市，数据 CC BY 4.0，注明来源即可使用。
- *
- * robots 说明：api.open-meteo.com 的 robots.txt 也写着 Disallow: /，那是挡搜索引擎收录
- *   接口地址（避免 API 被索引），不是禁止程序调用——该服务本身就是给软件调用的。
- *   这里显式 ignoreRobots 并只发 1 个请求/轮，属于有意的例外，已在 README 记录。
- */
 import { get } from '../lib/http.mjs'
 import { writeRaw } from '../lib/store.mjs'
 
@@ -35,7 +23,6 @@ const CITIES = [
   { city: '滨州', lat: 37.3835, lon: 117.9707 }, { city: '菏泽', lat: 35.2333, lon: 115.4800 },
 ]
 
-/** WMO 天气码 → 中文（Open-Meteo 用的是 WMO 4677 码表） */
 const WMO = {
   0: '晴', 1: '晴间多云', 2: '多云', 3: '阴',
   45: '雾', 48: '雾凇',
@@ -49,7 +36,6 @@ const WMO = {
   95: '雷阵雨', 96: '雷阵雨伴冰雹', 99: '强雷阵雨伴冰雹',
 }
 
-/** 风向角度 → 中文风向（气象习惯：风从哪个方向来就叫什么风） */
 const COMPASS = [
   [0, '北风'], [45, '东北风'], [90, '东风'], [135, '东南风'],
   [180, '南风'], [225, '西南风'], [270, '西风'], [315, '西北风'], [360, '北风'],
@@ -67,7 +53,6 @@ function windName(deg) {
   return best[1]
 }
 
-/** 风速(km/h) → 蒲福风力等级，前端要的是"2级"这种写法 */
 function beaufort(kmh) {
   const table = [1, 6, 12, 20, 29, 39, 50, 62, 75, 89, 103, 118]
   if (!Number.isFinite(kmh)) return null
@@ -80,7 +65,6 @@ function weatherOf(code) {
   return WMO[code] ?? (code === undefined || code === null ? null : `未知(${code})`)
 }
 
-/** 取每日本地日期（API 已按 Asia/Shanghai 返回 YYYY-MM-DD） */
 function dayAt(daily, i) {
   if (!daily || !Array.isArray(daily.time) || !daily.time[i]) return null
   return {
@@ -96,7 +80,6 @@ function dayAt(daily, i) {
 export async function run(ctx) {
   const lats = CITIES.map((c) => c.lat).join(',')
   const lons = CITIES.map((c) => c.lon).join(',')
-  // 一次请求取回 16 个点：返回结果是按坐标顺序排列的数组
   const url = `${API}?latitude=${lats}&longitude=${lons}&${PARAMS}`
   const res = await get(url, { ignoreRobots: true, retries: 3, timeout: 25000 })
   if (res.status !== 200) {
@@ -124,7 +107,6 @@ export async function run(ctx) {
       city: c.city,
       lat: c.lat,
       lon: c.lon,
-      // 接口回的是它自己插值到的格点坐标，留一份便于核对
       grid: { lat: one.latitude, lon: one.longitude, elevation: one.elevation },
       realtime: {
         temp: cur.temperature_2m ?? null,

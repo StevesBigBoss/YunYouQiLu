@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import urllib.request, ssl, re, gzip, io
 ctx = ssl.create_default_context(); ctx.check_hostname=False; ctx.verify_mode=ssl.CERT_NONE
 UA={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0 Safari/537.36',
@@ -14,10 +13,8 @@ def fetch(url):
 
 for name in ['潍坊风筝','吕剧','泰山皮影戏','梁祝传说']:
     try:
-        # 百度百科搜索建议接口
         import urllib.parse, json
         kw=urllib.parse.quote(name)
-        # 直接访问词条页
         url=f'https://baike.baidu.com/item/{kw}'
         body=fetch(url)
         og=re.search(r'property=["\']og:image["\'][^>]*content=["\']([^"\']+)', body)

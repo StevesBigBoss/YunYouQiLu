@@ -3,9 +3,7 @@ import { t } from '../../config/i18n'
 
 withDefaults(
   defineProps<{
-    /** 徽标边长（像素） */
     size?: number
-    /** 无障碍名称 */
     label?: string
   }>(),
   { size: 28, label: '云游齐鲁' },
@@ -15,7 +13,6 @@ withDefaults(
 <template>
   <span class="brand-logo" :style="{ width: `${size}px`, height: `${size}px` }">
     <svg viewBox="0 0 32 32" role="img" :aria-label="t(label)">
-      <!-- 齐鲁山河：日出东方、双峰并峙（泰山）、黄河水波 -->
       <circle class="bl-sun" cx="22.4" cy="10" r="4" />
       <path class="bl-peak-main" d="M5.6 23.6L12 9.4L18.4 23.6Z" />
       <path class="bl-peak-side" d="M16.8 23.6L21.6 13.8L26.4 23.6Z" />
