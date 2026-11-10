@@ -89,12 +89,7 @@ class User(models.Model):
         self.save()
 
     def check_password(self, raw_password):
-        if check_password(raw_password, self.password):
-            return True
-        if self.password == raw_password:
-            self.set_password(raw_password)
-            return True
-        return False
+        return check_password(raw_password, self.password)
 
     class Meta:
         db_table = "app_user"

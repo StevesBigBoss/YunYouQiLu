@@ -10,6 +10,7 @@ const PER_PAGE = 50
 const MAX_PAGES = 8
 const BASE = 'https://www.ihchina.cn'
 const REFERER = 'https://www.ihchina.cn/project.html'
+const BROWSER_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
 
 function apiUrl(page) {
   return `${BASE}/Article/Index/getProject.html?province=${PROVINCE_CODE}&p=${page}&limit=${PER_PAGE}`
@@ -43,7 +44,7 @@ export async function run(ctx) {
   const problems = []
   let total = null
   for (let page = 1; page <= MAX_PAGES; page += 1) {
-    const res = await get(apiUrl(page), { referer: REFERER })
+    const res = await get(apiUrl(page), { referer: REFERER, userAgent: BROWSER_UA })
     if (page === 1) writeRaw(id, `project-p1-limit${PER_PAGE}`, res.text, 'json')
     const payload = JSON.parse(res.text)
     if (!payload || !Array.isArray(payload.list) || payload.list.length === 0) break

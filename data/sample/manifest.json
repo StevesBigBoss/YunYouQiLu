@@ -1,0 +1,22 @@
+{
+  "weather": {
+    "source": "Open-Meteo（https://open-meteo.com）",
+    "fetchedAt": "2026-11-02T15:25:17.538Z",
+    "count": 16
+  },
+  "quake": {
+    "source": "USGS FDSN Event API（公开数据）",
+    "fetchedAt": "2026-11-02T15:25:21.535Z",
+    "count": 20
+  },
+  "heritage": {
+    "source": "中国非物质文化遗产网 www.ihchina.cn（国家级非遗代表性项目名录）",
+    "fetchedAt": "2026-11-02T15:25:26.308Z",
+    "count": 190
+  },
+  "news": {
+    "source": "文化和旅游部 www.mct.gov.cn、新华网山东频道 sd.news.cn、大众网文旅/山东频道 dzwww.com（公开列表页）",
+    "fetchedAt": "2026-11-02T15:25:29.926Z",
+    "count": 79
+  }
+}

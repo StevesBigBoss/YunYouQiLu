@@ -1,11 +1,13 @@
-import type { CityTourismItem } from '../types'
-
 export interface CountyStat {
   name: string
   share: number
-  heat: number
-  flow: number
-  warn: number
+  visitors: number
+  revenue: number
+}
+
+export interface CountySplitSource {
+  visitors: number
+  revenue: number
 }
 
 function nameHash(name: string): number {
@@ -36,20 +38,16 @@ export function splitIntByWeight(total: number, weights: number[]): number[] {
   return out
 }
 
-export function splitCityToCounties(city: CityTourismItem, names: string[]): CountyStat[] {
+export function splitCityToCounties(city: CountySplitSource, names: string[]): CountyStat[] {
   const weights = names.map((n) => countyWeight(n))
   const total = weights.reduce((s, w) => s + w, 0) || 1
-  const rows: CountyStat[] = names.map((name, i) => {
+  return names.map((name, i) => {
     const share = weights[i] / total
     return {
       name,
       share,
-      heat: Math.round(city.heat * share * 10) / 10,
-      flow: Math.round(city.flow * share),
-      warn: 0,
+      visitors: Math.round(city.visitors * share * 100) / 100,
+      revenue: Math.round(city.revenue * share * 100) / 100,
     }
   })
-  const order = rows.map((_, i) => i).sort((a, b) => weights[b] - weights[a])
-  for (let k = 0; k < city.warn && k < order.length; k++) rows[order[k]].warn += 1
-  return rows
 }

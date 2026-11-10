@@ -99,8 +99,6 @@
             </tbody>
           </table>
         </div>
-
-        <ImageGallery page="resource" :title="t('文旅资源管理场景图集')" />
       </div>
     </div>
 
@@ -159,7 +157,6 @@
 import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import ChartCard from '../components/common/ChartCard.vue'
-import ImageGallery from '../components/common/ImageGallery.vue'
 import AppIcon from '../components/common/AppIcon.vue'
 import {
   mockResourceTree,

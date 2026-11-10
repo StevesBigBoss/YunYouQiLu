@@ -1,4 +1,5 @@
 import os
+import argparse
 from dotenv import load_dotenv
 import requests
 import json
@@ -229,20 +230,25 @@ def scrape_mode(conn):
             offset += 20
         except Exception as e:
             print(f"  [爬取失败] {e}")
-            print("  切换到模拟数据模式...")
-            seed_mode(conn)
+            print("  未写入模拟数据，请检查 TIKTOK_COOKIE 或网络后重试。")
             return
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--seed", action="store_true", help="写入演示数据；仅在明确需要演示数据时使用")
+    args = parser.parse_args()
+
     conn = get_db_connection()
     print(f"数据库连接成功: {DB_CONFIG['database']}")
     print(f"关键词: {KEYWORD}")
 
     if COOKIE and len(COOKIE) > 50:
         scrape_mode(conn)
-    else:
+    elif args.seed:
         seed_mode(conn)
+    else:
+        print("未检测到有效 TIKTOK_COOKIE，已跳过写入。若需演示数据，请显式运行 --seed。")
 
     conn.close()
     print("\n全部完成！")

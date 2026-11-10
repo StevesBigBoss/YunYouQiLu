@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+      - name: Django tests
+        run: python manage.py test --settings=tiktok_blogger_web.settings_test -v 2
+      - name: Forecast demo
+        run: python scripts/forecast_qingdao.py --json forecast.json
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.12"
+          cache: npm
+      - name: Install Node dependencies
+        run: npm ci
+      - name: Use sample snapshot
+        run: npm run data:sample
+      - name: Check snapshots
+        run: npm run check:snapshots
+      - name: Build front end
+        run: npm run build

@@ -28,6 +28,24 @@ export interface CityTourismItem {
   warn: number
 }
 
+export interface CityTourismStat {
+  city: string
+  year: number
+  visitors: number
+  visitorsYoy: number | null
+  revenue: number | null
+  revenueYoy: number | null
+  inboundVisitors: number | null
+  inboundForeignVisitors: number | null
+  inboundFx: number | null
+}
+
+export interface CityTourismTrend {
+  city: string
+  visitors: (number | null)[]
+  revenue: (number | null)[]
+}
+
 export interface HomeData {
   cityTourism: CityTourismItem[]
   resourcePoints: ResourcePoint[]

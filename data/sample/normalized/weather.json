@@ -1,0 +1,664 @@
+{
+  "source": "Open-Meteo（https://open-meteo.com）",
+  "attribution": "Weather data by Open-Meteo.com, CC BY 4.0",
+  "fetchedAt": "2026-11-02T15:25:17.538Z",
+  "cityCount": 16,
+  "cities": [
+    {
+      "city": "济南",
+      "lat": 36.6512,
+      "lon": 117.1201,
+      "grid": {
+        "lat": 36.66081,
+        "lon": 117.12975,
+        "elevation": 130
+      },
+      "realtime": {
+        "temp": 13.1,
+        "humidity": 48,
+        "windDirection": "南风",
+        "windDegrees": 198,
+        "windLevel": "3级",
+        "windSpeedKmh": 13.4,
+        "precipitation": 0,
+        "weather": "晴",
+        "weatherCode": 0,
+        "observedAt": "2026-11-02T23:15"
+      },
+      "forecast": {
+        "updatedAt": "2026-11-02T23:15",
+        "today": {
+          "date": "2026-11-02",
+          "weather": "阴",
+          "tempHigh": 18.8,
+          "tempLow": 8.9,
+          "precipitation": 0,
+          "code": 3
+        },
+        "tomorrow": {
+          "date": "2026-11-03",
+          "weather": "阴",
+          "tempHigh": 20.5,
+          "tempLow": 13,
+          "precipitation": 0,
+          "code": 3
+        }
+      }
+    },
+    {
+      "city": "青岛",
+      "lat": 36.0671,
+      "lon": 120.3826,
+      "grid": {
+        "lat": 36.098415,
+        "lon": 120.3502,
+        "elevation": 11
+      },
+      "realtime": {
+        "temp": 15,
+        "humidity": 58,
+        "windDirection": "西南风",
+        "windDegrees": 237,
+        "windLevel": "3级",
+        "windSpeedKmh": 13.8,
+        "precipitation": 0,
+        "weather": "晴间多云",
+        "weatherCode": 1,
+        "observedAt": "2026-11-02T23:15"
+      },
+      "forecast": {
+        "updatedAt": "2026-11-02T23:15",
+        "today": {
+          "date": "2026-11-02",
+          "weather": "阴",
+          "tempHigh": 17.9,
+          "tempLow": 10.4,
+          "precipitation": 0,
+          "code": 3
+        },
+        "tomorrow": {
+          "date": "2026-11-03",
+          "weather": "阴",
+          "tempHigh": 19,
+          "tempLow": 12,
+          "precipitation": 0,
+          "code": 3
+        }
+      }
+    },
+    {
+      "city": "淄博",
+      "lat": 36.8131,
+      "lon": 118.0548,
+      "grid": {
+        "lat": 36.801403,
+        "lon": 118.028915,
+        "elevation": 42
+      },
+      "realtime": {
+        "temp": 11.6,
+        "humidity": 59,
+        "windDirection": "南风",
+        "windDegrees": 194,
+        "windLevel": "2级",
+        "windSpeedKmh": 10.4,
+        "precipitation": 0,
+        "weather": "晴",
+        "weatherCode": 0,
+        "observedAt": "2026-11-02T23:15"
+      },
+      "forecast": {
+        "updatedAt": "2026-11-02T23:15",
+        "today": {
+          "date": "2026-11-02",
+          "weather": "多云",
+          "tempHigh": 20.2,
+          "tempLow": 7.9,
+          "precipitation": 0,
+          "code": 2
+        },
+        "tomorrow": {
+          "date": "2026-11-03",
+          "weather": "阴",
+          "tempHigh": 22,
+          "tempLow": 10.3,
+          "precipitation": 0,
+          "code": 3
+        }
+      }
+    },
+    {
+      "city": "枣庄",
+      "lat": 34.8107,
+      "lon": 117.3239,
+      "grid": {
+        "lat": 34.76274,
+        "lon": 117.341774,
+        "elevation": 93
+      },
+      "realtime": {
+        "temp": 13,
+        "humidity": 72,
+        "windDirection": "南风",
+        "windDegrees": 189,
+        "windLevel": "1级",
+        "windSpeedKmh": 5.8,
+        "precipitation": 0,
+        "weather": "多云",
+        "weatherCode": 2,
+        "observedAt": "2026-11-02T23:15"
+      },
+      "forecast": {
+        "updatedAt": "2026-11-02T23:15",
+        "today": {
+          "date": "2026-11-02",
+          "weather": "雾",
+          "tempHigh": 18.8,
+          "tempLow": 4.1,
+          "precipitation": 0,
+          "code": 45
+        },
+        "tomorrow": {
+          "date": "2026-11-03",
+          "weather": "阴",
+          "tempHigh": 19.2,
+          "tempLow": 9.7,
+          "precipitation": 0,
+          "code": 3
+        }
+      }
+    },
+    {
+      "city": "东营",
+      "lat": 37.434,
+      "lon": 118.6746,
+      "grid": {
+        "lat": 37.434093,
+        "lon": 118.723404,
+        "elevation": 9
+      },
+      "realtime": {
+        "temp": 9.3,
+        "humidity": 73,
+        "windDirection": "西南风",
+        "windDegrees": 220,
+        "windLevel": "1级",
+        "windSpeedKmh": 5.9,
+        "precipitation": 0,
+        "weather": "晴",
+        "weatherCode": 0,
+        "observedAt": "2026-11-02T23:15"
+      },
+      "forecast": {
+        "updatedAt": "2026-11-02T23:15",
+        "today": {
+          "date": "2026-11-02",
+          "weather": "晴",
+          "tempHigh": 19.3,
+          "tempLow": 7.2,
+          "precipitation": 0,
+          "code": 0
+        },
+        "tomorrow": {
+          "date": "2026-11-03",
+          "weather": "阴",
+          "tempHigh": 20.8,
+          "tempLow": 7.6,
+          "precipitation": 0,
+          "code": 3
+        }
+      }
+    },
+    {
+      "city": "烟台",
+      "lat": 37.4638,
+      "lon": 121.4479,
+      "grid": {
+        "lat": 37.434093,
+        "lon": 121.47607,
+        "elevation": 5
+      },
+      "realtime": {
+        "temp": 10.7,
+        "humidity": 60,
+        "windDirection": "西南风",
+        "windDegrees": 224,
+        "windLevel": "2级",
+        "windSpeedKmh": 11.7,
+        "precipitation": 0,
+        "weather": "晴",
+        "weatherCode": 0,
+        "observedAt": "2026-11-02T23:15"
+      },
+      "forecast": {
+        "updatedAt": "2026-11-02T23:15",
+        "today": {
+          "date": "2026-11-02",
+          "weather": "晴间多云",
+          "tempHigh": 19.2,
+          "tempLow": 8.1,
+          "precipitation": 0,
+          "code": 1
+        },
+        "tomorrow": {
+          "date": "2026-11-03",
+          "weather": "阴",
+          "tempHigh": 21.2,
+          "tempLow": 6.4,
+          "precipitation": 0,
+          "code": 3
+        }
+      }
+    },
+    {
+      "city": "潍坊",
+      "lat": 36.7069,
+      "lon": 119.1618,
+      "grid": {
+        "lat": 36.731106,
+        "lon": 119.17323,
+        "elevation": 32
+      },
+      "realtime": {
+        "temp": 11.4,
+        "humidity": 60,
+        "windDirection": "西南风",
+        "windDegrees": 227,
+        "windLevel": "2级",
+        "windSpeedKmh": 7.6,
+        "precipitation": 0,
+        "weather": "多云",
+        "weatherCode": 2,
+        "observedAt": "2026-11-02T23:15"
+      },
+      "forecast": {
+        "updatedAt": "2026-11-02T23:15",
+        "today": {
+          "date": "2026-11-02",
+          "weather": "多云",
+          "tempHigh": 20.1,
+          "tempLow": 7.9,
+          "precipitation": 0,
+          "code": 2
+        },
+        "tomorrow": {
+          "date": "2026-11-03",
+          "weather": "阴",
+          "tempHigh": 21.6,
+          "tempLow": 8.8,
+          "precipitation": 0,
+          "code": 3
+        }
+      }
+    },
+    {
+      "city": "济宁",
+      "lat": 35.4149,
+      "lon": 116.5871,
+      "grid": {
+        "lat": 35.395428,
+        "lon": 116.61972,
+        "elevation": 42
+      },
+      "realtime": {
+        "temp": 11.5,
+        "humidity": 73,
+        "windDirection": "南风",
+        "windDegrees": 179,
+        "windLevel": "2级",
+        "windSpeedKmh": 9,
+        "precipitation": 0,
+        "weather": "多云",
+        "weatherCode": 2,
+        "observedAt": "2026-11-02T23:15"
+      },
+      "forecast": {
+        "updatedAt": "2026-11-02T23:15",
+        "today": {
+          "date": "2026-11-02",
+          "weather": "阴",
+          "tempHigh": 20.4,
+          "tempLow": 7.6,
+          "precipitation": 0,
+          "code": 3
+        },
+        "tomorrow": {
+          "date": "2026-11-03",
+          "weather": "阴",
+          "tempHigh": 19.6,
+          "tempLow": 9.8,
+          "precipitation": 0,
+          "code": 3
+        }
+      }
+    },
+    {
+      "city": "泰安",
+      "lat": 36.1992,
+      "lon": 117.0879,
+      "grid": {
+        "lat": 36.168716,
+        "lon": 117.11688,
+        "elevation": 168
+      },
+      "realtime": {
+        "temp": 10.4,
+        "humidity": 61,
+        "windDirection": "西南风",
+        "windDegrees": 236,
+        "windLevel": "0级",
+        "windSpeedKmh": 0.6,
+        "precipitation": 0,
+        "weather": "晴间多云",
+        "weatherCode": 1,
+        "observedAt": "2026-11-02T23:15"
+      },
+      "forecast": {
+        "updatedAt": "2026-11-02T23:15",
+        "today": {
+          "date": "2026-11-02",
+          "weather": "阴",
+          "tempHigh": 17.7,
+          "tempLow": 7.1,
+          "precipitation": 0,
+          "code": 3
+        },
+        "tomorrow": {
+          "date": "2026-11-03",
+          "weather": "阴",
+          "tempHigh": 18.4,
+          "tempLow": 7.6,
+          "precipitation": 0,
+          "code": 3
+        }
+      }
+    },
+    {
+      "city": "威海",
+      "lat": 37.513,
+      "lon": 122.1204,
+      "grid": {
+        "lat": 37.50439,
+        "lon": 122.11718,
+        "elevation": 19
+      },
+      "realtime": {
+        "temp": 11.5,
+        "humidity": 64,
+        "windDirection": "西南风",
+        "windDegrees": 226,
+        "windLevel": "2级",
+        "windSpeedKmh": 11.7,
+        "precipitation": 0,
+        "weather": "晴",
+        "weatherCode": 0,
+        "observedAt": "2026-11-02T23:15"
+      },
+      "forecast": {
+        "updatedAt": "2026-11-02T23:15",
+        "today": {
+          "date": "2026-11-02",
+          "weather": "晴间多云",
+          "tempHigh": 17,
+          "tempLow": 10.6,
+          "precipitation": 0,
+          "code": 1
+        },
+        "tomorrow": {
+          "date": "2026-11-03",
+          "weather": "阴",
+          "tempHigh": 19.4,
+          "tempLow": 10.2,
+          "precipitation": 0,
+          "code": 3
+        }
+      }
+    },
+    {
+      "city": "日照",
+      "lat": 35.4164,
+      "lon": 119.5269,
+      "grid": {
+        "lat": 35.395428,
+        "lon": 119.50064,
+        "elevation": 39
+      },
+      "realtime": {
+        "temp": 11.7,
+        "humidity": 67,
+        "windDirection": "西风",
+        "windDegrees": 251,
+        "windLevel": "2级",
+        "windSpeedKmh": 8.4,
+        "precipitation": 0,
+        "weather": "多云",
+        "weatherCode": 2,
+        "observedAt": "2026-11-02T23:15"
+      },
+      "forecast": {
+        "updatedAt": "2026-11-02T23:15",
+        "today": {
+          "date": "2026-11-02",
+          "weather": "阴",
+          "tempHigh": 19,
+          "tempLow": 8.1,
+          "precipitation": 0,
+          "code": 3
+        },
+        "tomorrow": {
+          "date": "2026-11-03",
+          "weather": "阴",
+          "tempHigh": 18.4,
+          "tempLow": 10.4,
+          "precipitation": 0,
+          "code": 3
+        }
+      }
+    },
+    {
+      "city": "临沂",
+      "lat": 35.1045,
+      "lon": 118.3564,
+      "grid": {
+        "lat": 35.114235,
+        "lon": 118.318474,
+        "elevation": 73
+      },
+      "realtime": {
+        "temp": 12.4,
+        "humidity": 69,
+        "windDirection": "西南风",
+        "windDegrees": 216,
+        "windLevel": "1级",
+        "windSpeedKmh": 5.5,
+        "precipitation": 0,
+        "weather": "阴",
+        "weatherCode": 3,
+        "observedAt": "2026-11-02T23:15"
+      },
+      "forecast": {
+        "updatedAt": "2026-11-02T23:15",
+        "today": {
+          "date": "2026-11-02",
+          "weather": "阴",
+          "tempHigh": 18.6,
+          "tempLow": 6.2,
+          "precipitation": 0,
+          "code": 3
+        },
+        "tomorrow": {
+          "date": "2026-11-03",
+          "weather": "阴",
+          "tempHigh": 18.6,
+          "tempLow": 8.9,
+          "precipitation": 0,
+          "code": 3
+        }
+      }
+    },
+    {
+      "city": "德州",
+      "lat": 37.4355,
+      "lon": 116.3576,
+      "grid": {
+        "lat": 37.434093,
+        "lon": 116.32979,
+        "elevation": 23
+      },
+      "realtime": {
+        "temp": 10.7,
+        "humidity": 56,
+        "windDirection": "南风",
+        "windDegrees": 189,
+        "windLevel": "3级",
+        "windSpeedKmh": 12,
+        "precipitation": 0,
+        "weather": "晴",
+        "weatherCode": 0,
+        "observedAt": "2026-11-02T23:15"
+      },
+      "forecast": {
+        "updatedAt": "2026-11-02T23:15",
+        "today": {
+          "date": "2026-11-02",
+          "weather": "晴",
+          "tempHigh": 19.4,
+          "tempLow": 6.5,
+          "precipitation": 0,
+          "code": 0
+        },
+        "tomorrow": {
+          "date": "2026-11-03",
+          "weather": "阴",
+          "tempHigh": 19.9,
+          "tempLow": 7.5,
+          "precipitation": 0,
+          "code": 3
+        }
+      }
+    },
+    {
+      "city": "聊城",
+      "lat": 36.4568,
+      "lon": 115.9852,
+      "grid": {
+        "lat": 36.44991,
+        "lon": 115.96606,
+        "elevation": 35
+      },
+      "realtime": {
+        "temp": 11,
+        "humidity": 70,
+        "windDirection": "南风",
+        "windDegrees": 187,
+        "windLevel": "2级",
+        "windSpeedKmh": 11.4,
+        "precipitation": 0,
+        "weather": "晴",
+        "weatherCode": 0,
+        "observedAt": "2026-11-02T23:15"
+      },
+      "forecast": {
+        "updatedAt": "2026-11-02T23:15",
+        "today": {
+          "date": "2026-11-02",
+          "weather": "阴",
+          "tempHigh": 20.8,
+          "tempLow": 6.9,
+          "precipitation": 0,
+          "code": 3
+        },
+        "tomorrow": {
+          "date": "2026-11-03",
+          "weather": "阴",
+          "tempHigh": 21,
+          "tempLow": 8.7,
+          "precipitation": 0,
+          "code": 3
+        }
+      }
+    },
+    {
+      "city": "滨州",
+      "lat": 37.3835,
+      "lon": 117.9707,
+      "grid": {
+        "lat": 37.363796,
+        "lon": 117.96813,
+        "elevation": 15
+      },
+      "realtime": {
+        "temp": 9.4,
+        "humidity": 67,
+        "windDirection": "西南风",
+        "windDegrees": 203,
+        "windLevel": "2级",
+        "windSpeedKmh": 7.8,
+        "precipitation": 0,
+        "weather": "晴",
+        "weatherCode": 0,
+        "observedAt": "2026-11-02T23:15"
+      },
+      "forecast": {
+        "updatedAt": "2026-11-02T23:15",
+        "today": {
+          "date": "2026-11-02",
+          "weather": "晴",
+          "tempHigh": 19.6,
+          "tempLow": 7.4,
+          "precipitation": 0,
+          "code": 0
+        },
+        "tomorrow": {
+          "date": "2026-11-03",
+          "weather": "阴",
+          "tempHigh": 21.2,
+          "tempLow": 7,
+          "precipitation": 0,
+          "code": 3
+        }
+      }
+    },
+    {
+      "city": "菏泽",
+      "lat": 35.2333,
+      "lon": 115.48,
+      "grid": {
+        "lat": 35.254833,
+        "lon": 115.51724,
+        "elevation": 53
+      },
+      "realtime": {
+        "temp": 12.4,
+        "humidity": 63,
+        "windDirection": "南风",
+        "windDegrees": 190,
+        "windLevel": "2级",
+        "windSpeedKmh": 10.2,
+        "precipitation": 0,
+        "weather": "阴",
+        "weatherCode": 3,
+        "observedAt": "2026-11-02T23:15"
+      },
+      "forecast": {
+        "updatedAt": "2026-11-02T23:15",
+        "today": {
+          "date": "2026-11-02",
+          "weather": "阴",
+          "tempHigh": 20.1,
+          "tempLow": 6.8,
+          "precipitation": 0,
+          "code": 3
+        },
+        "tomorrow": {
+          "date": "2026-11-03",
+          "weather": "阴",
+          "tempHigh": 20,
+          "tempLow": 10.2,
+          "precipitation": 0,
+          "code": 3
+        }
+      }
+    }
+  ]
+}

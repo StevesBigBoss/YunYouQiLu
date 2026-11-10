@@ -25,31 +25,10 @@ export const APP_THEMES: AppThemeMeta[] = [
     dark: false,
   },
   {
-    id: 'hellokitty',
-    name: 'Hello Kitty',
-    desc: '粉嫩甜心 · 圆润可爱',
-    swatches: ['#F06292', '#FF9EB5', '#FFF6F9', '#5A3A45'],
-    dark: false,
-  },
-  {
-    id: 'night',
-    name: '夜晚科技',
-    desc: '深蓝夜幕 · 金色数据',
-    swatches: ['#C8A45C', '#3A7BD5', '#0A1628', '#E8EDF5'],
-    dark: true,
-  },
-  {
     id: 'cyber',
     name: '赛博炫彩',
     desc: '霓虹紫青 · 高对比',
     swatches: ['#22D3EE', '#7C3AED', '#090B1A', '#E6F7FF'],
-    dark: true,
-  },
-  {
-    id: 'eyecare',
-    name: '夜晚护眼色',
-    desc: '墨绿柔光 · 低刺激',
-    swatches: ['#D9A13B', '#6FA07C', '#111C18', '#DCE6DC'],
     dark: true,
   },
 ]

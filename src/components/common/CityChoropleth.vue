@@ -14,7 +14,6 @@
 
     <div v-if="headlineTitle" class="map-headline">
       <div class="headline-title">{{ t(headlineTitle) }}</div>
-      <div v-if="headlineSub" class="headline-sub">{{ t(headlineSub) }}</div>
     </div>
 
     <div class="layer-legend" :class="{ 'panel-idle': !layerPanelVisible }">
@@ -104,7 +103,6 @@ const props = withDefaults(defineProps<{
   valueLabel?: string
   legendTitle?: string
   headlineTitle?: string
-  headlineSub?: string
   focus?: { city: string; county: string; label?: string } | null
   pointGroups?: MapPointGroup[]
   colorMode?: 'heat' | 'categorical'
@@ -113,7 +111,6 @@ const props = withDefaults(defineProps<{
   valueLabel: '数量',
   legendTitle: '各市数量分布',
   headlineTitle: '',
-  headlineSub: '',
   focus: null,
   pointGroups: () => [],
   colorMode: 'heat',
@@ -736,14 +733,6 @@ function bindLayerPanelTier(m: L.Map) {
   color: var(--map-title);
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
-.headline-sub {
-  margin-top: 4px;
-  font-size: 11px;
-  line-height: 1.5;
-  color: var(--text-muted);
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
 .layer-legend {
   position: absolute;
   top: 12px;

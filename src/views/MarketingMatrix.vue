@@ -118,8 +118,6 @@
         </div>
       </div>
     </div>
-
-    <ImageGallery page="marketing" :title="t('新媒体营销场景图集')" />
   </div>
 </template>
 
@@ -127,7 +125,6 @@
 import { ref, computed, watch } from 'vue'
 import L from 'leaflet'
 import ChartCard from '../components/common/ChartCard.vue'
-import ImageGallery from '../components/common/ImageGallery.vue'
 import MapContainer from '../components/common/MapContainer.vue'
 import AppIcon from '../components/common/AppIcon.vue'
 import {

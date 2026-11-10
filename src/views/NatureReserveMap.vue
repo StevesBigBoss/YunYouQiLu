@@ -7,7 +7,6 @@
         :value-label="t('保护区数量')"
         :legend-title="t('各市自然保护区数量（处）')"
         :headline-title="t('自然保护区地图 · {scope}', { scope: scopeLabel })"
-        :headline-sub="t('全国底图 · 聚焦山东 · 各市自然保护区数量热力 + 保护区叶形标（按等级着色）与物种监测点；点叶形标看保护区详情，单击地市切换分析范围并细分县区')"
         :point-groups="natureGroups"
         @select="onSelectCity"
         @point-select="onPointSelect"

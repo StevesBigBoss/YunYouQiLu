@@ -1,12 +1,14 @@
 {
   "name": "shandong-huanghe-platform",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "data:sample": "node scripts/use_sample_data.mjs",
+    "check:snapshots": "node scripts/check_snapshots.mjs"
   },
   "dependencies": {
     "echarts": "^6.1.0",

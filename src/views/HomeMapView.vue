@@ -13,12 +13,11 @@
     >
       <div class="map-headline">
         <div class="headline-title">{{ headlineTitle }}</div>
-        <div class="headline-sub">{{ headlineSub }}</div>
       </div>
 
       <div class="float-panel panel-tl" :class="{ collapsed: collapse.tl }">
         <div class="panel-head">
-          <span class="panel-title">{{ t('实时概览') }}</span>
+          <span class="panel-title">{{ t('{year}年旅游概览', { year: TOURISM_STATS_YEAR }) }}</span>
           <span class="panel-toggle" @click="collapse.tl = !collapse.tl">
             {{ collapse.tl ? '+' : '–' }}
           </span>
@@ -26,14 +25,23 @@
         <div v-show="!collapse.tl" class="panel-body">
           <div class="scope-line">{{ t('范围：') }}{{ scopeText }}</div>
           <div class="kpi-row">
-            <div class="kpi-label">{{ t('实时客流总量') }}</div>
-            <div class="kpi-value gold">{{ formatNum(kpiFlow) }}</div>
-            <div class="kpi-sub">{{ t('人次') }}</div>
+            <div class="kpi-label">{{ kpiVisitorsLabel }}</div>
+            <div class="kpi-value gold">{{ formatNum(kpiVisitors) }}</div>
+            <div class="kpi-sub">
+              {{ t('万人次') }}
+              <span v-if="kpiVisitorsYoy !== null"> · {{ t('同比') }} {{ formatPct(kpiVisitorsYoy) }}</span>
+            </div>
           </div>
           <div class="kpi-row">
-            <div class="kpi-label">{{ t('今日预警数') }}</div>
-            <div class="kpi-value red">{{ kpiWarn }}</div>
-            <div class="kpi-sub">{{ t('条') }}</div>
+            <div class="kpi-label">{{ kpiRevenueLabel }}</div>
+            <div class="kpi-value">{{ formatNum(kpiRevenue) }}</div>
+            <div class="kpi-sub">
+              {{ t('亿元') }}
+              <span v-if="kpiRevenueYoy !== null"> · {{ t('同比') }} {{ formatPct(kpiRevenueYoy) }}</span>
+            </div>
+          </div>
+          <div class="scope-note" :title="`${TOURISM_STATS_URL} · ${TOURISM_STATS_FETCHED_AT}`">
+            {{ sourceNote }}
           </div>
           <div v-if="currentCity" class="scope-note">
             {{ t('县区数值按市级总量折算（演示口径）') }}
@@ -52,7 +60,7 @@
           <div v-show="!collapse.tr" class="panel-body">
           <label class="layer-item">
             <input type="checkbox" v-model="layers.heat" />
-            <span class="dot" :style="{ background: legendGradient }"></span>{{ t('旅游热度着色') }}
+            <span class="dot" :style="{ background: legendGradient }"></span>{{ t('游客量着色') }}
           </label>
           <label class="layer-item">
             <input type="checkbox" v-model="layers.river" />
@@ -95,25 +103,6 @@
         </div>
       </Transition>
 
-      <div class="float-panel panel-bl" :class="{ collapsed: collapse.bl }">
-        <div class="panel-head">
-          <span class="panel-title">{{ rankTitle }}</span>
-          <span class="panel-toggle" @click="collapse.bl = !collapse.bl">
-            {{ collapse.bl ? '+' : '–' }}
-          </span>
-        </div>
-        <div v-show="!collapse.bl" class="panel-body">
-          <div v-for="(item, idx) in rankRows" :key="item.name" class="rank-row">
-            <span class="rank-no" :class="{ top: idx < 3 }">{{ idx + 1 }}</span>
-            <span class="rank-city" :title="tv(item.name)">{{ tv(item.name) }}</span>
-            <div class="rank-bar-wrap">
-              <div class="rank-bar" :style="{ width: barWidth(item.flow) }"></div>
-            </div>
-            <span class="rank-flow">{{ formatNum(item.flow) }}</span>
-          </div>
-        </div>
-      </div>
-
       <div class="heat-legend">
         <div class="legend-head">{{ legendHead }}</div>
         <div class="legend-bar" :style="{ background: legendGradient }"></div>
@@ -144,15 +133,15 @@
         </div>
       </div>
 
-      <div class="float-panel panel-br" :class="{ collapsed: collapse.br }">
+      <div class="float-panel panel-br chart-panel" :class="{ collapsed: collapse.br }">
         <div class="panel-head">
-          <span class="panel-title">{{ t('山东文旅图集') }}</span>
+          <span class="panel-title">{{ trendChartTitle }}</span>
           <span class="panel-toggle" @click="collapse.br = !collapse.br">
             {{ collapse.br ? '+' : '–' }}
           </span>
         </div>
-        <div v-show="!collapse.br" class="panel-body">
-          <ImageGallery page="home" :title="t('山东文旅实景')" :hint="t('点击缩略图放大查看大图')" plain />
+        <div v-show="!collapse.br" class="chart-panel-body">
+          <div ref="trendChartEl" class="trend-chart"></div>
         </div>
       </div>
     </MapContainer>
@@ -160,15 +149,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, reactive, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import L from 'leaflet'
 import type { GeoJsonObject } from 'geojson'
+import * as echarts from 'echarts'
 import MapContainer from '../components/common/MapContainer.vue'
-import ImageGallery from '../components/common/ImageGallery.vue'
 import AppIcon from '../components/common/AppIcon.vue'
 import { iconSvg } from '../config/icons'
 import { mockHomeData, mockReserves, mockYellowRiverCourse, mockYellowRiverFullCourse } from '../mock'
+import {
+  CITY_TOURISM_STATS, CITY_TOURISM_TREND, TOURISM_STATS_FETCHED_AT, TOURISM_STATS_SOURCE,
+  TOURISM_STATS_URL, TOURISM_STATS_YEAR, TOURISM_TREND_YEARS,
+} from '../data/tourismStats'
 import {
   dataFetchedAt, newsByCity, newsCityMax, newsNoCityCount, newsTotal, quakeEvents, quakeInsideCount,
   quakeMinMagnitude, quakeSince, shortTime,
@@ -177,12 +170,12 @@ import { NO_DATA_BORDER, NO_DATA_COLOR, heatColor, heatGradient, heatLevel } fro
 import { isDeepColor, mapFocusColor } from '../config/mapPalette'
 import { createPressPicker } from '../config/cityPick'
 import type { PressPicker } from '../config/cityPick'
-import { themeAccent, themeAccentAlpha, themeColors } from '../config/theme'
+import { themeAccent, themeAccentAlpha, themeColors, themeLegend, CHART_THEME_NAME } from '../config/theme'
 import { t, tv, locale } from '../config/i18n'
 import {
   CHINA_CENTER, CHINA_ZOOM, bindCityLabelZoom, playNationalIntro, setupNationalBase,
 } from '../config/chinaMap'
-import { switchScopeToCity, YELLOW_RIVER_SET, isCityScope, scopeCities, scopeShort, scopeState } from '../config/cityScope'
+import { switchScopeToCity, YELLOW_RIVER_SET, isCityScope, scopeCities, scopeState } from '../config/cityScope'
 import type { ScopeId } from '../config/cityScope'
 import { splitCityToCounties, type CountyStat } from '../config/cityStats'
 import {
@@ -194,7 +187,7 @@ import type { AdminCityFeatureCollection, ResourcePoint } from '../types'
 
 const router = useRouter()
 
-const collapse = reactive({ tl: false, tr: false, bl: false, br: true })
+const collapse = reactive({ tl: false, tr: false, br: false })
 
 const layerPanelVisible = ref(false)
 
@@ -229,24 +222,27 @@ const currentCity = computed<ShandongCity | null>(() =>
   isCityScope(scope.value) ? (scope.value as ShandongCity) : null,
 )
 
-const cityTourism = mockHomeData.cityTourism
+const cityTourism = CITY_TOURISM_STATS
 const tourismMap = new Map(cityTourism.map((d) => [d.city, d]))
 const tourismRank = new Map(
-  [...cityTourism].sort((a, b) => b.heat - a.heat).map((d, i) => [d.city, i + 1]),
+  [...cityTourism].sort((a, b) => b.visitors - a.visitors).map((d, i) => [d.city, i + 1]),
 )
+const trendMap = new Map(CITY_TOURISM_TREND.map((d) => [d.city, d]))
+const trendYearIndex = new Map(TOURISM_TREND_YEARS.map((year, i) => [year, i]))
+const TREND_START_YEAR = 2018
+const trendYears = TOURISM_TREND_YEARS.filter((year) => year >= TREND_START_YEAR)
 
 interface ScopeRow {
   name: string
-  heat: number
-  flow: number
-  warn: number
+  visitors: number
+  revenue: number
 }
 
 const cityScopeRows = computed<ScopeRow[]>(() => {
   const rows: ScopeRow[] = []
   scopeCities(scope.value).forEach((c) => {
-    const t = tourismMap.get(c)
-    if (t) rows.push({ name: c, heat: t.heat, flow: t.flow, warn: t.warn })
+    const stat = tourismMap.get(c)
+    if (stat) rows.push({ name: c, visitors: stat.visitors, revenue: stat.revenue ?? 0 })
   })
   return rows
 })
@@ -258,21 +254,78 @@ const scopeRows = computed<ScopeRow[]>(() =>
   currentCity.value ? countyRows.value : cityScopeRows.value,
 )
 
-const rankRows = computed(() => [...scopeRows.value].sort((a, b) => b.flow - a.flow).slice(0, 5))
-const rankTitle = computed(
-  () => t('{scope}客流 TOP{n}', { scope: currentCity.value ? t('县区') : scopeShort(scope.value), n: rankRows.value.length }),
+const currentStat = computed(() => {
+  const c = currentCity.value
+  return c ? tourismMap.get(c) : undefined
+})
+
+function round2(value: number): number {
+  return Math.round(value * 100) / 100
+}
+
+function sumScope(field: 'visitors' | 'revenue'): number {
+  const total = scopeCities(scope.value).reduce((sum, city) => {
+    const stat = tourismMap.get(city)
+    return sum + (stat?.[field] ?? 0)
+  }, 0)
+  return round2(total)
+}
+
+function trendValue(city: string, year: number, field: 'visitors' | 'revenue'): number | null {
+  const index = trendYearIndex.get(year)
+  const row = trendMap.get(city)
+  if (index === undefined || !row) return null
+  const value = row[field][index]
+  return typeof value === 'number' ? value : null
+}
+
+function scopeYoy(field: 'visitors' | 'revenue'): number | null {
+  let current = 0
+  let previous = 0
+  for (const city of scopeCities(scope.value)) {
+    const now = trendValue(city, TOURISM_STATS_YEAR, field)
+    const before = trendValue(city, TOURISM_STATS_YEAR - 1, field)
+    if (now === null || before === null) return null
+    current += now
+    previous += before
+  }
+  return previous ? round2(((current - previous) / previous) * 100) : null
+}
+
+const kpiVisitors = computed(() => {
+  if (currentCity.value) return currentStat.value?.visitors ?? 0
+  return sumScope('visitors')
+})
+const kpiRevenue = computed(() => {
+  if (currentCity.value) return currentStat.value?.revenue ?? 0
+  return sumScope('revenue')
+})
+const kpiVisitorsYoy = computed(() =>
+  currentCity.value ? (currentStat.value?.visitorsYoy ?? null) : scopeYoy('visitors'),
+)
+const kpiRevenueYoy = computed(() =>
+  currentCity.value ? (currentStat.value?.revenueYoy ?? null) : scopeYoy('revenue'),
+)
+const kpiVisitorsLabel = computed(() =>
+  currentCity.value
+    ? t('{year}年全市国内游客', { year: TOURISM_STATS_YEAR })
+    : t('{year}年国内游客（分市合计）', { year: TOURISM_STATS_YEAR }),
+)
+const kpiRevenueLabel = computed(() =>
+  currentCity.value
+    ? t('{year}年全市国内旅游收入', { year: TOURISM_STATS_YEAR })
+    : t('{year}年国内旅游收入', { year: TOURISM_STATS_YEAR }),
+)
+const sourceNote = computed(() =>
+  currentCity.value
+    ? t('数据来源：{source}（{year}年）', { source: TOURISM_STATS_SOURCE, year: TOURISM_STATS_YEAR })
+    : t('数据来源：{source}（{year}年），分市合计与全省总计口径不同', { source: TOURISM_STATS_SOURCE, year: TOURISM_STATS_YEAR }),
 )
 
-const kpiFlow = computed(() => {
-  const c = currentCity.value
-  if (c) return tourismMap.get(c)?.flow ?? 0
-  return scopeRows.value.reduce((s, r) => s + r.flow, 0)
-})
-const kpiWarn = computed(() => {
-  const c = currentCity.value
-  if (c) return tourismMap.get(c)?.warn ?? 0
-  return scopeRows.value.reduce((s, r) => s + r.warn, 0)
-})
+function formatPct(value: number | null): string {
+  if (value === null || !Number.isFinite(value)) return '—'
+  return `${value > 0 ? '+' : ''}${value.toFixed(2)}%`
+}
 
 const scopeText = computed(() => {
   const c = currentCity.value
@@ -283,27 +336,30 @@ const scopeText = computed(() => {
 
 const headlineTitle = computed(() => {
   const c = currentCity.value
-  if (c) return t('{city}市旅游热度分析', { city: c })
-  if (scope.value === 'river') return t('山东省沿黄九市旅游热度')
-  return t('山东省 16 市旅游热度')
-})
-const headlineSub = computed(() => {
-  const c = currentCity.value
-  if (c) return t('{city}市 · 已叠加县市分界线与市区锚点 · 颜色越暖表示县区旅游热度越高 · 单位：万人次', { city: c })
-  return t('全国底图 · 聚焦山东省 · 颜色越暖表示旅游热度越高 · 单位：万人次 · 统计周期：近30日')
+  const year = TOURISM_STATS_YEAR
+  if (c) return `${t('{city}市', { city: c })} ${t('{year}年旅游概览', { year })}`
+  if (scope.value === 'river') return `${t('沿黄九市')} ${t('{year}年旅游概览', { year })}`
+  return `${t('全省16市')} ${t('{year}年旅游概览', { year })}`
 })
 
-const heatMin = computed(() => (scopeRows.value.length ? Math.min(...scopeRows.value.map((r) => r.heat)) : 0))
-const heatMax = computed(() => (scopeRows.value.length ? Math.max(...scopeRows.value.map((r) => r.heat)) : 1))
+const heatMin = computed(() => (scopeRows.value.length ? Math.min(...scopeRows.value.map((r) => r.visitors)) : 0))
+const heatMax = computed(() => (scopeRows.value.length ? Math.max(...scopeRows.value.map((r) => r.visitors)) : 1))
 const legendMaxName = computed(() => {
-  const row = [...scopeRows.value].sort((a, b) => b.heat - a.heat)[0]
+  const row = [...scopeRows.value].sort((a, b) => b.visitors - a.visitors)[0]
   if (!row) return ''
   return currentCity.value ? row.name : shortCity(row.name)
 })
+const CJK_LOCALES = new Set(['zh-CN', 'zh-TW', 'ja', 'ko'])
+
+function joinPhrase(left: string, right: string): string {
+  return CJK_LOCALES.has(locale.value) ? `${left} ${right}` : `${left} · ${right}`
+}
+
 const legendHead = computed(() => {
-  if (currentCity.value) return t('县区旅游热度热力（万人次）')
-  if (scope.value === 'river') return t('沿黄九市旅游热度热力（万人次）')
-  return t('全省 16 市旅游热度热力（万人次）')
+  const year = TOURISM_STATS_YEAR
+  if (currentCity.value) return joinPhrase(t('县区'), t('{year}年国内游客（万人次，折算）', { year }))
+  const scopeName = scope.value === 'river' ? t('沿黄九市') : t('全省16市')
+  return joinPhrase(scopeName, t('{year}年国内游客（万人次）', { year }))
 })
 const legendGradient = heatGradient()
 const scopeSet = computed(() => new Set(scopeCities(scope.value) as string[]))
@@ -315,14 +371,138 @@ function formatNum(n: number): string {
   return n.toLocaleString('zh-CN')
 }
 
+function formatVisitorsShort(value: number): string {
+  if (CJK_LOCALES.has(locale.value)) {
+    return value >= 10000
+      ? t('{n}亿', { n: (value / 10000).toFixed(2) })
+      : t('{n}万', { n: Math.round(value) })
+  }
+  return new Intl.NumberFormat(locale.value, {
+    notation: 'compact',
+    maximumFractionDigits: 1,
+    numberingSystem: 'latn',
+  }).format(value * 10000)
+}
+
 function shortCity(name: string): string {
   return name.replace(/市$/, '')
 }
 
-function barWidth(flow: number): string {
-  const max = rankRows.value[0]?.flow || 1
-  return `${Math.max(8, (flow / max) * 100)}%`
+function shiftHex(hex: string, amount: number): string {
+  const value = Number.parseInt(hex.replace('#', ''), 16)
+  const channels = [(value >> 16) & 255, (value >> 8) & 255, value & 255]
+  return `#${channels
+    .map((c) => Math.round(c + (amount > 0 ? (255 - c) * amount : c * amount)))
+    .map((c) => Math.max(0, Math.min(255, c)).toString(16).padStart(2, '0'))
+    .join('')}`
 }
+
+const trendPalette = computed(() => {
+  const base = themeColors()
+  return SHANDONG_CITIES.map((_, i) => {
+    const color = base[i % base.length]
+    const round = Math.floor(i / base.length)
+    return round === 0 ? color : shiftHex(color, round === 1 ? 0.35 : -0.25)
+  })
+})
+
+const trendYearLabels = trendYears.map((year) => String(year))
+
+const trendChartTitle = computed(() => {
+  const c = currentCity.value
+  const scopeName = c ? t('{city}市', { city: c }) : t(scope.value === 'river' ? '沿黄九市' : '全省16市')
+  return joinPhrase(scopeName, t('2018–2024年国内游客趋势'))
+})
+
+function trendSeriesOf(city: string): (number | null)[] {
+  return trendYears.map((year) => trendValue(city, year, 'visitors'))
+}
+
+const trendChartOption = computed<Record<string, unknown>>(() => {
+  const city = currentCity.value
+  const palette = trendPalette.value
+  const cities = city ? [city] : SHANDONG_CITIES
+  const series = cities.map((name) => {
+    const idx = SHANDONG_CITIES.indexOf(name)
+    const color = palette[idx] ?? themeAccent()
+    return {
+      name: tv(name),
+      type: 'line',
+      smooth: false,
+      showSymbol: !!city,
+      symbol: 'circle',
+      symbolSize: city ? 6 : 0,
+      lineStyle: { width: city ? 2.6 : 1.6, color, opacity: city ? 1 : 0.88 },
+      itemStyle: { color },
+      emphasis: { focus: 'series' },
+      areaStyle: city ? { color, opacity: 0.16 } : undefined,
+      data: trendSeriesOf(name),
+    }
+  })
+  return {
+    color: palette,
+    animationDuration: 700,
+    tooltip: {
+      trigger: 'axis',
+      confine: true,
+      valueFormatter: (value: unknown) => `${formatNum(Number(value))} ${t('万人次')}`,
+    },
+    legend: city
+      ? undefined
+      : {
+          type: 'scroll',
+          bottom: 0,
+          left: 'center',
+          itemWidth: 10,
+          itemHeight: 6,
+          itemGap: 8,
+          pageIconSize: 9,
+          textStyle: { fontSize: 10, color: themeLegend() },
+          pageTextStyle: { fontSize: 9, color: themeLegend() },
+        },
+    grid: { left: 48, right: 14, top: 30, bottom: city ? 26 : 46 },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: trendYearLabels,
+      axisTick: { show: false },
+      axisLabel: { fontSize: 9, color: themeLegend(), interval: 0 },
+    },
+    yAxis: {
+      type: 'value',
+      name: t('万人次'),
+      nameTextStyle: { fontSize: 10, color: themeLegend(), padding: [0, 0, 4, 0] },
+      axisLabel: {
+        fontSize: 9,
+        color: themeLegend(),
+        formatter: (value: number) => formatNum(value),
+      },
+      splitLine: { lineStyle: { opacity: 0.35 } },
+    },
+    series,
+  }
+})
+
+const trendChartEl = ref<HTMLDivElement>()
+let trendChart: echarts.ECharts | null = null
+
+function initTrendChart() {
+  if (!trendChartEl.value || trendChart) return
+  trendChart = echarts.init(trendChartEl.value, CHART_THEME_NAME)
+  trendChart.setOption(trendChartOption.value)
+}
+
+function resizeTrendChart() {
+  trendChart?.resize()
+}
+
+watch(trendChartOption, (option) => {
+  trendChart?.setOption(option, true)
+})
+
+watch(() => collapse.br, (collapsed) => {
+  if (!collapsed) nextTick(() => resizeTrendChart())
+})
 
 function scopeResourcePoints(): ResourcePoint[] {
   const c = currentCity.value
@@ -460,7 +640,7 @@ function cityStyle(name: string, heatOn: boolean): L.PathOptions {
     return { fillColor: NO_DATA_COLOR(), fillOpacity: 0.9, color: NO_DATA_BORDER(), weight: 1, opacity: 1 }
   }
   return {
-    fillColor: heatColor(item.heat, heatMin.value, heatMax.value),
+    fillColor: heatColor(item.visitors, heatMin.value, heatMax.value),
     fillOpacity: 0.95,
     color: themeAccentAlpha(0.45),
     weight: 1.2,
@@ -468,28 +648,49 @@ function cityStyle(name: string, heatOn: boolean): L.PathOptions {
   }
 }
 
+function formatVisitors(value: number | null): string {
+  return value === null ? '—' : t('{n} 万人次', { n: formatNum(value) })
+}
+
+function formatRevenue(value: number | null): string {
+  return value === null ? '—' : `${formatNum(value)} ${t('亿元')}`
+}
+
+function formatFx(value: number | null): string {
+  return value === null ? '—' : `${formatNum(value)} ${t('万美元')}`
+}
+
 function cityTooltip(name: string): string {
   const short = shortCity(name)
   const item = tourismMap.get(short)
   if (!item) {
     return `<div class="sd-tip"><div class="sd-tip-name">${tv(name)}</div>
-      <div class="sd-tip-none">${t('暂无市级演示数据')}</div></div>`
+      <div class="sd-tip-none">${t('暂无该市年度数据')}</div></div>`
   }
   const tag = YELLOW_RIVER_SET.has(short) ? `<span class="sd-tip-tag">${t('沿黄')}</span>` : ''
+  const visitors = `<b style="color:${heatColor(item.visitors, heatMin.value, heatMax.value)}">${formatVisitors(item.visitors)}</b>`
+  const revenue = formatRevenue(item.revenue)
+  const inbound = formatVisitors(item.inboundVisitors)
+  const rows = `
+    <div class="sd-tip-row"><span>${t('同比')}</span><b>${formatPct(item.visitorsYoy)}</b></div>
+    <div class="sd-tip-row"><span>${t('国内旅游收入')}</span><b>${revenue}</b></div>
+    <div class="sd-tip-row"><span>${t('收入同比')}</span><b>${formatPct(item.revenueYoy)}</b></div>
+    <div class="sd-tip-row"><span>${t('入境游客')}</span><b>${inbound}</b></div>`
   if (currentCity.value) {
     const selected = short === currentCity.value
     return `<div class="sd-tip">
       <div class="sd-tip-name">${tv(name)}${tag}</div>
-      <div class="sd-tip-row"><span>${t('市级热度')}</span><b>${t('{n} 万人次', { n: item.heat.toFixed(1) })}</b></div>
-      <div class="sd-tip-row"><span>${t('实时客流')}</span><b>${t('{n} 人次', { n: formatNum(item.flow) })}</b></div>
+      <div class="sd-tip-row"><span>${t('全市国内游客')}</span>${visitors}</div>
+      ${rows}
+      <div class="sd-tip-row"><span>${t('外汇收入')}</span><b>${formatFx(item.inboundFx)}</b></div>
       <div class="sd-tip-none">${selected ? t('已展开县区分界线，悬停县区查看明细') : t('不在当前分析范围（当前：{city}市）', { city: currentCity.value })}</div>
     </div>`
   }
   return `<div class="sd-tip">
     <div class="sd-tip-name">${tv(name)}${tag}</div>
-    <div class="sd-tip-row"><span>${t('旅游热度')}</span>
-      <b style="color:${heatColor(item.heat, heatMin.value, heatMax.value)}">${t('{n} 万人次', { n: item.heat.toFixed(1) })}</b></div>
-    <div class="sd-tip-row"><span>${t('热度等级')}</span><b>${t(heatLevel(item.heat, heatMin.value, heatMax.value))}</b></div>
+    <div class="sd-tip-row"><span>${t('{year}年国内游客', { year: TOURISM_STATS_YEAR })}</span>${visitors}</div>
+    ${rows}
+    <div class="sd-tip-row"><span>${t('游客量等级')}</span><b>${t(heatLevel(item.visitors, heatMin.value, heatMax.value))}</b></div>
     <div class="sd-tip-row"><span>${t('全省排名')}</span><b>${t('第 {rank} / {total} 位', { rank: tourismRank.get(short) ?? '', total: cityTourism.length })}</b></div>
   </div>`
 }
@@ -570,11 +771,11 @@ function buildCityLabels(): L.LayerGroup {
     const item = tourismMap.get(short)
     const inScope = scopeSet.value.has(short)
     const withHeat = !!item && inScope && !city
-    const onDeep = withHeat ? isDeepColor(heatColor(item!.heat, heatMin.value, heatMax.value)) : false
+    const onDeep = withHeat ? isDeepColor(heatColor(item!.visitors, heatMin.value, heatMax.value)) : false
     const html = withHeat
       ? `<div class="sd-city-label-inner hot${onDeep ? ' on-deep' : ''}">
            <span class="sd-city-name">${t(short)}</span>
-           <span class="sd-city-heat">${t('{n}万', { n: item!.heat.toFixed(1) })}</span>
+           <span class="sd-city-heat">${formatVisitorsShort(item!.visitors)}</span>
          </div>`
       : `<div class="sd-city-label-inner${inScope ? '' : ' dim'}"><span class="sd-city-name">${t(short)}</span></div>`
     const label = L.marker([lat, lng], {
@@ -820,7 +1021,7 @@ function countyStyle(name: string, heatOn: boolean): L.PathOptions {
     return { fillColor: NO_DATA_COLOR(), fillOpacity: 0.5, color: '#FFFFFF', weight: 1.2, opacity: 0.8, dashArray: '4 3' }
   }
   return {
-    fillColor: heatColor(row.heat, heatMin.value, heatMax.value),
+    fillColor: heatColor(row.visitors, heatMin.value, heatMax.value),
     fillOpacity: 0.95,
     color: '#FFFFFF',
     weight: 1.3,
@@ -834,11 +1035,10 @@ function countyTooltip(name: string): string {
   if (!row) return `<div class="sd-tip"><div class="sd-tip-name">${tv(name)}</div></div>`
   return `<div class="sd-tip">
     <div class="sd-tip-name">${tv(name)}</div>
-    <div class="sd-tip-row"><span>${t('旅游热度')}</span>
-      <b style="color:${heatColor(row.heat, heatMin.value, heatMax.value)}">${t('{n} 万人次', { n: row.heat.toFixed(1) })}</b></div>
-    <div class="sd-tip-row"><span>${t('实时客流')}</span><b>${t('{n} 人次', { n: formatNum(row.flow) })}</b></div>
-    <div class="sd-tip-row"><span>${t('占全市客流')}</span><b>${(row.share * 100).toFixed(1)}%</b></div>
-    ${row.warn ? `<div class="sd-tip-row"><span>${t('今日预警')}</span><b>${t('{n} 条', { n: row.warn })}</b></div>` : ''}
+    <div class="sd-tip-row"><span>${t('国内游客（折算）')}</span>
+      <b style="color:${heatColor(row.visitors, heatMin.value, heatMax.value)}">${formatVisitors(row.visitors)}</b></div>
+    <div class="sd-tip-row"><span>${t('国内旅游收入（折算）')}</span><b>${formatRevenue(row.revenue)}</b></div>
+    <div class="sd-tip-row"><span>${t('占全市游客')}</span><b>${(row.share * 100).toFixed(1)}%</b></div>
     <div class="sd-tip-none">${t('按全市总量折算（演示口径）')}</div>
   </div>`
 }
@@ -853,16 +1053,11 @@ function openCountyPopup(name: string, city: ShandongCity, latlng: L.LatLng) {
       <div class="sd-tip-none">${t('暂无县区演示数据')}</div>`
   } else {
     el.innerHTML = `<div class="sd-popup-title">${tv(name)}<span class="sd-tip-tag">${t('{city}市', { city })}</span></div>
-      <div class="sd-popup-row"><span>${t('旅游热度')}</span>
-        <b style="color:${heatColor(row.heat, heatMin.value, heatMax.value)}">${t('{n} 万人次', { n: row.heat.toFixed(1) })}</b></div>
-      <div class="sd-popup-row"><span>${t('实时客流')}</span><b>${t('{n} 人次', { n: formatNum(row.flow) })}</b></div>
-      <div class="sd-popup-row"><span>${t('占全市客流')}</span><b>${(row.share * 100).toFixed(1)}%</b></div>
-      <div class="sd-popup-row"><span>${t('今日预警')}</span><b>${t('{n} 条', { n: row.warn })}</b></div>
-      <a class="sd-popup-link" href="javascript:;">${t('进入客流监测')}${iconSvg('arrow-right', 12, 'sd-popup-arrow')}</a>`
-    el.querySelector('.sd-popup-link')?.addEventListener('click', (e) => {
-      e.preventDefault()
-      router.push('/flow')
-    })
+      <div class="sd-popup-row"><span>${t('国内游客（折算）')}</span>
+        <b style="color:${heatColor(row.visitors, heatMin.value, heatMax.value)}">${formatVisitors(row.visitors)}</b></div>
+      <div class="sd-popup-row"><span>${t('国内旅游收入（折算）')}</span><b>${formatRevenue(row.revenue)}</b></div>
+      <div class="sd-popup-row"><span>${t('占全市游客')}</span><b>${(row.share * 100).toFixed(1)}%</b></div>
+      <div class="sd-tip-none">${t('按全市总量折算（演示口径）')}</div>`
   }
   L.popup({ className: 'sd-popup-wrap', offset: [0, -6] }).setLatLng(latlng).setContent(el).openOn(map)
 }
@@ -942,12 +1137,11 @@ function buildCountyLayer(fc: CountyFeatureCollection, city: ShandongCity) {
 }
 
 async function ensureCityGeo(city: ShandongCity): Promise<void> {
-  if (cityGeo?.city === city) return
-  let geo = cityGeoCache.get(city)
+  let geo = cityGeo?.city === city ? cityGeo : cityGeoCache.get(city)
   if (!geo) {
     const countyFc = await loadCounties(city)
     const county = buildCountyLayer(countyFc, city)
-    const t = tourismMap.get(city)
+    const stat = tourismMap.get(city)
     geo = {
       city,
       countyGroup: county.group,
@@ -955,7 +1149,12 @@ async function ensureCityGeo(city: ShandongCity): Promise<void> {
       fc: countyFc,
       labelGroup: county.labelGroup,
       labels: county.labels,
-      rows: t ? splitCityToCounties(t, countyFc.features.map((f) => f.properties.name)) : [],
+      rows: stat
+        ? splitCityToCounties(
+            { visitors: stat.visitors, revenue: stat.revenue ?? 0 },
+            countyFc.features.map((f) => f.properties.name),
+          )
+        : [],
     }
     cityGeoCache.set(city, geo)
   }
@@ -1011,7 +1210,7 @@ function syncCountyLabelTone() {
     const inner = marker.getElement()?.querySelector('.sd-county-label-inner')
     if (!inner) return
     const row = countyStatMap.value.get(name)
-    const deep = layers.heat && !!row && isDeepColor(heatColor(row.heat, heatMin.value, heatMax.value))
+    const deep = layers.heat && !!row && isDeepColor(heatColor(row.visitors, heatMin.value, heatMax.value))
     inner.classList.toggle('on-deep', deep)
   })
 }
@@ -1200,7 +1399,15 @@ function onMapReady(m: L.Map) {
 
 watch(layers, syncLayers)
 
+onMounted(() => {
+  nextTick(initTrendChart)
+  window.addEventListener('resize', resizeTrendChart)
+})
+
 onBeforeUnmount(() => {
+  window.removeEventListener('resize', resizeTrendChart)
+  trendChart?.dispose()
+  trendChart = null
   map = null
 })
 </script>
@@ -1219,27 +1426,23 @@ onBeforeUnmount(() => {
   left: 50%;
   transform: translateX(-50%);
   z-index: 1100;
+  width: max-content;
+  max-width: 44%;
   text-align: center;
   pointer-events: none;
 }
 .headline-title {
   font-size: 20px;
   font-weight: 700;
+  line-height: 1.3;
   letter-spacing: 3px;
   color: var(--map-title);
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
-.headline-sub {
-  margin-top: 4px;
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
 .heat-legend {
   position: absolute;
-  left: 50%;
-  bottom: 18px;
-  transform: translateX(-50%);
+  left: 16px;
+  bottom: 16px;
   z-index: 1100;
   width: 300px;
   padding: 10px 14px 12px;
@@ -1512,8 +1715,19 @@ onBeforeUnmount(() => {
 }
 .panel-tl { top: 16px; left: 16px; }
 .panel-tr { top: 16px; right: 16px; }
-.panel-bl { bottom: 16px; left: 16px; }
 .panel-br { bottom: 16px; right: 16px; }
+
+.chart-panel {
+  width: 460px;
+  max-width: calc(100vw - 32px);
+}
+.chart-panel-body {
+  padding: 8px 10px 10px;
+}
+.trend-chart {
+  width: 100%;
+  height: 220px;
+}
 
 .panel-fade-enter-active {
   transition: opacity 0.45s ease-out 0.18s, transform 0.45s ease-out 0.18s;
@@ -1593,42 +1807,4 @@ onBeforeUnmount(() => {
   width: 8px; height: 8px; border-radius: 50%;
   display: inline-block;
 }
-
-.rank-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-  font-size: 12px;
-}
-.rank-row:last-child { margin-bottom: 0; }
-.rank-no {
-  width: 18px; height: 18px;
-  border-radius: 3px;
-  background: var(--bg-secondary);
-  color: var(--text-muted);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px;
-}
-.rank-no.top { background: var(--gradient-gold); color: #FFFFFF; font-weight: 700; }
-.rank-city {
-  width: 42px;
-  color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.rank-bar-wrap {
-  flex: 1;
-  height: 8px;
-  background: var(--bg-secondary);
-  border-radius: 4px;
-  overflow: hidden;
-}
-.rank-bar {
-  height: 100%;
-  background: var(--gradient-gold);
-  border-radius: 4px;
-}
-.rank-flow { width: 64px; text-align: right; color: var(--text-secondary); font-size: 11px; }
 </style>

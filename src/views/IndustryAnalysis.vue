@@ -79,8 +79,6 @@
         </tbody>
       </table>
     </div>
-
-    <ImageGallery page="industry" :title="t('文旅产业场景图集')" />
   </div>
 </template>
 
@@ -88,7 +86,6 @@
 import { ref, computed } from 'vue'
 import StatCard from '../components/common/StatCard.vue'
 import ChartCard from '../components/common/ChartCard.vue'
-import ImageGallery from '../components/common/ImageGallery.vue'
 import {
   mockIndustryKpi,
   mockConsumeStruct,

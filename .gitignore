@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Python bytecode
+__pycache__/
+*.py[cod]
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -27,12 +31,28 @@ dist-ssr
 !.env.example
 tiktok_user_data.csv
 
-# 构建产物与数据快照（体积大，不入库）
+# 根目录爬虫输出与构建产物（体积大，不入库）
 dist.zip
-data/
+/data/*
+# 小型、可公开的样例快照与官方统计（供 fresh clone 直接构建/复现预测）
+!/data/sample/
+!/data/sample/**/
+!/data/sample/**
+!/data/real/
+/data/real/*
+!/data/real/qingdao_tourism_revenue.csv
 
 # 本机部署脚本与隧道地址（含本机路径/局域网IP，不入库）
 公网地址.txt
 启动公网访问.bat
 启动开发模式.bat
 启动网站.bat
+
+# 论文排版、软著 PDF 与本机一次性脚本（含本机绝对路径/体积大，不入库）
+/docx_edit_work/
+/drawio_work/
+/public/covers/
+/remove_ai_comment.py
+/scripts/gen_doc_pdf.py
+/scripts/gen_source_pdf.py
+/scripts/draw_architecture_layered.py

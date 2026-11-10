@@ -8,7 +8,6 @@
         color-mode="categorical"
         :legend-title="t('各市饮食文化收录（项）')"
         :headline-title="t('饮食文化地图 · {scope}', { scope: scopeLabel })"
-        :headline-sub="t('全国底图 · 聚焦山东 · 各市按固定彩色区分、五颜六色（颜色只作区分，范围外地市灰显，数量见图上数字）+ 收录美食碗形标（按类别着色）；点碗形标定位到所属县区，单击地市切换分析范围并细分县区')"
         :focus="focusTarget"
         :point-groups="foodGroups"
         @select="onSelectCity"

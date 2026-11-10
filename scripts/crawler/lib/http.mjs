@@ -80,7 +80,7 @@ async function rawFetch(url, opts, timeout) {
   try {
     const res = await fetch(url, {
       headers: {
-        'User-Agent': UA,
+        'User-Agent': opts.userAgent ?? UA,
         'Accept-Language': 'zh-CN,zh;q=0.9',
         ...(opts.referer ? { Referer: opts.referer } : {}),
       },
@@ -103,7 +103,7 @@ async function throttle(url) {
 }
 
 export async function get(url, opts = {}) {
-  const { referer, timeout = DEFAULT_TIMEOUT, retries = DEFAULT_RETRIES, ignoreRobots = false } = opts
+  const { referer, userAgent, timeout = DEFAULT_TIMEOUT, retries = DEFAULT_RETRIES, ignoreRobots = false } = opts
   if (!ignoreRobots) {
     const robots = await loadRobots(url)
     if (robots.crawlDelay) {
@@ -118,7 +118,7 @@ export async function get(url, opts = {}) {
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     await throttle(url)
     try {
-      const res = await rawFetch(url, { referer }, timeout)
+      const res = await rawFetch(url, { referer, userAgent }, timeout)
       if (res.status >= 500 && attempt < retries) {
         await sleep(1000 * (attempt + 1))
         continue

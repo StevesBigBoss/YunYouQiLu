@@ -1,0 +1,7 @@
+-r requirements.txt
+
+# Optional: regenerate the paper figures. The platform itself does not import
+# numpy or matplotlib; scripts/forecast_qingdao.py uses only the standard
+# library unless --figure is supplied.
+numpy>=1.24
+matplotlib>=3.7

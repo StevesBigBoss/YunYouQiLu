@@ -7,7 +7,6 @@
         :value-label="t('A级景区数量')"
         :legend-title="t('各市A级景区数量（处）')"
         :headline-title="t('旅游景点地图 · {scope}', { scope: scopeLabel })"
-        :headline-sub="t('全国底图 · 聚焦山东 · 各市 A 级景区数量热力（普查口径）+ 重点监测景点客流点位（圆点按景区等级着色）；点圆点看客流画像，单击地市切换分析范围并细分县区')"
         :point-groups="spotGroups"
         @select="onSelectCity"
         @point-select="onSelectSpot"

@@ -52,6 +52,7 @@
           <span class="platform-title" :title="t('“云游齐鲁”山东沿黄文旅数智传播平台')">
             {{ t('“云游齐鲁”山东沿黄文旅数智传播平台') }}
           </span>
+          <span class="demo-badge" :title="t('山东沿黄九市文旅数据 · 演示环境')">{{ t('演示数据') }}</span>
         </div>
         <CityScopeBar class="topbar-scope" />
         <div class="topbar-right">
@@ -70,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import BrandLogo from './BrandLogo.vue'
 import AppIcon from './AppIcon.vue'
@@ -79,6 +80,7 @@ import ThemeSwitcher from './ThemeSwitcher.vue'
 import UserMenu from './UserMenu.vue'
 import CityScopeBar from './CityScopeBar.vue'
 import { t } from '../../config/i18n'
+import { TOURISM_STATS_FETCHED_AT } from '../../data/tourismStats'
 
 const route = useRoute()
 const router = useRouter()
@@ -86,11 +88,7 @@ const router = useRouter()
 const isCollapsed = ref(false)
 const expandedMenus = ref<string[]>(['/opinion'])
 
-const updateTime = computed(() => {
-  const now = new Date()
-  const pad = (n: number) => String(n).padStart(2, '0')
-  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`
-})
+const updateTime = TOURISM_STATS_FETCHED_AT
 
 interface MenuChild { path: string; title: string }
 interface MenuItem { path: string; title: string; icon: string; children?: MenuChild[] }
@@ -250,8 +248,18 @@ function openParent(path: string) {
   gap: 20px;
   flex-shrink: 0;
 }
-.topbar-left { flex: 0 1 auto; min-width: 0; }
+.topbar-left { flex: 0 1 auto; min-width: 0; display: flex; align-items: center; gap: 8px; }
 .topbar-scope { margin: 0 auto; }
+.demo-badge {
+  flex-shrink: 0;
+  padding: 2px 7px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
 .platform-title {
   display: block;
   max-width: 100%;

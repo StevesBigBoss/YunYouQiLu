@@ -64,9 +64,6 @@
           >
             <div class="map-headline">
               <div class="headline-title">{{ t('齐鲁文化遗产数字化地图 · {scope}', { scope: scopeLabel }) }}</div>
-              <div class="headline-sub">
-                {{ t('当前范围国家级非遗代表性项目 {n} 项 · 按申报地区归市统计 · 抓取 {time}', { n: scopeTotal, time: shortTime(dataFetchedAt.heritage) }) }}
-              </div>
             </div>
 
             <div class="map-legend">
@@ -105,8 +102,8 @@ import ImageGallery from '../components/common/ImageGallery.vue'
 import AppIcon from '../components/common/AppIcon.vue'
 import { HERITAGE_ITEM_IMAGES } from '../mock/heritageItemImages'
 import {
-  dataFetchedAt, dataSources, heritageCategories, heritageCoords,
-  heritageItems, heritageNoCity, shortTime,
+  dataSources, heritageCategories, heritageCoords,
+  heritageItems, heritageNoCity,
 } from '../api/crawled'
 import type { HeritageRecord } from '../api/crawled'
 import { inScope, scope, scopeCity, scopeLabel } from '../config/scopeData'
@@ -870,12 +867,6 @@ watch(locale, () => {
   color: var(--map-title);
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
-.headline-sub {
-  margin-top: 2px;
-  font-size: 11px;
-  color: var(--text-muted);
-}
-
 .map-legend {
   position: absolute;
   left: 14px;

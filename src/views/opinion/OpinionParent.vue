@@ -49,8 +49,6 @@
     </template>
 
     <router-view v-else />
-
-    <ImageGallery page="opinion" :title="t('生态环境治理场景图集')" />
   </div>
 </template>
 
@@ -61,7 +59,6 @@ import L from 'leaflet'
 import FilterBar from '../../components/common/FilterBar.vue'
 import StatCard from '../../components/common/StatCard.vue'
 import ChartCard from '../../components/common/ChartCard.vue'
-import ImageGallery from '../../components/common/ImageGallery.vue'
 import MapContainer from '../../components/common/MapContainer.vue'
 import {
   dataFetchedAt, dataSources, shortTime,

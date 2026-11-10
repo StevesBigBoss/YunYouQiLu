@@ -14,9 +14,6 @@
       >
         <div class="map-headline">
           <div class="headline-title">{{ t('灾难监控与预测 · {scope}', { scope: scopeLabel }) }}</div>
-          <div class="headline-sub">
-            {{ t('范围内灾害风险指数 = 气象实况 + 近十年地震活动（两项为真实抓取数据）+ 地灾隐患 / 人流预警 / 水情监测（演示）') }}
-          </div>
         </div>
 
         <div class="layer-legend">
@@ -125,8 +122,6 @@
         {{ t('地震活动：范围内震中近邻市 {n} 条（全省口径 {count} 条，{since} 年以来 M≥{magnitude}）来自 {from}，抓取于 {time}。', { n: scopeQuakes.length, count: quakeEvents.length, since: quakeSince.slice(0, 4), magnitude: quakeMinMagnitude, from: dataSources.quake, time: shortTime(dataFetchedAt.quake) }) }}
         {{ tv(dataSources.quakeNote) }}
       </div>
-
-      <ImageGallery page="disaster" :title="t('灾害监测场景图集')" />
     </div>
 
     <div v-if="showModal" class="modal-mask" @click.self="showModal = false">
@@ -149,7 +144,6 @@ import { ref, shallowRef, computed, watch } from 'vue'
 import L from 'leaflet'
 import type { GeoJsonObject } from 'geojson'
 import ChartCard from '../components/common/ChartCard.vue'
-import ImageGallery from '../components/common/ImageGallery.vue'
 import MapContainer from '../components/common/MapContainer.vue'
 import AppIcon from '../components/common/AppIcon.vue'
 import {
@@ -965,13 +959,6 @@ function confirmNotify() {
   color: var(--map-title);
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
-.headline-sub {
-  margin-top: 4px;
-  font-size: 11px;
-  color: var(--text-muted);
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
 .layer-legend {
   position: absolute;
   top: 12px;
