@@ -2,7 +2,7 @@
 
 YunYouQiLu is a dashboard for culture and tourism along the Yellow River in Shandong. It covers all 16 prefecture-level cities in the province; nine of them sit on the river and get most of the attention. Some pages are map-first: city heat, scenic spots, protected areas, heritage sites, and disaster risk. Others are chart-first: visitor flow, industry numbers, marketing, and public opinion. Weather and earthquake feeds are real; most of the tourism figures are not. The interface starts in Chinese; the top bar has a language menu with English and several other locales.
 
-The front end is Vue 3 with TypeScript, Vite, ECharts, and Leaflet. The backend is Django 4.2 with MySQL. The two sides are loosely coupled: the dashboard imports four JSON snapshots at build time and does not call Django at runtime, so you can run the UI on its own. Django is there for the admin, the TikTok models, a few account endpoints, and an optional read-only snapshot API.
+The front end is Vue 3 with TypeScript, Vite, ECharts, and Leaflet. The backend is Django 4.2 with MySQL. The two sides are loosely coupled: the dashboard imports four JSON snapshots at build time and does not call Django at runtime, so you can run the UI on its own. Django is there for the admin, the Douyin models, a few account endpoints, and an optional read-only snapshot API.
 
 ## Data authenticity
 
@@ -20,7 +20,7 @@ distinction is used in the paper and in `PRIVACY_AND_DATA.md`:
 | Visitor flow, monthly heat, industry, marketing, resource, water level, hazards | Front-end fixtures | Synthetic/demo data |
 | County splits | Fixed allocation from city totals | Demo allocation, not official county data |
 | Disaster predictions and capacity warnings | Rule-based fixtures | Synthetic/demo data |
-| TikTok profiles/comments | Local collector output | Public platform content; not redistributed |
+| Douyin profiles/comments | Local collector output | Public platform content; not redistributed |
 
 The global header and the landing page label the demo environment. Do not cite
 the `/flow`, `/industry`, `/resource`, `/marketing`, `/disaster`, monthly heat,
@@ -28,7 +28,7 @@ or county-split values as observations.
 
 ## Background
 
-The repo started as a TikTok blogger data exercise. The Django models and admin still use the older naming: `TiktokUser`, `Video`, `VideoComment`, and an admin title that says 抖音博主数据分析系统后台. The dashboard then grew into a broader Shandong tourism project. Renaming the models would mean new migrations and admin changes without changing anything users see, so the old names stayed.
+The repo started as a Douyin blogger data exercise. The Django models and admin still use the older English naming: `TiktokUser`, `Video`, `VideoComment`, and an admin title that says 抖音博主数据分析系统后台. The dashboard then grew into a broader Shandong tourism project. Renaming the models would mean new migrations and admin changes without changing anything users see, so the old names stayed.
 
 ## Pages
 
@@ -47,7 +47,7 @@ The repo started as a TikTok blogger data exercise. The Django models and admin 
 
 ## Stack
 
-Vue 3.5 and TypeScript do the UI. ECharts handles charts, Leaflet handles maps, and Vite 8 builds it. The Django side runs on 4.2 LTS, uses django-simpleui for the admin, and talks to MySQL 8 through PyMySQL. The TikTok spiders are Python. The Node crawler for public weather, earthquake, heritage, and news data has no npm dependencies.
+Vue 3.5 and TypeScript do the UI. ECharts handles charts, Leaflet handles maps, and Vite 8 builds it. The Django side runs on 4.2 LTS, uses django-simpleui for the admin, and talks to MySQL 8 through PyMySQL. The Douyin spiders are Python. The Node crawler for public weather, earthquake, heritage, and news data has no npm dependencies.
 
 ## Running it
 
@@ -94,7 +94,7 @@ npm run data:sample
 npm run check:snapshots
 ```
 
-The sample was fetched on 2026-11-02 and contains 16 city weather records, 20 earthquakes, 190 heritage items, and 79 news headlines. It contains no TikTok user data. To refresh it from the sources instead, run the crawler from the project root:
+The sample was fetched on 2026-11-02 and contains 16 city weather records, 20 earthquakes, 190 heritage items, and 79 news headlines. It contains no Douyin user data. To refresh it from the sources instead, run the crawler from the project root:
 
 ```bash
 node scripts/crawler/crawl.mjs
@@ -154,9 +154,9 @@ npm run preview
 
 The preview server uses port 4173. `node scripts/serve-public.mjs` wraps the same steps, starts a Cloudflare quick tunnel if `cloudflared.exe` is around, and writes the public URL to `公网地址.txt` (gitignored).
 
-### 4. TikTok data (optional)
+### 4. Douyin data (optional)
 
-Put a TikTok web cookie in `TIKTOK_COOKIE` if you have one. Then run:
+Put a Douyin web cookie in `TIKTOK_COOKIE` if you have one. Then run:
 
 ```bash
 python 爬虫/yellow_river_spider.py
@@ -240,8 +240,8 @@ check, and the production build.
 
 ## Versioning and reproducibility
 
-The `package.json` version is `1.1.0`, and the release used in the paper is tagged
-`v1.1.0` in the repository. Cite that tag rather than the moving `master` branch.
+The `package.json` version is `1.1.1`, and the release used in the paper is tagged
+`v1.1.1` in the repository. Cite that tag rather than the moving `master` branch.
 The inputs needed to rebuild the results are:
 
 - the commit or tag, which fixes the front-end source and the sample snapshot;
@@ -275,7 +275,7 @@ Django has its own `User` model and the `/login_user/`, `/reg_user/`, and `/chan
 - The dashboard collects no visitor accounts, no location traces, and no analytics
   identifiers. The login demo stores only a username and a salted hash in the
   browser's `localStorage`.
-- The TikTok collector stores public video and comment records in a local MySQL
+- The Douyin collector stores public video and comment records in a local MySQL
   database. It is not part of the public snapshot, is not redistributed, and
   should not be run against accounts or content that the platform terms forbid.
   The crawler honours `robots.txt` where one is published, but platform terms and
@@ -283,7 +283,7 @@ Django has its own `User` model and the `/login_user/`, `/reg_user/`, and `/chan
 - Usernames, avatars, and comment text can identify people even when they are
   public. Before publishing any derived dataset, remove or hash user identifiers
   and paraphrase quoted comments. The repository's `data/sample/` deliberately
-  contains no TikTok records.
+  contains no Douyin records.
 - Weather, earthquake, heritage, and news snapshots are public facts or public
   list items. Photo credits and licences are kept in the JSON and shown in the
   UI. AI-generated placeholder images are labelled and must not be presented as
@@ -328,7 +328,7 @@ Django has its own `User` model and the `/login_user/`, `/reg_user/`, and `/chan
 |---|---|---|
 | `DB_PASSWORD` | yes | MySQL root password |
 | `SECRET_KEY` | yes | Django signing key; generate a random one |
-| `TIKTOK_COOKIE` | no | TikTok cookie; empty means seed data |
+| `TIKTOK_COOKIE` | no | Douyin cookie; empty means seed data |
 | `DEBUG` | no | `True` for local debugging; defaults to `False` |
 | `ALLOWED_HOSTS` | no | Comma-separated hosts; defaults to `127.0.0.1,localhost` |
 | `SNAPSHOT_DIR` | no | Directory for normalized snapshots; defaults to `<BASE_DIR>/data/normalized` |
@@ -360,7 +360,7 @@ app/test_snapshots.py   snapshot API and refresh-command tests
 app/management/         refresh_snapshots management command
 tiktok_blogger_web/     settings and URL config
 tiktok_blogger_web/settings_test.py  SQLite test settings
-爬虫/                    TikTok spiders
+爬虫/                    Douyin spiders
 src/                    Vue app
 templates/              Django login and registration pages
 scripts/                crawler, data build scripts, preview tunnel,
@@ -373,10 +373,9 @@ public/                 GeoJSON and images
 ```
 
 The crawler output under `data/raw/`, `data/normalized/` (except the sample), and
-the raw TikTok collection are ignored. `data/sample/`, `data/real/*.csv`, and
+the raw Douyin collection are ignored. `data/sample/`, `data/real/*.csv`, and
 `data/analytics/` are committed on purpose so a fresh clone can build and
-reproduce the paper's numbers. The raw export keeps the source URLs recorded at
-collection time; only its file name and display labels use the TikTok name.
+reproduce the paper's numbers.
 
 ## A few things that are easy to trip over
 
