@@ -1,0 +1,427 @@
+{
+  "source": "data/real/shandong_city_tourism_2024.csv",
+  "source_sha256": "5f19408081051d5f9ff887c99d1c799db433a68c4fa97e775f15aa673e4db2a9",
+  "seed": 42,
+  "features": [
+    "visitors_10k",
+    "revenue_100m_cny",
+    "visitors_yoy_pct",
+    "revenue_yoy_pct",
+    "inbound_visitors_10k",
+    "inbound_foreign_visitors_10k",
+    "inbound_fx_10k_usd",
+    "revenue_per_visitor_cny",
+    "inbound_share_pct"
+  ],
+  "cities": [
+    "济南",
+    "青岛",
+    "淄博",
+    "枣庄",
+    "东营",
+    "烟台",
+    "潍坊",
+    "济宁",
+    "泰安",
+    "威海",
+    "日照",
+    "临沂",
+    "德州",
+    "聊城",
+    "滨州",
+    "菏泽"
+  ],
+  "kmeans": {
+    "selected_k": 2,
+    "silhouette": 0.5562,
+    "inertia": 65.5081,
+    "iterations": 5,
+    "assignments": {
+      "济南": 0,
+      "青岛": 1,
+      "淄博": 0,
+      "枣庄": 0,
+      "东营": 0,
+      "烟台": 1,
+      "潍坊": 0,
+      "济宁": 0,
+      "泰安": 0,
+      "威海": 0,
+      "日照": 0,
+      "临沂": 0,
+      "德州": 0,
+      "聊城": 0,
+      "滨州": 0,
+      "菏泽": 0
+    },
+    "clusters": [
+      {
+        "cluster": 0,
+        "cities": [
+          "济南",
+          "淄博",
+          "枣庄",
+          "东营",
+          "潍坊",
+          "济宁",
+          "泰安",
+          "威海",
+          "日照",
+          "临沂",
+          "德州",
+          "聊城",
+          "滨州",
+          "菏泽"
+        ],
+        "mean_raw": {
+          "visitors_10k": 6163.04,
+          "revenue_100m_cny": 567.41,
+          "visitors_yoy_pct": 12.49,
+          "revenue_yoy_pct": 12.03,
+          "inbound_visitors_10k": 3.4,
+          "inbound_foreign_visitors_10k": 2.76,
+          "inbound_fx_10k_usd": 1525.29,
+          "revenue_per_visitor_cny": 885.88,
+          "inbound_share_pct": 0.05
+        }
+      },
+      {
+        "cluster": 1,
+        "cities": [
+          "青岛",
+          "烟台"
+        ],
+        "mean_raw": {
+          "visitors_10k": 10947.14,
+          "revenue_100m_cny": 1467.72,
+          "visitors_yoy_pct": 12.99,
+          "revenue_yoy_pct": 13.09,
+          "inbound_visitors_10k": 34.1,
+          "inbound_foreign_visitors_10k": 27.75,
+          "inbound_fx_10k_usd": 28009.5,
+          "revenue_per_visitor_cny": 1323.9,
+          "inbound_share_pct": 0.31
+        }
+      }
+    ],
+    "candidates": [
+      {
+        "k": 2,
+        "silhouette": 0.5562,
+        "inertia": 65.5081
+      },
+      {
+        "k": 3,
+        "silhouette": 0.2567,
+        "inertia": 52.3025
+      },
+      {
+        "k": 4,
+        "silhouette": 0.2399,
+        "inertia": 41.0796
+      },
+      {
+        "k": 5,
+        "silhouette": 0.1343,
+        "inertia": 38.7121
+      },
+      {
+        "k": 6,
+        "silhouette": 0.2452,
+        "inertia": 13.7502
+      }
+    ]
+  },
+  "som": {
+    "grid_rows": 4,
+    "grid_columns": 4,
+    "epochs": 1000,
+    "learning_rate": 0.5,
+    "sigma": 2.0,
+    "quantization_error": 0.158,
+    "topographic_error": 0.25,
+    "assignments": {
+      "济南": {
+        "node": 11,
+        "row": 2,
+        "column": 3
+      },
+      "青岛": {
+        "node": 3,
+        "row": 0,
+        "column": 3
+      },
+      "淄博": {
+        "node": 5,
+        "row": 1,
+        "column": 1
+      },
+      "枣庄": {
+        "node": 4,
+        "row": 1,
+        "column": 0
+      },
+      "东营": {
+        "node": 8,
+        "row": 2,
+        "column": 0
+      },
+      "烟台": {
+        "node": 2,
+        "row": 0,
+        "column": 2
+      },
+      "潍坊": {
+        "node": 14,
+        "row": 3,
+        "column": 2
+      },
+      "济宁": {
+        "node": 15,
+        "row": 3,
+        "column": 3
+      },
+      "泰安": {
+        "node": 0,
+        "row": 0,
+        "column": 0
+      },
+      "威海": {
+        "node": 10,
+        "row": 2,
+        "column": 2
+      },
+      "日照": {
+        "node": 13,
+        "row": 3,
+        "column": 1
+      },
+      "临沂": {
+        "node": 15,
+        "row": 3,
+        "column": 3
+      },
+      "德州": {
+        "node": 12,
+        "row": 3,
+        "column": 0
+      },
+      "聊城": {
+        "node": 12,
+        "row": 3,
+        "column": 0
+      },
+      "滨州": {
+        "node": 8,
+        "row": 2,
+        "column": 0
+      },
+      "菏泽": {
+        "node": 8,
+        "row": 2,
+        "column": 0
+      }
+    },
+    "hit_counts": [
+      1,
+      0,
+      1,
+      1,
+      1,
+      1,
+      0,
+      0,
+      3,
+      0,
+      1,
+      1,
+      2,
+      1,
+      1,
+      2
+    ]
+  },
+  "sparse_autoencoder": {
+    "hidden_dim": 4,
+    "epochs": 3000,
+    "sparsity_target": 0.05,
+    "sparsity_weight": 0.1,
+    "final_loss": 0.044343,
+    "reconstruction_mse": 0.033307,
+    "baseline_mse": 0.056127,
+    "reconstruction_reduction_pct": 40.66,
+    "mean_hidden_activation": 0.0808,
+    "active_fraction": 0.4062,
+    "codes": {
+      "济南": [
+        0.0153,
+        0.0118,
+        0.0155,
+        0.013
+      ],
+      "青岛": [
+        0.0012,
+        0.0007,
+        0.001,
+        0.001
+      ],
+      "淄博": [
+        0.0708,
+        0.0551,
+        0.0633,
+        0.0623
+      ],
+      "枣庄": [
+        0.1471,
+        0.1342,
+        0.1265,
+        0.1423
+      ],
+      "东营": [
+        0.1358,
+        0.1896,
+        0.1356,
+        0.1453
+      ],
+      "烟台": [
+        0.0081,
+        0.0055,
+        0.007,
+        0.0071
+      ],
+      "潍坊": [
+        0.0336,
+        0.0345,
+        0.0359,
+        0.0309
+      ],
+      "济宁": [
+        0.0361,
+        0.0427,
+        0.0398,
+        0.0351
+      ],
+      "泰安": [
+        0.0628,
+        0.0158,
+        0.0392,
+        0.044
+      ],
+      "威海": [
+        0.0442,
+        0.0397,
+        0.0414,
+        0.0404
+      ],
+      "日照": [
+        0.0855,
+        0.1318,
+        0.106,
+        0.091
+      ],
+      "临沂": [
+        0.0402,
+        0.0438,
+        0.0426,
+        0.0385
+      ],
+      "德州": [
+        0.115,
+        0.2221,
+        0.1459,
+        0.1341
+      ],
+      "聊城": [
+        0.1176,
+        0.1987,
+        0.1369,
+        0.1315
+      ],
+      "滨州": [
+        0.1611,
+        0.2205,
+        0.162,
+        0.1738
+      ],
+      "菏泽": [
+        0.1384,
+        0.1536,
+        0.1268,
+        0.1412
+      ]
+    },
+    "downstream_kmeans": {
+      "k": 2,
+      "silhouette": 0.7329,
+      "inertia": 0.0318,
+      "assignments": {
+        "济南": 1,
+        "青岛": 1,
+        "淄博": 1,
+        "枣庄": 0,
+        "东营": 0,
+        "烟台": 1,
+        "潍坊": 1,
+        "济宁": 1,
+        "泰安": 1,
+        "威海": 1,
+        "日照": 0,
+        "临沂": 1,
+        "德州": 0,
+        "聊城": 0,
+        "滨州": 0,
+        "菏泽": 0
+      },
+      "clusters": [
+        {
+          "cluster": 0,
+          "cities": [
+            "枣庄",
+            "东营",
+            "日照",
+            "德州",
+            "聊城",
+            "滨州",
+            "菏泽"
+          ],
+          "mean_raw": {
+            "visitors_10k": 3360.12,
+            "revenue_100m_cny": 251.61,
+            "visitors_yoy_pct": 13.02,
+            "revenue_yoy_pct": 12.82,
+            "inbound_visitors_10k": 1.11,
+            "inbound_foreign_visitors_10k": 0.91,
+            "inbound_fx_10k_usd": 407.71,
+            "revenue_per_visitor_cny": 785.88,
+            "inbound_share_pct": 0.03
+          }
+        },
+        {
+          "cluster": 1,
+          "cities": [
+            "济南",
+            "青岛",
+            "淄博",
+            "烟台",
+            "潍坊",
+            "济宁",
+            "泰安",
+            "威海",
+            "临沂"
+          ],
+          "mean_raw": {
+            "visitors_10k": 9406.22,
+            "revenue_100m_cny": 1013.11,
+            "visitors_yoy_pct": 12.2,
+            "revenue_yoy_pct": 11.65,
+            "inbound_visitors_10k": 12.0,
+            "inbound_foreign_visitors_10k": 9.76,
+            "inbound_fx_10k_usd": 8279.89,
+            "revenue_per_visitor_cny": 1061.0,
+            "inbound_share_pct": 0.12
+          }
+        }
+      ]
+    }
+  }
+}

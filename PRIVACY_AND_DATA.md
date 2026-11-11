@@ -14,10 +14,11 @@ document and the code are the source of truth.
 | National ICH list (190 items) | ihchina.cn | Real public list, with descriptions and credits |
 | News headlines | Ministry of Culture and Tourism, Xinhua Shandong, Dazhong | Real public headlines |
 | 2024 city tourism totals | Shandong Statistical Yearbook 2025, tables 6-20/6-21/6-25/6-26 | Official statistics, exported to `src/data/tourismStats.ts` |
+| 2024 city analytics | Same yearbook tables, exported to `data/real/shandong_city_tourism_2024.csv` | Official inputs; reproducible K-means/SOM/SAE outputs in `data/analytics/` |
 | Visitor flow, monthly heat, industry, marketing, resource ledger, water level, hazard layers | Generated in the front end from demo fixtures | Synthetic/demo data |
 | County-level splits | Allocated from city totals with fixed weights | Demo allocation, not official county data |
 | Disaster predictions and capacity warnings | Rule-based demo values | Synthetic/demo data |
-| Douyin videos/comments | Collector output in the local MySQL database | Public platform content; not redistributed in the repository |
+| TikTok videos/comments | Collector output in the local MySQL database | Public platform content; not redistributed in the repository |
 | Food, heritage, and scenic photos | Wikimedia Commons; some AI-generated placeholders | See the `credit` fields; AI placeholders are marked in the UI |
 
 The front end labels the demo environment on the landing page and in the
@@ -31,18 +32,21 @@ measurements.
   a User-Agent that identifies the crawler. These are polite-crawling measures;
   they do not by themselves establish compliance with a platform's terms of
   service or with research-ethics requirements.
-- The Douyin collector requires a user-supplied cookie (`TIKTOK_COOKIE`). The
+- The TikTok collector requires a user-supplied cookie (`TIKTOK_COOKIE`). The
   repository does not include a cookie, a login bypass, or a CAPTCHA bypass.
-- Without a cookie, the Douyin collector writes a small seed set rather than
+- The optional `/api/snapshots/` endpoints are read-only and allow-listed to
+  weather, earthquake, heritage, and news JSON. They do not expose Django
+  models, the TikTok database, or arbitrary files.
+- Without a cookie, the TikTok collector writes a small seed set rather than
   attempting to defeat access controls.
 - No private messages, phone numbers, or account credentials are collected.
-- The repository does not redistribute raw Douyin user profiles or comments.
+- The repository does not redistribute raw TikTok user profiles or comments.
   The public sample snapshot contains only weather, earthquake, ICH, and news
   data.
 
 ## 3. Personal data
 
-The Django models can store the following fields for Douyin users and
+The Django models can store the following fields for TikTok users and
 commenters: nickname, gender, age, province, bio, follower/following counts,
 engagement counts, video metadata, and comment text. These fields can identify
 a person indirectly, especially when combined.
@@ -64,10 +68,11 @@ delete the mapping after the analysis.
 
 ## 4. Retention and deletion
 
-- Raw crawler output is written under `data/raw/`; the exported Douyin file
-  `data/real/douyin_comments_raw.json` is git-ignored as well.
+- Raw crawler output is written under `data/raw/`; the exported TikTok file
+  `data/real/tiktok_comments_raw.json` is git-ignored as well. Renaming the export
+  does not rewrite its payload; source URLs inside the JSON remain as collected.
 - Normalized snapshots are written under `data/normalized/` and are git-ignored.
-- The public sample snapshot under `data/sample/` contains no Douyin personal
+- The public sample snapshot under `data/sample/` contains no TikTok personal
   data.
 - Define a retention period before collection (for example, delete raw records
   after the paper is accepted or after 12 months) and document it in the
@@ -110,7 +115,7 @@ applies to content about sensitive locations or events.
 ## 8. Ethics review
 
 The repository does not include an ethics-review approval or a platform
-authorization letter. Before submitting a paper that analyzes Douyin users or
+authorization letter. Before submitting a paper that analyzes TikTok users or
 comments, the authors should determine whether their institution requires
 ethics review, obtain any required approval or exemption, and keep the
 documentation. If the work is defined as software evaluation with no human

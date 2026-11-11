@@ -19,6 +19,8 @@ jobs:
         run: python manage.py test --settings=tiktok_blogger_web.settings_test -v 2
       - name: Forecast demo
         run: python scripts/forecast_qingdao.py --json forecast.json
+      - name: City analytics demo
+        run: python scripts/run_city_analytics.py --out-dir /tmp/city-analytics
 
   frontend:
     runs-on: ubuntu-latest

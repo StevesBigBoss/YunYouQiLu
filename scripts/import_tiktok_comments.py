@@ -145,7 +145,7 @@ def dump_table(cursor, table, target):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input", default="data/real/douyin_comments_raw.json")
+    parser.add_argument("--input", default="data/real/tiktok_comments_raw.json")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 

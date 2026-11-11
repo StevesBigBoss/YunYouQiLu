@@ -101,3 +101,6 @@ STATICFILES_DIRS = [
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+SNAPSHOT_DIR = os.getenv("SNAPSHOT_DIR", str(BASE_DIR / "data" / "normalized"))
+SNAPSHOT_MANIFEST = os.getenv("SNAPSHOT_MANIFEST")

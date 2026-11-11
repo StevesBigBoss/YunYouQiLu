@@ -41,6 +41,10 @@ dist.zip
 !/data/real/
 /data/real/*
 !/data/real/qingdao_tourism_revenue.csv
+!/data/real/shandong_city_tourism_2024.csv
+!/data/real/README.md
+!/data/analytics/
+!/data/analytics/**
 
 # 本机部署脚本与隧道地址（含本机路径/局域网IP，不入库）
 公网地址.txt

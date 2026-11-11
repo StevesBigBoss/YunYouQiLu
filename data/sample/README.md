@@ -18,7 +18,7 @@ The snapshot contains four files that the Vue build imports:
 | `normalized/news.json` | 79 headlines | Ministry of Culture and Tourism, Xinhua Shandong, Dazhong | Real public headlines, fetched 2026-11-02 |
 
 The snapshot is intentionally limited to fields needed by the dashboard. It
-does not include Douyin user profiles or comments. The `/flow`, `/industry`,
+does not include TikTok user profiles or comments. The `/flow`, `/industry`,
 `/resource`, `/marketing`, `/disaster`, monthly heat, county split, and
 water-level layers use synthetic/demo values in the front end; see the main
 README and `PRIVACY_AND_DATA.md` for the full data provenance.

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, re_path
 from django.views.generic import RedirectView
 
-from app import views
+from app import snapshot_views, views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -13,6 +13,8 @@ urlpatterns = [
 
                 path('logout_user/', views.logout_user),
     path('change_password/', views.change_password),
+    path('api/snapshots/', snapshot_views.snapshot_index, name='snapshot-index'),
+    path('api/snapshots/<str:name>/', snapshot_views.snapshot_detail, name='snapshot-detail'),
 
 
 ]
