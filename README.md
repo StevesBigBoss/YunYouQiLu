@@ -240,8 +240,8 @@ check, and the production build.
 
 ## Versioning and reproducibility
 
-The `package.json` version is `1.0.0`, and the release used in the paper is tagged
-`v1.0.0` in the repository. Cite that tag rather than the moving `master` branch.
+The `package.json` version is `1.1.0`, and the release used in the paper is tagged
+`v1.1.0` in the repository. Cite that tag rather than the moving `master` branch.
 The inputs needed to rebuild the results are:
 
 - the commit or tag, which fixes the front-end source and the sample snapshot;
