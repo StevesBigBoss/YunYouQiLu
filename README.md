@@ -1,13 +1,13 @@
-# YunYouQiLu
+# YunYouQiLu (云游齐鲁)
 
-Wandering Qilu is a cultural and tourism dashboard for Shandong's Yellow River region. It covers all 16 prefecture-level cities in the province; 9 of them are along the Yellow River and get most of the attention. Some pages are map-focused: city popularity, attractions, protected areas, heritage sites, and disaster risks. Other pages are chart-focused: visitor flow, industry data, marketing, and public opinion. Weather and earthquake data are real; most of the tourism data isn’t. The interface defaults to Chinese; there’s a language menu in the top bar with English and a few other languages. 
+YunYouQiLu is a dashboard for culture and tourism along the Yellow River in Shandong. It covers all 16 prefecture-level cities in the province; nine of them sit on the river and get most of the attention. Some pages are map-first: city heat, scenic spots, protected areas, heritage sites, and disaster risk. Others are chart-first: visitor flow, industry numbers, marketing, and public opinion. Weather and earthquake feeds are real; most of the tourism figures are not. The interface starts in Chinese; the top bar has a language menu with English and several other locales.
 
 The front end is Vue 3 with TypeScript, Vite, ECharts, and Leaflet. The backend is Django 4.2 with MySQL. The two sides are loosely coupled: the dashboard imports four JSON snapshots at build time and does not call Django at runtime, so you can run the UI on its own. Django is there for the admin, the TikTok models, a few account endpoints, and an optional read-only snapshot API.
 
 ## Data authenticity
 
-The platform mixes real public data with clearly labeled demo data. 
-The paper and PRIVACY_AND_DATA.md use the same distinction:
+The platform mixes real public data with clearly labeled demo data. The same
+distinction is used in the paper and in `PRIVACY_AND_DATA.md`:
 
 | Data | Source | Status |
 |---|---|---|
