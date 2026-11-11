@@ -1,25 +1,25 @@
-# YunYouQiLu (云游齐鲁)
+# YunYouQiLu
 
-YunYouQiLu is a dashboard for culture and tourism along the Yellow River in Shandong. It covers all 16 prefecture-level cities in the province; nine of them sit on the river and get most of the attention. Some pages are map-first: city heat, scenic spots, protected areas, heritage sites, and disaster risk. Others are chart-first: visitor flow, industry numbers, marketing, and public opinion. Weather and earthquake feeds are real; most of the tourism figures are not. The interface starts in Chinese; the top bar has a language menu with English and several other locales.
+Wandering Qilu is a cultural and tourism dashboard for Shandong's Yellow River region. It covers all 16 prefecture-level cities in the province; 9 of them are along the Yellow River and get most of the attention. Some pages are map-focused: city popularity, attractions, protected areas, heritage sites, and disaster risks. Other pages are chart-focused: visitor flow, industry data, marketing, and public opinion. Weather and earthquake data are real; most of the tourism data isn’t. The interface defaults to Chinese; there’s a language menu in the top bar with English and a few other languages. 
 
-The front end is Vue 3 with TypeScript, Vite, ECharts, and Leaflet. The backend is Django 4.2 with MySQL. The two sides are loosely coupled: the dashboard imports four JSON snapshots at build time and does not call Django at runtime, so you can run the UI on its own. Django is there for the admin, the Douyin models, and a few account endpoints.
+The frontend uses Vue 3, TypeScript, Vite, ECharts, and Leaflet. The backend uses Django 4.2 and MySQL. The two sides are loosely coupled: the dashboard imports four JSON snapshots at build time and doesn’t call Django at runtime, so you can run the UI on its own. Django is used for the admin panel, Douyin models, and a few account endpoints.
 
 ## Data authenticity
 
-The platform mixes real public data with clearly labelled demo data. The same
-distinction is used in the paper and in `PRIVACY_AND_DATA.md`:
+The platform mixes real public data with clearly labeled demo data. 
+The paper and PRIVACY_AND_DATA.md use the same distinction:
 
 | Data | Source | Status |
-|---|---|---|
-| Weather | Open-Meteo (CC BY 4.0) | Real, refreshed by the crawler |
-| Earthquakes | USGS FDSN Event API | Real, refreshed by the crawler |
-| 190 national ICH items | ihchina.cn | Real public list |
-| News headlines | Ministry of Culture and Tourism, Xinhua Shandong, Dazhong | Real public headlines |
-| 2024 city tourism totals | Shandong Statistical Yearbook 2025, tables 6-20/6-21/6-25/6-26 | Official statistics in `src/data/tourismStats.ts` |
-| Visitor flow, monthly heat, industry, marketing, resource, water level, hazards | Front-end fixtures | Synthetic/demo data |
-| County splits | Fixed allocation from city totals | Demo allocation, not official county data |
-| Disaster predictions and capacity warnings | Rule-based fixtures | Synthetic/demo data |
-| Douyin profiles/comments | Local collector output | Public platform content; not redistributed |
+|------|--------|--------|
+| Weather | Open-Meteo (CC BY 4.0) | Real, refreshed by crawler |
+| Earthquake | USGS FDSN Event API | Real, refreshed by crawler |
+| 190 National-level Intangible Cultural Heritage | ihchina.cn | Real, publicly listed |
+| News Headlines | Ministry of Culture and Tourism, Xinhua Shandong, Dazhong | Real, publicly available headlines |
+| 2024 City Tourism Totals | "Shandong Statistical Yearbook 2025", Tables 6-20/6-21/6-25/6-26 | Official statistics, located in `src/data/tourismStats.ts` |
+| Visitor Flow, Monthly Popularity, Industry, Marketing, Resources, Water Levels, Disasters | Frontend fixed data | Synthetic/demo data |
+| County-level Breakdown | Allocated from city totals | Synthetic allocation, not official county data |
+| Disaster Prediction and Capacity Alert | Rule-based fixed data | Synthetic/demo data |
+| Douyin Data/Comments | Local collector output | Public platform content; no longer distributed |
 
 The global header and the landing page label the demo environment. Do not cite
 the `/flow`, `/industry`, `/resource`, `/marketing`, `/disaster`, monthly heat,
