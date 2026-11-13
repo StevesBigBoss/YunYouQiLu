@@ -31,8 +31,6 @@
               <button
                 class="item-img-btn"
                 type="button"
-                :class="{ ai: itemImage(h.id)?.onlyAi }"
-                :title="itemImage(h.id)?.onlyAi ? t('该项目暂无实景图，点开看 AI 生成配图') : t('用配图替换右侧项目简介')"
                 @click.stop="selectHeritage(h.id, 'image')"
               >
                 <AppIcon name="image" :size="12" />{{ t('查看图片') }}
@@ -365,14 +363,12 @@ function itemImage(id: string): ItemImageView | null {
 
 function figureHtml(h: HeritageRecord, img: ItemImageView): string {
   const ai = !img.real
-  const badge = ai ? t('AI 生成') : ''
-  const capText = ai ? t('AI 生成 · 仅作示意') : t('实景图')
+  const capText = ai ? '' : t('实景图')
   return `<div class="sd-popup-figure" data-name="${h.name}" data-real="${img.real ?? ''}" data-ai="${img.ai ?? ''}" data-ai-now="${ai ? '1' : ''}">
     <img class="sd-popup-img" src="${img.real ?? img.ai ?? ''}" alt="${t('{name}项目配图', { name: h.name })}" title="${t('双击放大查看')}" data-zoom-caption="${capText}" loading="lazy" />
-    <span class="sd-popup-ai${ai ? ' show' : ''}">${badge}</span>
     <div class="sd-popup-fig-foot">
       <span class="sd-popup-cap">${capText}</span>
-      ${img.real && img.ai ? `<button class="sd-popup-switch" type="button">${t('看 AI 配图')}</button>` : ''}
+      ${img.real && img.ai ? `<button class="sd-popup-switch" type="button">${t('查看图片')}</button>` : ''}
     </div>
   </div>`
 }
@@ -380,21 +376,18 @@ function figureHtml(h: HeritageRecord, img: ItemImageView): string {
 function bindFigureSwitch(el: HTMLElement) {
   const box = el.querySelector<HTMLElement>('.sd-popup-figure')
   const pic = box?.querySelector<HTMLImageElement>('.sd-popup-img')
-  const tag = box?.querySelector<HTMLElement>('.sd-popup-ai')
   const cap = box?.querySelector<HTMLElement>('.sd-popup-cap')
   const btn = box?.querySelector<HTMLButtonElement>('.sd-popup-switch')
-  if (!box || !pic || !tag || !cap || !btn) return
+  if (!box || !pic || !cap || !btn) return
   btn.addEventListener('click', () => {
     const toAi = box.dataset.aiNow !== '1'
     const next = (toAi ? box.dataset.ai : box.dataset.real) ?? ''
     if (!next) return
     box.dataset.aiNow = toAi ? '1' : ''
     pic.src = next
-    tag.classList.toggle('show', toAi)
-    tag.textContent = toAi ? t('AI 生成') : ''
-    cap.textContent = toAi ? t('AI 生成 · 仅作示意') : t('实景图')
-    pic.dataset.zoomCaption = toAi ? t('AI 生成 · 仅作示意') : t('实景图')
-    btn.textContent = toAi ? t('看实景图') : t('看 AI 配图')
+    cap.textContent = toAi ? '' : t('实景图')
+    pic.dataset.zoomCaption = toAi ? '' : t('实景图')
+    btn.textContent = toAi ? t('看实景图') : t('查看图片')
   })
 }
 
@@ -806,15 +799,6 @@ watch(locale, () => {
   background: rgba(var(--rgb-gold), 0.1);
 }
 .heritage-item.selected .item-img-btn { color: var(--text-gold); border-color: rgba(var(--rgb-gold), 0.55); }
-.item-img-btn.ai::after {
-  content: 'AI';
-  padding: 0 3px;
-  font-size: 9px;
-  line-height: 14px;
-  color: #FFFFFF;
-  background: rgba(var(--rgb-gold), 0.85);
-  border-radius: 3px;
-}
 .item-meta {
   display: flex;
   align-items: center;
@@ -1061,20 +1045,6 @@ watch(locale, () => {
   background: var(--bg-secondary);
   cursor: zoom-in;
 }
-:deep(.sd-popup-ai) {
-  display: none;
-  position: absolute;
-  top: 12px;
-  right: 6px;
-  padding: 1px 6px;
-  font-size: 10px;
-  line-height: 16px;
-  letter-spacing: 0.4px;
-  color: #FFFFFF;
-  background: rgba(22, 24, 28, 0.62);
-  border-radius: 4px;
-}
-:deep(.sd-popup-ai.show) { display: block; }
 :deep(.sd-popup-fig-foot) {
   display: flex;
   align-items: center;
