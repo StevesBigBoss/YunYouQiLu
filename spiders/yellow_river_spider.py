@@ -100,7 +100,7 @@ def save_video(conn, video_data):
         return cursor.lastrowid or video_data["aweme_id"]
     except Exception as e:
         conn.rollback()
-        print(f"  [视频保存失败] {e}")
+        print(f"  [video insert failed] {e}")
         return None
 
 
@@ -117,12 +117,12 @@ def save_comment(conn, video_id, comment_data):
         conn.commit()
     except Exception as e:
         conn.rollback()
-        print(f"  [评论保存失败] {e}")
+        print(f"  [comment insert failed] {e}")
 
 
 def seed_mode(conn):
     print("=" * 60)
-    print("进入模拟数据生成模式（无Cookie）")
+    print("Entering seeded demo-data mode (no cookie)")
     print("=" * 60)
 
     for idx, (title, location, category) in enumerate(SEED_VIDEOS):
@@ -143,7 +143,7 @@ def seed_mode(conn):
         vid = save_video(conn, video_data)
         if vid is None:
             continue
-        print(f"  视频[{idx + 1}] {title[:20]}... 点赞{video_data['likes']}")
+        print(f"  Video [{idx + 1}] {title[:20]}... likes {video_data['likes']}")
 
         for _ in range(random.randint(10, COMMENTS_PER_VIDEO)):
             comment_data = {
@@ -158,12 +158,12 @@ def seed_mode(conn):
 
         time.sleep(0.05)
 
-    print(f"\n完成！共生成 {len(SEED_VIDEOS)} 个视频及其评论数据")
+    print(f"\nDone. Generated {len(SEED_VIDEOS)} videos with their comments.")
 
 
 def scrape_mode(conn):
     print("=" * 60)
-    print("开始爬取抖音数据...")
+    print("Starting Douyin crawl...")
     print("=" * 60)
 
     search_url = "https://www.douyin.com/aweme/v1/web/search/item/"
@@ -182,7 +182,7 @@ def scrape_mode(conn):
             data = resp.json()
             items = data.get("data", [])
             if not items:
-                print("  没有更多数据了")
+                print("  No more data.")
                 break
 
             for item in items:
@@ -205,7 +205,7 @@ def scrape_mode(conn):
                     "publish_time": datetime.fromtimestamp(aweme.get("create_time", 0)).strftime("%Y-%m-%d %H:%M"),
                 }
                 vid = save_video(conn, video_data)
-                print(f"  视频: {video_data['title'][:30]}...")
+                print(f"  Video: {video_data['title'][:30]}...")
 
                 comment_url = "https://www.douyin.com/aweme/v1/web/comment/list/"
                 c_params = {"aweme_id": aweme_id, "count": COMMENTS_PER_VIDEO, "cursor": 0}
@@ -223,32 +223,32 @@ def scrape_mode(conn):
                         }
                         save_comment(conn, vid, comment_data)
                 except Exception as e:
-                    print(f"  [评论爬取失败] {e}")
+                    print(f"  [comment crawl failed] {e}")
 
                 time.sleep(1)
 
             offset += 20
         except Exception as e:
-            print(f"  [爬取失败] {e}")
-            print("  未写入模拟数据，请检查 TIKTOK_COOKIE 或网络后重试。")
+            print(f"  [crawl failed] {e}")
+            print("  No seed data written; check TIKTOK_COOKIE or the network and retry.")
             return
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--seed", action="store_true", help="写入演示数据；仅在明确需要演示数据时使用")
+    parser.add_argument("--seed", action="store_true", help="write demo data; use only when demo data is explicitly required")
     args = parser.parse_args()
 
     conn = get_db_connection()
-    print(f"数据库连接成功: {DB_CONFIG['database']}")
-    print(f"关键词: {KEYWORD}")
+    print(f"Database connected: {DB_CONFIG['database']}")
+    print(f"Keyword: {KEYWORD}")
 
     if COOKIE and len(COOKIE) > 50:
         scrape_mode(conn)
     elif args.seed:
         seed_mode(conn)
     else:
-        print("未检测到有效 TIKTOK_COOKIE，已跳过写入。若需演示数据，请显式运行 --seed。")
+        print("No valid TIKTOK_COOKIE found, so nothing was written. Run with --seed if demo data is needed.")
 
     conn.close()
-    print("\n全部完成！")
+    print("\nAll done.")

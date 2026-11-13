@@ -1,134 +1,152 @@
-# 数据采集脚本（山东黄河文旅大屏 · 真实数据）
+# Data collection scripts (Shandong Yellow River cultural tourism dashboard, real data)
 
-用 Node 内置能力（`fetch` / `AbortController` / `TextDecoder`）写的轻量爬虫，**不依赖任何 npm 包**，
-Node 18 以上直接跑。抓取结果落在项目根目录的 `data/`，前端可直接读。
+Lightweight crawlers built only on Node built-ins (`fetch` / `AbortController` / `TextDecoder`).
+They have **no npm dependencies** and run directly on Node 18 or newer. Output is written to
+`data/` in the project root, where the front end reads it.
 
 ---
 
-## 一、怎么跑
+## 1. How to run
 
 ```bash
-# 在 tiktok_blogger_web 目录下执行
-node scripts/crawler/crawl.mjs               # 跑全部 4 个数据源（约 20 秒）
-node scripts/crawler/crawl.mjs weather       # 只跑天气
-node scripts/crawler/crawl.mjs quake news    # 只跑指定的几个源
-node scripts/crawler/crawl.mjs --list        # 列出所有数据源
+# run from the project root
+node scripts/crawler/crawl.mjs               # all four sources (about 20 seconds)
+node scripts/crawler/crawl.mjs weather       # weather only
+node scripts/crawler/crawl.mjs quake news    # only the listed sources
+node scripts/crawler/crawl.mjs --list        # list every source
 ```
 
-退出码：全部源成功为 `0`，有源部分失败为 `2`（脚本里 `process.exitCode = 2`，方便挂定时任务时判断）。
+Exit code: `0` when all sources succeed, `2` when at least one source partially fails (the script
+sets `process.exitCode = 2` so scheduled jobs can detect the difference).
 
 ---
 
-## 二、抓到的数据放在哪（重点）
+## 2. Where the data goes
 
-全部在 **`tiktok_blogger_web/data/`**，绝对路径：
-
-```
-D:\项目备份\云游齐鲁-山东沿黄文旅数智传播平台\tiktok_blogger_web\data
-```
+Everything is written under `data/` in the project root:
 
 ```
 data/
-├── normalized/                      ← 整理好的数据，前端直接用这个
-│   ├── weather.json                 山东 16 市实时天气 + 今明预报
-│   ├── quake.json                   山东及邻区地震目录
-│   ├── heritage.json                山东国家级非遗代表性项目
-│   └── news.json                    黄河/山东文旅公开新闻 + 关键词 + 情感分布
-├── raw/                             ← 原始响应快照，按源分目录、文件名带时间戳
+├── normalized/                      ← cleaned data, read directly by the front end
+│   ├── weather.json                 current weather plus today/tomorrow forecast for the 16 Shandong cities
+│   ├── quake.json                   earthquake catalogue for Shandong and neighbouring regions
+│   ├── heritage.json                national-level intangible cultural heritage items in Shandong
+│   └── news.json                    public Yellow River / Shandong tourism news + keywords + sentiment
+├── raw/                             ← raw response snapshots, one folder per source, timestamped names
 │   ├── weather/20260927-1036-forecast.json
 │   ├── quake/20260927-1033-usgs-query.json
 │   ├── heritage/20260927-1037-project-p1-limit50.json
-│   └── news/20260927-1040-大众网-文旅频道.html
-└── manifest.json                    ← 抓取清单：每次运行的时间、各源条数、状态、问题
+│   └── news/20260927-1040-dazhongwang-tourism.html
+└── manifest.json                    ← run manifest: start time, record counts, status and problems per source
 ```
 
-- `normalized/*.json`：**每次运行覆盖写**，永远是最新一份；UTF-8、带缩进、可直接 `JSON.parse`。
-- `raw/`：**只增不删**，用于复现和排查（比如某个源某天突然解析失败，可以拿快照对着改解析规则）。
-- `manifest.json`：保留最近 20 次运行记录，字段为 `{ startedAt, sources: [{ id, title, status, records, problems, file, elapsedMs }] }`。
+- `normalized/*.json`: **overwritten on every run**, so they always hold the newest snapshot. UTF-8,
+  indented, and directly `JSON.parse`-able.
+- `raw/`: **append-only**, used for reproducibility and debugging (for example, if a source starts
+  failing to parse on some day, the snapshot can be compared against the parser).
+- `manifest.json`: keeps the last 20 runs, with fields
+  `{ startedAt, sources: [{ id, title, status, records, problems, file, elapsedMs }] }`.
 
-最近一次抓取结果：天气 16 条、地震 20 条、非遗 190 条、新闻 99 条，共 **325 条**。
+Latest run: 16 weather records, 20 earthquake records, 190 heritage records and 99 news records,
+**325 records** in total.
 
 ---
 
-## 三、四个数据源分别是什么
+## 3. The four sources
 
-| 源 | 站点 / 接口 | 条数 | 对应大屏位置 |
+| Source | Site / endpoint | Records | Dashboard area |
 |---|---|---|---|
-| `weather` | Open-Meteo `api.open-meteo.com/v1/forecast` | 16 市 | 实时天气、预警 |
-| `quake` | USGS FDSN `earthquake.usgs.gov/fdsnws/event/1/query` | 20 | 灾难监控与预测 |
-| `heritage` | 中国非物质文化遗产网 `ihchina.cn` 目录接口 | 190 | 文化遗产 |
-| `news` | 文旅部 / 新华网山东 / 大众网 列表页 | 77 | 舆情分析（话题 / 词云 / 情感） |
+| `weather` | Open-Meteo `api.open-meteo.com/v1/forecast` | 16 cities | Live weather, warnings |
+| `quake` | USGS FDSN `earthquake.usgs.gov/fdsnws/event/1/query` | 20 | Disaster monitoring and forecasting |
+| `heritage` | China Intangible Cultural Heritage network `ihchina.cn` catalogue API | 190 | Cultural heritage |
+| `news` | Ministry of Culture and Tourism / Xinhua Shandong / Dazhongwang list pages | 77 | Opinion analysis (topics / word cloud / sentiment) |
 
 ### weather.json
 
-16 个地级市中心坐标一次性提交（`latitude`/`longitude` 用逗号拼接），返回按坐标顺序排列的数组。
-字段：`realtime { temp, humidity, windDirection, windLevel, windSpeedKmh, weather, weatherCode, observedAt }`、
-`forecast { updatedAt, today { date, weather, tempHigh, tempLow, precipitation, code }, tomorrow { ... } }`。
-WMO 天气码已译成中文（`0 晴`、`3 阴`、`61 小雨`…），风向角度已译成 `西风`/`东北风`，风速已按蒲福风级折算成 `2级`。
-数据许可 CC BY 4.0，文件里保留了 `attribution` 字段。
+The centre coordinates of the 16 prefecture-level cities are submitted in one request
+(`latitude`/`longitude` joined by commas), and the response array follows the coordinate order.
+Fields: `realtime { temp, humidity, windDirection, windLevel, windSpeedKmh, weather, weatherCode, observedAt }`,
+`forecast { updatedAt, today { date, weather, tempHigh, tempLow, precipitation, code }, tomorrow { ... } }`.
+WMO weather codes are translated to Chinese labels (`0 晴`, `3 阴`, `61 小雨`, ...), wind directions to
+`西风`/`东北风`, and wind speeds to Beaufort levels such as `2级`.
+The data is CC BY 4.0 licensed and the `attribution` field is kept in the file.
 
 ### quake.json
 
-范围北纬 34–39°、东经 114–123°，震级 ≥3，2015 年至今，按时间倒序。
-字段：`{ id, time, magnitude, place, depthKm, lng, lat, url }`，`bbox` / `minMagnitude` / `startTime` 记录在文件头部。
+Latitude 34-39 degrees north, longitude 114-123 degrees east, magnitude 3 or above, 2015 to present,
+newest first. Fields: `{ id, time, magnitude, place, depthKm, lng, lat, url }`; `bbox`, `minMagnitude`
+and `startTime` are recorded in the file header.
 
 ### heritage.json
 
-按山东省代码 `370000` 拉取国家级非遗项目名录，共 190 项（接口声明的 `declaredTotal` 也是 190，已对齐）。
-字段：`{ id, num, name, category, categoryKind, projectNum, batchYear, batch, province, unit, protectUnit, desc, url }`。
-注意：接口不返回详情页链接，所以 `url` 目前统一为 `null`；`desc` 是从接口正文里清洗出来的，截断到 200 字。
+Pulls the national intangible cultural heritage catalogue for Shandong province (code `370000`):
+190 items, which matches the `declaredTotal` returned by the API. Fields:
+`{ id, num, name, category, categoryKind, projectNum, batchYear, batch, province, unit, protectUnit, desc, url }`.
+The API does not return detail-page links, so `url` is currently `null` for every item; `desc` is cleaned
+from the response body and truncated to 200 characters.
 
 ### news.json
 
-五个列表页，按标题去重、按日期倒序。**按山东 / 黄河相关性过滤过**：省级页面（文旅部·山东）整页收；
-其余页面按「山东地名 / 黄河词」挑（大众网文旅频道虽是省级频道，首页混有转载的外省稿与其它频道稿，故一并按地名筛），
-本地综合频道（新华网山东、大众网山东）按「文旅题材词」挑；全国性页面（文旅部全国联播）同样按「山东地名 / 黄河词」挑
-——不筛的话，全国联播页会把安徽、广西、西藏等外省稿一起带进来。
+Five list pages, de-duplicated by title and sorted newest first. **Filtered for Shandong / Yellow River
+relevance**: provincial pages (Ministry of Culture and Tourism, Shandong) are taken in full; the other
+pages are filtered by Shandong place names or Yellow River keywords (the Dazhongwang tourism channel is
+provincial but its front page mixes reposted stories from other provinces and other channels, so it is
+filtered by place name as well); local general channels (Xinhua Shandong, Dazhongwang Shandong) are
+filtered by tourism subject words; national pages (the Ministry's national feed) are filtered the same
+way, because otherwise the feed would also bring in stories from Anhui, Guangxi, Tibet and elsewhere.
 
-字段：`items [{ title, url, date, channel }]`、`keywords [{ word, count }]`（前 40）、
-`sentiment { total, positive, neutral, negative, raw }`（百分比 + 原始计数）、`datedCount`（能推出日期的条数）。
-`keywords` 与 `sentiment` 是基于**标题**的词表统计，不是平台真实互动量，文件里的 `note` 已写明。
+Fields: `items [{ title, url, date, channel }]`, `keywords [{ word, count }]` (top 40),
+`sentiment { total, positive, neutral, negative, raw }` (percentages plus raw counts), and
+`datedCount` (number of items whose date could be derived). `keywords` and `sentiment` are computed from
+**titles**, not from platform interaction data; the `note` field in the file says so.
 
-> 前端 `src/config/textRules.ts` 是 `lib/zh.mjs` 的同口径移植（页面需要逐条明细做排序与分渠道统计），
-> 改词表时两边都要改。`src/config/shandongRegions.ts` 负责把 `province`（申报地区）和新闻标题里的地名归并到 16 个地级市。
+> The front end has `src/config/textRules.ts`, a port of `lib/zh.mjs` with the same rules (the pages need
+> per-item detail for sorting and per-channel counts). When the word lists change, both places must change.
+> `src/config/shandongRegions.ts` maps `province` (declaration region) and place names in news titles onto
+> the 16 prefecture-level cities.
 
 ---
 
-## 四、合规与礼貌（重要）
+## 4. Compliance and politeness (important)
 
-脚本内置了 robots.txt 校验，**默认先读 robots 再决定抓不抓**：
+The scripts check robots.txt and **read it before deciding whether to crawl**:
 
-- robots.txt 返回 4xx → 视为无约束；返回 5xx 或读取失败 → 保守放弃该域。
-- 规则按「最长匹配路径优先，Allow 覆盖 Disallow」判断。
-- robots 里声明了 `Crawl-delay` 时，取它与默认间隔的较大值。
-- 默认每个域 1.2 秒一次请求；失败退避重试（最多 2 次）；20 秒超时。
-- UA 为 `Mozilla/5.0 (compatible; ShandongYellowRiverDashboardBot/1.0; +local research crawler)`——保留爬虫身份，同时带上 `Mozilla/5.0 (compatible; ...)` 前缀（少数站点只认这个前缀，写别的直接 403）。
+- robots.txt returning 4xx means no restriction; 5xx or a failed read means the domain is skipped conservatively.
+- Rules follow the longest matching path, with `Allow` overriding `Disallow`.
+- When `Crawl-delay` is declared, the larger of that value and the default interval is used.
+- Default rate is one request per 1.2 seconds per domain, with backoff retries (at most 2) and a 20 second timeout.
+- The user agent is `Mozilla/5.0 (compatible; ShandongYellowRiverDashboardBot/1.0; +local research crawler)`:
+  it keeps the crawler identity while carrying the `Mozilla/5.0 (compatible; ...)` prefix that a few sites
+  require (other values are rejected with 403).
 
-**因为 robots 被主动排除的源**（不是抓不到，是规则不允许，故放弃）：
+**Sources deliberately excluded because of robots.txt** (not unreachable, but disallowed):
 
-| 站点 | robots 规则 | 处理 |
+| Site | robots rule | Handling |
 |---|---|---|
-| 中国天气网 `d1.weather.com.cn` | `User-agent: * / Disallow: /` | 整站禁止，改用 Open-Meteo |
-| 中国地震台网 `ceic.ac.cn` | `Disallow: /ajax/`、`/speedsearch` | 数据只能从被禁接口取，改用 USGS |
-| 中国政府网搜索 | `Disallow: /` | 不使用 |
-| 人民网 | `Crawl-delay: 120` | 间隔要求过长，不使用 |
+| China Weather `d1.weather.com.cn` | `User-agent: * / Disallow: /` | Whole site disallowed; Open-Meteo is used instead |
+| China Earthquake Networks `ceic.ac.cn` | `Disallow: /ajax/`, `/speedsearch` | Data is only available through disallowed endpoints; USGS is used instead |
+| Chinese government search | `Disallow: /` | Not used |
+| People's Daily Online | `Crawl-delay: 120` | Interval requirement is too long; not used |
 
-**唯一的 robots 例外**：`api.open-meteo.com` 的 robots.txt 也写着 `Disallow: /`，但那是挡搜索引擎收录接口地址，
-该 API 本身就是给程序调用的开放服务（数据 CC BY 4.0，注明来源即可用）。所以 `weather.mjs` 里显式传了
-`ignoreRobots: true`，并注明理由；每轮只发 **1 个请求**，属于有意为之、有记录的例外。
+**The only robots.txt exception**: `api.open-meteo.com` also publishes `Disallow: /`, but that rule exists
+to keep the endpoint out of search engines, while the API itself is a public service meant to be called by
+programs (CC BY 4.0 data, attribution required). `weather.mjs` therefore passes `ignoreRobots: true`
+explicitly, with the reason documented, and sends only **one request** per run. This is a deliberate,
+recorded exception.
 
-另外，抖音 / 微博 / 微信没有可直接抓取的公开接口（需要开放平台密钥或登录态，且其条款禁止抓取），
-所以平台维度的真实互动量拿不到，`news` 只落地公开新闻侧的数据。
+In addition, Douyin / Weibo / WeChat have no public endpoints that can be crawled directly (they need
+open-platform keys or a logged-in session, and their terms prohibit crawling), so platform-level
+interaction volumes are not available and `news` only covers the public news side.
 
 ---
 
-## 五、怎么接到前端用
+## 5. Connecting the data to the front end
 
-`data/` 不在 Vite 的 `public/` 目录里，所以有两种接法：
+`data/` is not inside Vite's `public/` directory, so there are two options:
 
-**接法 A：构建期直接 import（推荐，静态大屏够用）**
+**Option A: import at build time (recommended, enough for a static dashboard)**
 
-项目 tsconfig 已开 `resolveJsonModule`，JSON 能直接当模块引：
+`resolveJsonModule` is already enabled in the project tsconfig, so the JSON files can be imported as modules:
 
 ```ts
 // src/api/crawled.ts
@@ -136,35 +154,41 @@ import weather from '../../data/normalized/weather.json'
 import quake from '../../data/normalized/quake.json'
 import heritage from '../../data/normalized/heritage.json'
 
-export const cityWeather = weather.cities   // 16 条
-export const quakeEvents = quake.events     // 20 条
-export const heritageItems = heritage.items // 190 条
+export const cityWeather = weather.cities   // 16 records
+export const quakeEvents = quake.events     // 20 records
+export const heritageItems = heritage.items // 190 records
 ```
 
-然后替换掉 `src/mock/index.ts` 里对应的 `mockXxx`。注意字段不完全对齐，需要做一层映射，例如
-`heritage.json` 的 `items` 有 `name / category / batch / province / unit / desc`，而前端 `HeritageItem`
-还要 `lng / lat / level / era`——`level` 可由 `categoryKind` 推、`era` 可用 `batchYear`，
-`lng/lat` 需要另外补一张申报地区坐标表。重新抓数据后要重新构建才生效。
+Then replace the corresponding `mockXxx` exports in `src/mock/index.ts`. The fields do not line up exactly,
+so a mapping layer is needed: `heritage.json` items carry `name / category / batch / province / unit / desc`,
+while the front-end `HeritageItem` also needs `lng / lat / level / era`. `level` can be derived from
+`categoryKind`, `era` from `batchYear`, and `lng`/`lat` require a separate coordinate table for the
+declaration regions. A rebuild is needed after new data is crawled.
 
-**接法 B：运行期 fetch（数据要能随时刷新时用）**
+**Option B: fetch at run time (when the data must be refreshed without rebuilding)**
 
-把 `data/normalized/` 整个复制到 `public/data/`，然后：
+Copy `data/normalized/` into `public/data/`, then:
 
 ```ts
 const res = await fetch('/data/normalized/weather.json')
 const weather = await res.json()
 ```
 
-重新抓完数据只需再复制一次 `public/data/`，不用重新构建。
+After re-crawling, only `public/data/` needs to be copied again; no rebuild is required.
 
 ---
 
-## 六、已知限制
+## 6. Known limitations
 
-- 地震目录用的是 USGS，国内 3 级上下的小震在 USGS 收录不全，事件数偏少（当前 20 条）属正常。
-- 天气是格点插值值（`grid` 字段记录了实际取到的坐标与海拔），与地面站实测会有小差异。
-- 非遗 `desc` 截断 200 字，且接口无详情页链接。
-- 新闻只取各列表页**当前首页**的标题（不翻页），所以是滚动窗口，条数在 90–120 之间浮动；没有正文和阅读量/互动量，
-  舆情侧的走势只能用条数近似，不能当真实热度。
-- 少数来源页自己把标题截断了（尾部带 `...`），这类标题会原样保留；当前 99 条里只有 1 条这样。
-- 7 条新闻的 URL 里没有日期（如专题首页），`date` 为 `null`。
+- The earthquake catalogue comes from USGS, which does not fully cover small events around magnitude 3 in
+  China, so the record count is on the low side (20 at present); this is expected.
+- Weather values are interpolated grid values (the `grid` field records the actual coordinates and elevation
+  used) and may differ slightly from ground station measurements.
+- Heritage `desc` is truncated to 200 characters, and the API provides no detail-page links.
+- News only takes the titles on **the current front page** of each list page (no pagination), so the window
+  moves and the record count fluctuates between roughly 90 and 120. There is no article body and no
+  read/interaction counts, so the opinion trend can only be approximated by record counts, not treated as
+  real popularity.
+- A few source pages truncate titles themselves (with a trailing `...`); such titles are kept as-is.
+  Currently only 1 of the 99 records is affected.
+- Seven news URLs contain no date (for example topic home pages), so their `date` is `null`.

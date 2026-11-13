@@ -159,10 +159,10 @@ The preview server uses port 4173. `node scripts/serve-public.mjs` wraps the sam
 Put a Douyin web cookie in `TIKTOK_COOKIE` if you have one. Then run:
 
 ```bash
-python 爬虫/yellow_river_spider.py
+python spiders/yellow_river_spider.py
 ```
 
-It collects videos and comments for the keyword 黄河流域生态治理 (Yellow River basin ecological governance). Without a cookie it writes a set of seed videos and comments instead. The older `python 爬虫/spider.py` fills the `TiktokUser` table with generated users. Note the database names: the Yellow River spider uses `dyinfo_schema`, while `spider.py` uses `tiktok_blogger_web`. Create both schemas if you plan to run both scripts.
+It collects videos and comments for the keyword 黄河流域生态治理 (Yellow River basin ecological governance). Without a cookie it writes a set of seed videos and comments instead. The older `python spiders/spider.py` fills the `TiktokUser` table with generated users. Note the database names: the Yellow River spider uses `dyinfo_schema`, while `spider.py` uses `tiktok_blogger_web`. Create both schemas if you plan to run both scripts.
 
 ### 5. Illustrative forecast (optional)
 
@@ -360,7 +360,7 @@ app/test_snapshots.py   snapshot API and refresh-command tests
 app/management/         refresh_snapshots management command
 tiktok_blogger_web/     settings and URL config
 tiktok_blogger_web/settings_test.py  SQLite test settings
-爬虫/                    Douyin spiders
+spiders/                 Douyin spiders
 src/                    Vue app
 templates/              Django login and registration pages
 scripts/                crawler, data build scripts, preview tunnel,
