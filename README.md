@@ -387,4 +387,4 @@ reproduce the paper's numbers.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT. See [LICENCE.txt](LICENCE.txt).
