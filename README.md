@@ -267,17 +267,9 @@ To start them again after reopening a terminal, repeat step 1, the activation co
 
 ### 1. Django and MySQL
 
-Step one is Python 3.8 or newer. Check with `python --version`, and install it if needed.
+> **Ubuntu/Debian users: the quick start above already completes this section.** Its commands are steps 2–10; this section explains what each one does and gives the Windows/macOS equivalents, so read it as reference instead of running it a second time.
 
-**Linux (Ubuntu/Debian)**
-
-```bash
-sudo apt update
-```
-
-```bash
-sudo apt install python-is-python3 python3-pip python3-venv -y
-```
+Python 3.8 or newer is required. Check with `python --version`.
 
 **Windows (PowerShell)**
 
@@ -287,33 +279,7 @@ winget install --id Python.Python.3.12 -e
 
 On macOS use `brew install python@3.12`, or download the installer from <https://www.python.org/downloads/>.
 
-Then create the virtual environment and install the backend dependencies.
-
-**Linux**
-
-Create the virtual environment:
-
-```bash
-python -m venv .venv
-```
-
-Activate it:
-
-```bash
-source .venv/bin/activate
-```
-
-Install the backend dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-Copy the environment template:
-
-```bash
-cp .env.example .env
-```
+Then create the virtual environment and install the backend dependencies (on Linux this is quick start steps 3–4).
 
 **Windows (PowerShell)**
 
@@ -341,37 +307,13 @@ Copy the environment template:
 Copy-Item .env.example .env
 ```
 
-Open `.env` (`nano .env` on Linux, `notepad .env` on Windows) and set `DB_PASSWORD` and `SECRET_KEY`. Both are read from the environment, and `SECRET_KEY` has no fallback, so an empty value will stop the server. You can generate a key with:
+Open `.env` (`nano .env` on Linux, `notepad .env` on Windows) and set `DB_PASSWORD` and `SECRET_KEY`; quick start step 7 writes the file for you. Both are read from the environment, and `SECRET_KEY` has no fallback, so an empty value will stop the server. You can generate a key with:
 
 ```bash
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
 
-Install MySQL Server if it is not already running.
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-sudo apt update
-```
-
-```bash
-sudo apt install -y mysql-server
-```
-
-```bash
-sudo systemctl start mysql
-```
-
-Ubuntu gives the MySQL root account the `auth_socket` plugin, so the first connection uses `sudo mysql`. Set a password there, otherwise `mysql -u root -p` and the Django `DB_PASSWORD` value will not work:
-
-```bash
-sudo mysql
-```
-
-```sql
-ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'your_password';
-```
+Install MySQL Server if it is not already running (on Linux this is quick start steps 5–6, which also set the root password and create the database).
 
 **Windows**
 
@@ -427,17 +369,7 @@ Also note that `exit` in the previous block is a MySQL command typed at the `mys
 
 ### 2. Data snapshots
 
-Node.js 22 is required. The Ubuntu package is too old for Vite 8, so install the current release first.
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
-```
-
-```bash
-sudo apt install -y nodejs
-```
+Node.js 22 is required. The Ubuntu package is too old for Vite 8, so install the current release first; on Linux follow quick start step 11.
 
 **Windows (PowerShell)**
 
@@ -506,13 +438,13 @@ polling: the Vue app continues to read its bundled snapshot until it is rebuilt.
 
 ### 3. Frontend
 
-Install the front-end dependencies:
+Install the front-end dependencies (quick start step 13):
 
 ```bash
 npm install
 ```
 
-Start the dev server:
+Start the dev server (quick start step 14):
 
 ```bash
 npm run dev
