@@ -55,7 +55,7 @@ It was built and tested with Python 3.8 and Node 22. Vite 8 requires Node 20.19+
 
 ### 0. Quick start (Ubuntu/Debian): run the dashboard
 
-**Steps 1-6 give you the dashboard in a browser.** They only need Node.js and the committed data snapshot. Python, Django, and MySQL are optional and only required for the admin panel and the snapshot API, which are covered in section 0b.
+**Steps 1-6 open the dashboard in a browser**, and they only need Node.js plus the committed data snapshot. **Step 0b (steps 7-16) completes the system** with the Django admin, MySQL, and the snapshot API. Everything after 0b is reference or optional tooling.
 
 Open a terminal and paste the blocks below **in order, in the same terminal**.
 
@@ -253,7 +253,7 @@ The dev server writes its own links to `frontend.log`. To print only the network
 grep -Eo 'http://[0-9.]+:5173/' frontend.log | head -n 1
 ```
 
-`frontend.log` should contain `VITE v8.x ready` and `Local: http://localhost:5173/`. **That is the system dashboard, and it needs no database.** If a browser shows it, you are done; skip everything under "Extensions (optional)" unless you also want the admin backend, the crawler, or the analytics scripts.
+`frontend.log` should contain `VITE v8.x ready` and `Local: http://localhost:5173/`. **That is the system dashboard, and it needs no database.** The page alone is enough to review the system; step 0b below adds the Django admin and MySQL backend, and everything after it is reference or optional tooling.
 
 Each machine has its own `localhost`, so the address depends on where the browser runs:
 
@@ -273,13 +273,9 @@ To stop it later:
 pkill -f "vite"
 ```
 
-## Extensions (optional)
+### 0b. Django admin and MySQL (Ubuntu/Debian)
 
-The six steps above already open the full dashboard. Everything below this heading is optional: the Django admin and MySQL backend, the crawl and snapshot workflow, the forecast and analytics scripts, the tests, and the build/preview pipeline. Read or run only what you need.
-
-### 0b. Optional: Django admin and MySQL (Ubuntu/Debian)
-
-The steps below add the Django admin at port 8000 and the read-only snapshot API. Skip this whole section if you only need the dashboard.
+The rest of the main path. These steps add the Django admin at port 8000, the MySQL database, and the read-only snapshot API. The dashboard works without them, so skip the section if you only need the pages.
 
 7. Install Python, pip, and the venv module:
 
@@ -406,6 +402,10 @@ pkill -f "manage.py runserver"
 ```
 
 The demo passwords above are local values, not secrets, and `.env` is gitignored. To restart after reopening the terminal: repeat step 1, the activation command from step 8, step 5, and step 15. The detailed per-platform reference follows below.
+
+## Alternative platforms and extensions (optional)
+
+Sections 1–6 are not part of the Ubuntu main path above. Section 1 gives the Windows/macOS equivalents of steps 7–16; sections 2–6 cover the crawl and snapshot workflow, the build/preview pipeline, the crawler, the forecast, and the analytics scripts. Read or run only what you need.
 
 ### 1. Django and MySQL
 
