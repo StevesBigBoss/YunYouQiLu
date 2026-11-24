@@ -135,7 +135,21 @@ DJANGO_SUPERUSER_USERNAME=admin DJANGO_SUPERUSER_EMAIL=admin@example.com DJANGO_
 nohup python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &
 ```
 
-11. Install Node.js 22 (the Ubuntu package is too old for Vite 8):
+11. Install Node.js 22. Two paths are supported; **use the NVM path if you hit `cdrom:// ... does not have a Release file`** on `apt update` (common on freshly installed VMs whose ISO was unmounted):
+
+    **Option A — apt + NodeSource:**
+
+```bash
+sudo sed -i.bak '/cdrom/d' /etc/apt/sources.list
+```
+
+```bash
+for f in /etc/apt/sources.list.d/*.sources; do [ -f "$f" ] && sudo sed -i.bak '/cdrom/d' "$f"; done
+```
+
+```bash
+sudo apt update
+```
 
 ```bash
 curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
@@ -144,6 +158,22 @@ curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 ```bash
 sudo apt install -y nodejs
 ```
+
+    **Option B — NVM (works on any distro, recommended inside VMs or behind firewalls):**
+
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+```
+
+```bash
+export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+```
+
+```bash
+nvm install 22 && node -v
+```
+
+If you go with NVM, skip the NodeSource block and go straight to step 12; `node -v` should print `v22.x.x`.
 
 12. Copy the committed sample snapshots:
 
