@@ -55,22 +55,40 @@ It was built and tested with Python 3.8 and Node 22. Vite 8 requires Node 20.19+
 
 ### 1. Django and MySQL
 
-Step one is Python 3.8 or newer. On Ubuntu/Debian:
+Step one is Python 3.8 or newer. Check with `python --version`, and install it if needed.
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 sudo apt update && sudo apt install python-is-python3 python3-pip python3-venv -y
 ```
 
-On macOS use `brew install python@3.12`; on Windows use `winget install --id Python.Python.3.12 -e`, or download the installer from <https://www.python.org/downloads/>. Check the result with `python --version`.
+**Windows (PowerShell)**
 
-Then create the virtual environment and install the backend dependencies:
+```powershell
+winget install --id Python.Python.3.12 -e
+```
+
+On macOS use `brew install python@3.12`, or download the installer from <https://www.python.org/downloads/>.
+
+Then create the virtual environment and install the backend dependencies.
+
+**Linux**
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-# Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env
+```
+
+**Windows (PowerShell)**
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+Copy-Item .env.example .env
 ```
 
 Open `.env` and set `DB_PASSWORD` and `SECRET_KEY`. Both are read from the environment, and `SECRET_KEY` has no fallback, so an empty value will stop the server. You can generate a key with:
@@ -79,7 +97,9 @@ Open `.env` and set `DB_PASSWORD` and `SECRET_KEY`. Both are read from the envir
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
 
-Install MySQL Server if it is not already running. On Ubuntu/Debian:
+Install MySQL Server if it is not already running.
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 sudo apt update
@@ -97,13 +117,15 @@ sudo mysql
 ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'your_password';
 ```
 
-Then log in with that password:
+**Windows**
+
+Install MySQL Server 8 with the MySQL Installer from <https://dev.mysql.com/downloads/installer/> and choose a root password during setup. Open "MySQL 8.0 Command Line Client" from the Start menu, or add `C:\Program Files\MySQL\MySQL Server 8.0\bin` to `PATH` so `mysql` works in PowerShell.
+
+Then log in and create a database named `dyinfo_schema` from the MySQL shell:
 
 ```bash
 mysql -u root -p
 ```
-
-Create a database named `dyinfo_schema` from the MySQL shell:
 
 ```sql
 CREATE DATABASE dyinfo_schema CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
