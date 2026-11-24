@@ -57,11 +57,17 @@ It was built and tested with Python 3.8 and Node 22. Vite 8 requires Node 20.19+
 
 Open a terminal and paste the blocks below **in order, in the same terminal**. No text editor and no interactive MySQL session is needed. The only values you may want to change are the two demo passwords: `123456` for MySQL root and `admin123456` for the Django admin.
 
-1. Go to the project root (the directory containing `manage.py` and `package.json`; adjust the path if your folder is elsewhere):
+1. Go to the project root. This command locates the folder that contains `manage.py` under your home directory (ignoring the virtual environment) and `cd`s into it, so it works wherever you unzipped the archive:
 
 ```bash
-cd ~/YunYouQiLu-1.1.1/YunYouQiLu-1.1.1
+cd "$(dirname "$(find ~ -maxdepth 5 -name manage.py -not -path '*/.venv/*' -print -quit)")"
 ```
+
+```bash
+pwd && ls -1 manage.py package.json
+```
+
+If `pwd` does not show the project folder, the archive is not under your home directory; `cd` into the extracted folder manually and continue from step 2.
 
 2. Install Python, pip, and the venv module:
 
@@ -214,6 +220,16 @@ npm run data:sample
 ```
 
 13. Install the front-end dependencies:
+
+```bash
+npm install
+```
+
+If the download stalls or fails with a network error, switch to a mirror and retry:
+
+```bash
+npm config set registry https://registry.npmmirror.com
+```
 
 ```bash
 npm install
