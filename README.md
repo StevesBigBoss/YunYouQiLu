@@ -229,7 +229,17 @@ cat frontend.log
 hostname -I
 ```
 
-`frontend.log` should contain `VITE v8.x ready` and `Local: http://localhost:5173/`. Open `http://<VM-IP>:5173/` from the host machine, or `http://127.0.0.1:5173/` inside the VM. **That is the system dashboard, and it needs no database.**
+`frontend.log` should contain `VITE v8.x ready` and `Local: http://localhost:5173/`. **That is the system dashboard, and it needs no database.**
+
+Each machine has its own `localhost`, so the address depends on where the browser runs:
+
+| Browser runs on | URL to type | Service that must be running there |
+|---|---|---|
+| The VM itself | `http://127.0.0.1:5173/` | step 5 in this VM |
+| The Windows/macOS host, reaching the VM | `http://<VM-IP>:5173/` | step 5 in this VM (`--host` exposes it) |
+| The host, with a Vite preview started on the host | `http://localhost:4173/` | `npm run build` then `npm run preview` on the host |
+
+`localhost:4173` typed inside the VM will fail with "connection refused": port 4173 only exists on the machine where `npm run preview` runs, and it binds to 127.0.0.1 by default.
 
 To stop it later:
 
@@ -606,7 +616,7 @@ Then serve it:
 npm run preview
 ```
 
-The preview server uses port 4173. `node scripts/serve-public.mjs` wraps the same steps, starts a Cloudflare quick tunnel if `cloudflared.exe` is around, and writes the public URL to `公网地址.txt` (gitignored).
+The preview server uses port 4173. It binds to 127.0.0.1, so `http://localhost:4173/` works only in the browser of the machine that runs it; from another machine use the dev server with `--host` instead (see the address table in quick start step 6). `node scripts/serve-public.mjs` wraps the same steps, starts a Cloudflare quick tunnel if `cloudflared.exe` is around, and writes the public URL to `公网地址.txt` (gitignored).
 
 ### 4. Douyin data (optional)
 
