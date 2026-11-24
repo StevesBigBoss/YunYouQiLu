@@ -59,9 +59,13 @@ Open a terminal and paste the blocks below **in order, in the same terminal**. N
 
 1. Go to the project root. This command locates the folder that contains `manage.py` under your home directory (ignoring the virtual environment) and `cd`s into it, so it works wherever you unzipped the archive:
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 cd "$(dirname "$(find ~ -maxdepth 5 -name manage.py -not -path '*/.venv/*' -print -quit)")"
 ```
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 pwd && ls -1 manage.py package.json
@@ -71,9 +75,13 @@ If `pwd` does not show the project folder, the archive is not under your home di
 
 2. Install Python, pip, and the venv module:
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 sudo apt update
 ```
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 sudo apt install -y python-is-python3 python3-pip python3-venv curl
@@ -81,9 +89,13 @@ sudo apt install -y python-is-python3 python3-pip python3-venv curl
 
 3. Create and activate the virtual environment:
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 python -m venv .venv
 ```
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 source .venv/bin/activate
@@ -91,15 +103,21 @@ source .venv/bin/activate
 
 4. Install the Python dependencies:
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 pip install -r requirements.txt
 ```
 
 5. Install and start MySQL:
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 sudo apt install -y mysql-server
 ```
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 sudo systemctl start mysql
@@ -107,11 +125,15 @@ sudo systemctl start mysql
 
 6. Set the MySQL root password and create the database. The command below works regardless of whether root still uses `auth_socket` (fresh install) or has already been given a password; it uses the `debian-sys-maint` account that the Ubuntu MySQL package pre-configures and that always works locally:
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 sudo mysql --defaults-file=/etc/mysql/debian.cnf -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY '123456'; CREATE DATABASE IF NOT EXISTS dyinfo_schema CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 ```
 
 Then verify you can log in with the new password (`-p` and the password must be adjacent, no space):
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 mysql -u root -p123456 -e "SELECT user, plugin FROM mysql.user;"
@@ -119,11 +141,15 @@ mysql -u root -p123456 -e "SELECT user, plugin FROM mysql.user;"
 
 7. Write `.env` with that password and a freshly generated `SECRET_KEY`, without opening an editor:
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 printf 'DB_PASSWORD=123456\nSECRET_KEY=%s\nDEBUG=True\nALLOWED_HOSTS=*\n' "$(python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')" > .env
 ```
 
 8. Create the database tables:
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 python manage.py migrate
@@ -131,11 +157,15 @@ python manage.py migrate
 
 9. Create the admin account `admin` / `admin123456` without prompts:
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 DJANGO_SUPERUSER_USERNAME=admin DJANGO_SUPERUSER_EMAIL=admin@example.com DJANGO_SUPERUSER_PASSWORD=admin123456 python manage.py createsuperuser --noinput
 ```
 
 10. Start Django in the background so the terminal stays free:
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 nohup python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &
@@ -145,21 +175,31 @@ nohup python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &
 
     **Option A — apt + NodeSource (VM can reach both Ubuntu archives and deb.nodesource.com):**
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 sudo sed -i.bak '/cdrom/d' /etc/apt/sources.list
 ```
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 for f in /etc/apt/sources.list.d/*.sources; do [ -f "$f" ] && sudo sed -i.bak '/cdrom/d' "$f"; done
 ```
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 sudo apt update
 ```
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 ```
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 sudo apt install -y nodejs
@@ -167,13 +207,19 @@ sudo apt install -y nodejs
 
     **Option B — NVM (VM can reach raw.githubusercontent.com):**
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 ```
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 ```
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 nvm install 22
@@ -181,13 +227,19 @@ nvm install 22
 
     **Option C — NVM via Chinese mirrors (VM cannot reach raw.githubusercontent.com but can reach gitee / npmmirror):**
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 export NVM_SOURCE=https://gitee.com/mirrors/nvm.git && curl -o- https://gitee.com/mirrors/nvm/raw/v0.40.1/install.sh | bash
 ```
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 ```
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 export NVM_NODEJS_ORG_MIRROR=https://npmmirror.com/mirrors/node && nvm install 22
@@ -195,17 +247,25 @@ export NVM_NODEJS_ORG_MIRROR=https://npmmirror.com/mirrors/node && nvm install 2
 
     **Option D — fully offline (VM has no external internet):** Download `nvm-v0.40.1.tar.gz` and `node-v22.12.0-linux-x64.tar.xz` on another machine (e.g. https://npmmirror.com/mirrors/nvm/ and https://npmmirror.com/mirrors/node/), copy them into the VM, then run:
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 mkdir -p ~/.nvm && tar -xzf nvm-v0.40.1.tar.gz -C ~/.nvm --strip-components=1
 ```
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh"
 ```
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 mkdir -p "$NVM_DIR/versions/node/v22.12.0" && tar -xJf node-v22.12.0-linux-x64.tar.xz -C "$NVM_DIR/versions/node/v22.12.0" --strip-components=1
 ```
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 ln -sfn "$NVM_DIR/versions/node/v22.12.0" "$NVM_DIR/alias/default"
@@ -215,11 +275,15 @@ If you go with NVM (Options B, C, D), skip the NodeSource block and go straight 
 
 12. Copy the committed sample snapshots:
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 npm run data:sample
 ```
 
 13. Install the front-end dependencies:
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 npm install
@@ -227,9 +291,13 @@ npm install
 
 If the download stalls or fails with a network error, switch to a mirror and retry:
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 npm config set registry https://registry.npmmirror.com
 ```
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 npm install
@@ -237,15 +305,21 @@ npm install
 
 14. Start the front end in the background and make it reachable from the host machine:
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 nohup npm run dev -- --host > frontend.log 2>&1 &
 ```
 
 15. Read the front-end URL and the VM address:
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 cat frontend.log
 ```
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 hostname -I
@@ -255,9 +329,13 @@ Open `http://<VM-IP>:5173/` for the dashboard and `http://<VM-IP>:8000/admin/` f
 
 To stop the two servers later:
 
+**Linux (Ubuntu/Debian)**
+
 ```bash
 pkill -f "manage.py runserver"
 ```
+
+**Linux (Ubuntu/Debian)**
 
 ```bash
 pkill -f "vite"
@@ -281,9 +359,9 @@ On macOS use `brew install python@3.12`, or download the installer from <https:/
 
 Then create the virtual environment and install the backend dependencies (on Linux this is quick start steps 3–4).
 
-**Windows (PowerShell)**
-
 Create the virtual environment:
+
+**Windows (PowerShell)**
 
 ```powershell
 python -m venv .venv
@@ -291,11 +369,15 @@ python -m venv .venv
 
 Activate it:
 
+**Windows (PowerShell)**
+
 ```powershell
 .venv\Scripts\Activate.ps1
 ```
 
 Install the backend dependencies:
+
+**Windows (PowerShell)**
 
 ```powershell
 pip install -r requirements.txt
@@ -303,11 +385,15 @@ pip install -r requirements.txt
 
 Copy the environment template:
 
+**Windows (PowerShell)**
+
 ```powershell
 Copy-Item .env.example .env
 ```
 
 Open `.env` (`nano .env` on Linux, `notepad .env` on Windows) and set `DB_PASSWORD` and `SECRET_KEY`; quick start step 7 writes the file for you. Both are read from the environment, and `SECRET_KEY` has no fallback, so an empty value will stop the server. You can generate a key with:
+
+**All platforms**
 
 ```bash
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
@@ -321,9 +407,13 @@ Install MySQL Server 8 with the MySQL Installer from <https://dev.mysql.com/down
 
 Then log in and create a database named `dyinfo_schema` from the MySQL shell:
 
+**All platforms**
+
 ```bash
 mysql -u root -p
 ```
+
+**MySQL shell**
 
 ```sql
 CREATE DATABASE dyinfo_schema CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -331,11 +421,15 @@ CREATE DATABASE dyinfo_schema CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 Leave the MySQL shell before running the Django commands:
 
+**MySQL shell**
+
 ```bash
 exit
 ```
 
 Apply the migrations:
+
+**All platforms**
 
 ```bash
 python manage.py migrate
@@ -343,11 +437,15 @@ python manage.py migrate
 
 Create an admin user (it prompts for a username, email, and password):
 
+**All platforms**
+
 ```bash
 python manage.py createsuperuser
 ```
 
 Start the development server:
+
+**All platforms**
 
 ```bash
 python manage.py runserver 0.0.0.0:8000
@@ -357,9 +455,13 @@ The admin is at `http://127.0.0.1:8000/admin/`.
 
 `runserver` is a foreground process and does not return to the shell prompt. Leave it running while you use the browser, and press `Ctrl+C` to stop it. Run the front-end commands below in a second terminal, or start the server in the background with:
 
+**Linux / macOS**
+
 ```bash
 nohup python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &
 ```
+
+**Linux / macOS**
 
 ```bash
 tail -f server.log
@@ -381,15 +483,21 @@ Node 20.19+ or 22.12+ is required.
 
 The Vue build imports `data/normalized/weather.json`, `quake.json`, `heritage.json`, and `news.json`. A small public snapshot is committed under `data/sample/normalized/`, so a fresh clone can build without running the crawler:
 
+**All platforms**
+
 ```bash
 npm run data:sample
 ```
+
+**All platforms**
 
 ```bash
 npm run check:snapshots
 ```
 
 The sample was fetched on 2026-11-02 and contains 16 city weather records, 20 earthquakes, 190 heritage items, and 79 news headlines. It contains no Douyin user data. To refresh it from the sources instead, run the crawler from the project root:
+
+**All platforms**
 
 ```bash
 node scripts/crawler/crawl.mjs
@@ -402,6 +510,8 @@ The crawler takes about 20 seconds on a normal connection. If one source fails, 
 The build-time import remains the default, so the dashboard still works without
 Django. When the backend is running, the same files are available through a
 read-only, allow-listed API:
+
+**All platforms (HTTP)**
 
 ```text
 GET /api/snapshots/            status, sizes, SHA-256, freshness, last run
@@ -417,9 +527,13 @@ and missing or corrupt files return `503` rather than a stack trace.
 
 Refresh uses the existing Node crawler through a management command:
 
+**All platforms**
+
 ```bash
 python manage.py refresh_snapshots --check
 ```
+
+**All platforms**
 
 ```bash
 python manage.py refresh_snapshots --run --source weather --source quake
@@ -428,6 +542,8 @@ python manage.py refresh_snapshots --run --source weather --source quake
 The repository does not bundle an always-on scheduler. Run the command from
 cron, a systemd timer, or Windows Task Scheduler; the API reports the resulting
 file timestamps and a `stale` flag. For example, on a Unix host:
+
+**Linux (cron)**
 
 ```cron
 0 */6 * * * cd /srv/yunyouqilu && .venv/bin/python manage.py refresh_snapshots --run >> /var/log/yunyouqilu-snapshots.log 2>&1
@@ -440,11 +556,15 @@ polling: the Vue app continues to read its bundled snapshot until it is rebuilt.
 
 Install the front-end dependencies (quick start step 13):
 
+**All platforms**
+
 ```bash
 npm install
 ```
 
 Start the dev server (quick start step 14):
+
+**All platforms**
 
 ```bash
 npm run dev
@@ -452,11 +572,15 @@ npm run dev
 
 The dev server listens on `http://localhost:5173/`. For a production build, build the bundle first:
 
+**All platforms**
+
 ```bash
 npm run build
 ```
 
 Then serve it:
+
+**All platforms**
 
 ```bash
 npm run preview
@@ -468,6 +592,8 @@ The preview server uses port 4173. `node scripts/serve-public.mjs` wraps the sam
 
 Put a Douyin web cookie in `TIKTOK_COOKIE` if you have one. Then run:
 
+**All platforms**
+
 ```bash
 python spiders/yellow_river_spider.py
 ```
@@ -478,6 +604,8 @@ It collects videos and comments for the keyword 黄河流域生态治理 (Yellow
 
 The annual Qingdao revenue series and the OLS demo are separate from the front
 end. They run on the standard library only:
+
+**All platforms**
 
 ```bash
 python scripts/forecast_qingdao.py
@@ -494,6 +622,8 @@ forecasting model. Adding `--figure fig6.png` requires matplotlib from
 The three previously unimplemented methods are now available as dependency-free
 Python modules under `app/analytics/`. They run on the standard library, use a
 fixed seed, and consume the official 2024 indicators for all 16 cities:
+
+**All platforms**
 
 ```bash
 python scripts/run_city_analytics.py
@@ -533,21 +663,31 @@ validation, not for operational segmentation.
 
 ## Tests and CI
 
+**All platforms**
+
 ```bash
 python manage.py test --settings=tiktok_blogger_web.settings_test
 ```
+
+**All platforms**
 
 ```bash
 python scripts/run_city_analytics.py
 ```
 
+**All platforms**
+
 ```bash
 npm run data:sample
 ```
 
+**All platforms**
+
 ```bash
 npm run check:snapshots
 ```
+
+**All platforms**
 
 ```bash
 npm run build
