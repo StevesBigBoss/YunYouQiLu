@@ -135,9 +135,9 @@ DJANGO_SUPERUSER_USERNAME=admin DJANGO_SUPERUSER_EMAIL=admin@example.com DJANGO_
 nohup python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &
 ```
 
-11. Install Node.js 22. Two paths are supported; **use the NVM path if you hit `cdrom:// ... does not have a Release file`** on `apt update` (common on freshly installed VMs whose ISO was unmounted):
+11. Install Node.js 22. Several paths are supported; **pick whichever one does not hit a network error**:
 
-    **Option A — apt + NodeSource:**
+    **Option A — apt + NodeSource (VM can reach both Ubuntu archives and deb.nodesource.com):**
 
 ```bash
 sudo sed -i.bak '/cdrom/d' /etc/apt/sources.list
@@ -159,7 +159,7 @@ curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 sudo apt install -y nodejs
 ```
 
-    **Option B — NVM (works on any distro, recommended inside VMs or behind firewalls):**
+    **Option B — NVM (VM can reach raw.githubusercontent.com):**
 
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
@@ -173,7 +173,39 @@ export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 nvm install 22 && node -v
 ```
 
-If you go with NVM, skip the NodeSource block and go straight to step 12; `node -v` should print `v22.x.x`.
+    **Option C — NVM via Chinese mirrors (VM cannot reach raw.githubusercontent.com but can reach gitee / npmmirror):**
+
+```bash
+export NVM_SOURCE=https://gitee.com/mirrors/nvm.git && curl -o- https://gitee.com/mirrors/nvm/raw/v0.40.1/install.sh | bash
+```
+
+```bash
+export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+```
+
+```bash
+export NVM_NODEJS_ORG_MIRROR=https://npmmirror.com/mirrors/node && nvm install 22 && node -v
+```
+
+    **Option D — fully offline (VM has no external internet):** Download `nvm-v0.40.1.tar.gz` and `node-v22.12.0-linux-x64.tar.xz` on another machine (e.g. https://npmmirror.com/mirrors/nvm/ and https://npmmirror.com/mirrors/node/), copy them into the VM, then run:
+
+```bash
+mkdir -p ~/.nvm && tar -xzf nvm-v0.40.1.tar.gz -C ~/.nvm --strip-components=1
+```
+
+```bash
+export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh"
+```
+
+```bash
+mkdir -p "$NVM_DIR/versions/node/v22.12.0" && tar -xJf node-v22.12.0-linux-x64.tar.xz -C "$NVM_DIR/versions/node/v22.12.0" --strip-components=1
+```
+
+```bash
+ln -sfn "$NVM_DIR/versions/node/v22.12.0" "$NVM_DIR/alias/default" && node -v
+```
+
+If you go with NVM (Options B, C, D), skip the NodeSource block and go straight to step 12; `node -v` should print `v22.x.x`. Before picking an option, check which sites the VM can reach with `curl -I https://raw.githubusercontent.com`, `curl -I https://gitee.com`, or `curl -I https://npmmirror.com`.
 
 12. Copy the committed sample snapshots:
 
