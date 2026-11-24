@@ -79,7 +79,13 @@ Open `.env` and set `DB_PASSWORD` and `SECRET_KEY`. Both are read from the envir
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
 
-Create a database named `dyinfo_schema`:
+Log in to MySQL first (use the password you set for the MySQL root user):
+
+```bash
+mysql -u root -p
+```
+
+Then create a database named `dyinfo_schema` from the MySQL shell:
 
 ```sql
 CREATE DATABASE dyinfo_schema CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
