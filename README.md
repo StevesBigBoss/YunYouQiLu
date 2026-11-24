@@ -99,13 +99,17 @@ sudo apt install -y mysql-server
 sudo systemctl start mysql
 ```
 
-6. Set the MySQL root password and create the database in one non-interactive command:
+6. Set the MySQL root password and create the database. The command below works regardless of whether root still uses `auth_socket` (fresh install) or has already been given a password; it uses the `debian-sys-maint` account that the Ubuntu MySQL package pre-configures and that always works locally:
 
 ```bash
-sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY '123456'; CREATE DATABASE IF NOT EXISTS dyinfo_schema CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+sudo mysql --defaults-file=/etc/mysql/debian.cnf -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY '123456'; CREATE DATABASE IF NOT EXISTS dyinfo_schema CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 ```
 
-If you already gave root a password earlier, `sudo mysql` will be rejected; in that case replace `sudo mysql` with `mysql -u root -p<your_password>` (no space after `-p`).
+Then verify you can log in with the new password (`-p` and the password must be adjacent, no space):
+
+```bash
+mysql -u root -p123456 -e "SELECT user, plugin FROM mysql.user;"
+```
 
 7. Write `.env` with that password and a freshly generated `SECRET_KEY`, without opening an editor:
 
