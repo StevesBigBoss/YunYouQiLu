@@ -147,6 +147,15 @@ python manage.py runserver 0.0.0.0:8000
 
 The admin is at `http://127.0.0.1:8000/admin/`.
 
+`runserver` is a foreground process and does not return to the shell prompt. Leave it running while you use the browser, and press `Ctrl+C` to stop it. Run the front-end commands below in a second terminal, or start the server in the background with:
+
+```bash
+nohup python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &
+tail -f server.log
+```
+
+Also note that `exit` in the previous block is a MySQL command typed at the `mysql>` prompt; a `python` command typed there is treated as SQL and will appear to hang.
+
 ### 2. Data snapshots
 
 Node.js 22 is required. The Ubuntu package is too old for Vite 8, so install the current release first.
