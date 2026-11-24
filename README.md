@@ -445,6 +445,8 @@ Leave the MySQL shell before running the Django commands:
 exit
 ```
 
+> **Already followed section 0b on Ubuntu?** Do not run the migrations or the admin-user command again; steps 13–14 already did both. The blocks below are the Windows/macOS equivalents, plus the interactive form for anyone who skipped 0b.
+
 Apply the migrations:
 
 **All platforms**
@@ -453,7 +455,7 @@ Apply the migrations:
 python manage.py migrate
 ```
 
-Create an admin user (it prompts for a username, email, and password):
+Create an admin user (it prompts for a username, email, and password; if the user already exists, Django stops with a harmless "already taken" message):
 
 **All platforms**
 
