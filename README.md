@@ -60,7 +60,11 @@ Step one is Python 3.8 or newer. Check with `python --version`, and install it i
 **Linux (Ubuntu/Debian)**
 
 ```bash
-sudo apt update && sudo apt install python-is-python3 python3-pip python3-venv -y
+sudo apt update
+```
+
+```bash
+sudo apt install python-is-python3 python3-pip python3-venv -y
 ```
 
 **Windows (PowerShell)**
@@ -75,19 +79,53 @@ Then create the virtual environment and install the backend dependencies.
 
 **Linux**
 
+Create the virtual environment:
+
 ```bash
 python -m venv .venv
+```
+
+Activate it:
+
+```bash
 source .venv/bin/activate
+```
+
+Install the backend dependencies:
+
+```bash
 pip install -r requirements.txt
+```
+
+Copy the environment template:
+
+```bash
 cp .env.example .env
 ```
 
 **Windows (PowerShell)**
 
+Create the virtual environment:
+
 ```powershell
 python -m venv .venv
+```
+
+Activate it:
+
+```powershell
 .venv\Scripts\Activate.ps1
+```
+
+Install the backend dependencies:
+
+```powershell
 pip install -r requirements.txt
+```
+
+Copy the environment template:
+
+```powershell
 Copy-Item .env.example .env
 ```
 
@@ -103,7 +141,13 @@ Install MySQL Server if it is not already running.
 
 ```bash
 sudo apt update
+```
+
+```bash
 sudo apt install -y mysql-server
+```
+
+```bash
 sudo systemctl start mysql
 ```
 
@@ -137,11 +181,21 @@ Leave the MySQL shell before running the Django commands:
 exit
 ```
 
-Then run the migrations and the server:
+Apply the migrations:
 
 ```bash
 python manage.py migrate
+```
+
+Create an admin user (it prompts for a username, email, and password):
+
+```bash
 python manage.py createsuperuser
+```
+
+Start the development server:
+
+```bash
 python manage.py runserver 0.0.0.0:8000
 ```
 
@@ -151,6 +205,9 @@ The admin is at `http://127.0.0.1:8000/admin/`.
 
 ```bash
 nohup python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &
+```
+
+```bash
 tail -f server.log
 ```
 
@@ -164,6 +221,9 @@ Node.js 22 is required. The Ubuntu package is too old for Vite 8, so install the
 
 ```bash
 curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+```
+
+```bash
 sudo apt install -y nodejs
 ```
 
@@ -179,6 +239,9 @@ The Vue build imports `data/normalized/weather.json`, `quake.json`, `heritage.js
 
 ```bash
 npm run data:sample
+```
+
+```bash
 npm run check:snapshots
 ```
 
@@ -212,6 +275,9 @@ Refresh uses the existing Node crawler through a management command:
 
 ```bash
 python manage.py refresh_snapshots --check
+```
+
+```bash
 python manage.py refresh_snapshots --run --source weather --source quake
 ```
 
@@ -228,15 +294,27 @@ polling: the Vue app continues to read its bundled snapshot until it is rebuilt.
 
 ### 3. Frontend
 
+Install the front-end dependencies:
+
 ```bash
 npm install
+```
+
+Start the dev server:
+
+```bash
 npm run dev
 ```
 
-The dev server listens on `http://localhost:5173/`. For a production build:
+The dev server listens on `http://localhost:5173/`. For a production build, build the bundle first:
 
 ```bash
 npm run build
+```
+
+Then serve it:
+
+```bash
 npm run preview
 ```
 
@@ -313,9 +391,21 @@ validation, not for operational segmentation.
 
 ```bash
 python manage.py test --settings=tiktok_blogger_web.settings_test
+```
+
+```bash
 python scripts/run_city_analytics.py
+```
+
+```bash
 npm run data:sample
+```
+
+```bash
 npm run check:snapshots
+```
+
+```bash
 npm run build
 ```
 
