@@ -91,7 +91,7 @@ pip install -r requirements.txt
 Copy-Item .env.example .env
 ```
 
-Open `.env` and set `DB_PASSWORD` and `SECRET_KEY`. Both are read from the environment, and `SECRET_KEY` has no fallback, so an empty value will stop the server. You can generate a key with:
+Open `.env` (`nano .env` on Linux, `notepad .env` on Windows) and set `DB_PASSWORD` and `SECRET_KEY`. Both are read from the environment, and `SECRET_KEY` has no fallback, so an empty value will stop the server. You can generate a key with:
 
 ```bash
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
@@ -142,6 +142,23 @@ python manage.py runserver 0.0.0.0:8000
 The admin is at `http://127.0.0.1:8000/admin/`.
 
 ### 2. Data snapshots
+
+Node.js 22 is required. The Ubuntu package is too old for Vite 8, so install the current release first.
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+sudo apt install -y nodejs
+```
+
+**Windows (PowerShell)**
+
+```powershell
+winget install OpenJS.NodeJS.LTS
+```
+
+Check with `node --version`; 20.19+ or 22.12+ is required.
 
 The Vue build imports `data/normalized/weather.json`, `quake.json`, `heritage.json`, and `news.json`. A small public snapshot is committed under `data/sample/normalized/`, so a fresh clone can build without running the crawler:
 
