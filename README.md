@@ -53,6 +53,136 @@ Vue 3.5 and TypeScript do the UI. ECharts handles charts, Leaflet handles maps, 
 
 It was built and tested with Python 3.8 and Node 22. Vite 8 requires Node 20.19+ on the 20.x line, or 22.12+. If you only want to look at the dashboard, you can skip the Django steps; you need Node and the JSON snapshots.
 
+### 0. Zero-experience quick start (Ubuntu/Debian)
+
+Open a terminal and paste the blocks below **in order, in the same terminal**. No text editor and no interactive MySQL session is needed. The only values you may want to change are the two demo passwords: `123456` for MySQL root and `admin123456` for the Django admin.
+
+1. Go to the project root (the directory containing `manage.py` and `package.json`; adjust the path if your folder is elsewhere):
+
+```bash
+cd ~/YunYouQiLu-1.1.1/YunYouQiLu-1.1.1
+```
+
+2. Install Python, pip, and the venv module:
+
+```bash
+sudo apt update
+```
+
+```bash
+sudo apt install -y python-is-python3 python3-pip python3-venv curl
+```
+
+3. Create and activate the virtual environment:
+
+```bash
+python -m venv .venv
+```
+
+```bash
+source .venv/bin/activate
+```
+
+4. Install the Python dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+5. Install and start MySQL:
+
+```bash
+sudo apt install -y mysql-server
+```
+
+```bash
+sudo systemctl start mysql
+```
+
+6. Set the MySQL root password and create the database in one non-interactive command:
+
+```bash
+sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY '123456'; CREATE DATABASE IF NOT EXISTS dyinfo_schema CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+```
+
+If you already gave root a password earlier, `sudo mysql` will be rejected; in that case replace `sudo mysql` with `mysql -u root -p<your_password>` (no space after `-p`).
+
+7. Write `.env` with that password and a freshly generated `SECRET_KEY`, without opening an editor:
+
+```bash
+printf 'DB_PASSWORD=123456\nSECRET_KEY=%s\nDEBUG=True\nALLOWED_HOSTS=*\n' "$(python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')" > .env
+```
+
+8. Create the database tables:
+
+```bash
+python manage.py migrate
+```
+
+9. Create the admin account `admin` / `admin123456` without prompts:
+
+```bash
+DJANGO_SUPERUSER_USERNAME=admin DJANGO_SUPERUSER_EMAIL=admin@example.com DJANGO_SUPERUSER_PASSWORD=admin123456 python manage.py createsuperuser --noinput
+```
+
+10. Start Django in the background so the terminal stays free:
+
+```bash
+nohup python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &
+```
+
+11. Install Node.js 22 (the Ubuntu package is too old for Vite 8):
+
+```bash
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+```
+
+```bash
+sudo apt install -y nodejs
+```
+
+12. Copy the committed sample snapshots:
+
+```bash
+npm run data:sample
+```
+
+13. Install the front-end dependencies:
+
+```bash
+npm install
+```
+
+14. Start the front end in the background and make it reachable from the host machine:
+
+```bash
+nohup npm run dev -- --host > frontend.log 2>&1 &
+```
+
+15. Read the front-end URL and the VM address:
+
+```bash
+cat frontend.log
+```
+
+```bash
+hostname -I
+```
+
+Open `http://<VM-IP>:5173/` for the dashboard and `http://<VM-IP>:8000/admin/` for the Django admin (`admin` / `admin123456`). Inside the VM's own browser, `http://127.0.0.1:5173/` and `http://127.0.0.1:8000/admin/` work as well.
+
+To stop the two servers later:
+
+```bash
+pkill -f "manage.py runserver"
+```
+
+```bash
+pkill -f "vite"
+```
+
+To start them again after reopening a terminal, repeat step 1, the activation command from step 3, and steps 10 and 14. The passwords above are local demo values, not secrets; `.env` is gitignored. The detailed per-platform instructions follow below.
+
 ### 1. Django and MySQL
 
 Step one is Python 3.8 or newer. Check with `python --version`, and install it if needed.
