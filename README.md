@@ -131,6 +131,12 @@ mysql -u root -p
 CREATE DATABASE dyinfo_schema CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
+Leave the MySQL shell before running the Django commands:
+
+```bash
+exit
+```
+
 Then run the migrations and the server:
 
 ```bash
