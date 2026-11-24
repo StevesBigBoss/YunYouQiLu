@@ -253,7 +253,7 @@ The dev server writes its own links to `frontend.log`. To print only the network
 grep -Eo 'http://[0-9.]+:5173/' frontend.log | head -n 1
 ```
 
-`frontend.log` should contain `VITE v8.x ready` and `Local: http://localhost:5173/`. **That is the system dashboard, and it needs no database.**
+`frontend.log` should contain `VITE v8.x ready` and `Local: http://localhost:5173/`. **That is the system dashboard, and it needs no database.** If a browser shows it, you are done; skip everything under "Extensions (optional)" unless you also want the admin backend, the crawler, or the analytics scripts.
 
 Each machine has its own `localhost`, so the address depends on where the browser runs:
 
@@ -272,6 +272,10 @@ To stop it later:
 ```bash
 pkill -f "vite"
 ```
+
+## Extensions (optional)
+
+The six steps above already open the full dashboard. Everything below this heading is optional: the Django admin and MySQL backend, the crawl and snapshot workflow, the forecast and analytics scripts, the tests, and the build/preview pipeline. Read or run only what you need.
 
 ### 0b. Optional: Django admin and MySQL (Ubuntu/Debian)
 
