@@ -229,6 +229,14 @@ cat frontend.log
 hostname -I
 ```
 
+**Linux (Ubuntu/Debian)**
+
+```bash
+echo "http://$(hostname -I | awk '{print $1}'):5173/"
+```
+
+The last command prints a ready-to-click URL such as `http://192.168.241.132:5173/`; in the VS Code terminal `Ctrl+Click` (or `Cmd+Click` on macOS) opens it in the host browser.
+
 `frontend.log` should contain `VITE v8.x ready` and `Local: http://localhost:5173/`. **That is the system dashboard, and it needs no database.**
 
 Each machine has its own `localhost`, so the address depends on where the browser runs:
