@@ -55,6 +55,16 @@ It was built and tested with Python 3.8 and Node 22. Vite 8 requires Node 20.19+
 
 ### 1. Django and MySQL
 
+Step one is Python 3.8 or newer. On Ubuntu/Debian:
+
+```bash
+sudo apt update && sudo apt install python-is-python3 python3-pip python3-venv -y
+```
+
+On macOS use `brew install python@3.12`; on Windows use `winget install --id Python.Python.3.12 -e`, or download the installer from <https://www.python.org/downloads/>. Check the result with `python --version`.
+
+Then create the virtual environment and install the backend dependencies:
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate
