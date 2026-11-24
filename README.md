@@ -79,13 +79,31 @@ Open `.env` and set `DB_PASSWORD` and `SECRET_KEY`. Both are read from the envir
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
 
-Log in to MySQL first (use the password you set for the MySQL root user):
+Install MySQL Server if it is not already running. On Ubuntu/Debian:
+
+```bash
+sudo apt update
+sudo apt install -y mysql-server
+sudo systemctl start mysql
+```
+
+Ubuntu gives the MySQL root account the `auth_socket` plugin, so the first connection uses `sudo mysql`. Set a password there, otherwise `mysql -u root -p` and the Django `DB_PASSWORD` value will not work:
+
+```bash
+sudo mysql
+```
+
+```sql
+ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'your_password';
+```
+
+Then log in with that password:
 
 ```bash
 mysql -u root -p
 ```
 
-Then create a database named `dyinfo_schema` from the MySQL shell:
+Create a database named `dyinfo_schema` from the MySQL shell:
 
 ```sql
 CREATE DATABASE dyinfo_schema CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
