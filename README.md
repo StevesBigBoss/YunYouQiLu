@@ -237,6 +237,22 @@ echo "http://$(hostname -I | awk '{print $1}'):5173/"
 
 The last command prints a ready-to-click URL such as `http://192.168.241.132:5173/`; in the VS Code terminal `Ctrl+Click` (or `Cmd+Click` on macOS) opens it in the host browser.
 
+On Windows, with the preview server running, print the same kind of link:
+
+**Windows (PowerShell)**
+
+```powershell
+Write-Output "http://localhost:4173/"
+```
+
+The dev server writes its own links to `frontend.log`. To print only the network URL after starting it in the background:
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+grep -Eo 'http://[0-9.]+:5173/' frontend.log | head -n 1
+```
+
 `frontend.log` should contain `VITE v8.x ready` and `Local: http://localhost:5173/`. **That is the system dashboard, and it needs no database.**
 
 Each machine has its own `localhost`, so the address depends on where the browser runs:
@@ -365,6 +381,14 @@ nohup python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &
 
 ```bash
 cat server.log
+```
+
+Print the clickable admin link:
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+echo "http://$(hostname -I | awk '{print $1}'):8000/admin/"
 ```
 
 The admin is at `http://<VM-IP>:8000/admin/` (`admin` / `admin123456`); inside the VM use `http://127.0.0.1:8000/admin/`. A `staticfiles.W004 ... 'static' ... does not exist` warning is harmless and does not stop the server.
