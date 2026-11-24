@@ -176,7 +176,7 @@ export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 ```
 
 ```bash
-nvm install 22 && node -v
+nvm install 22
 ```
 
     **Option C — NVM via Chinese mirrors (VM cannot reach raw.githubusercontent.com but can reach gitee / npmmirror):**
@@ -190,7 +190,7 @@ export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 ```
 
 ```bash
-export NVM_NODEJS_ORG_MIRROR=https://npmmirror.com/mirrors/node && nvm install 22 && node -v
+export NVM_NODEJS_ORG_MIRROR=https://npmmirror.com/mirrors/node && nvm install 22
 ```
 
     **Option D — fully offline (VM has no external internet):** Download `nvm-v0.40.1.tar.gz` and `node-v22.12.0-linux-x64.tar.xz` on another machine (e.g. https://npmmirror.com/mirrors/nvm/ and https://npmmirror.com/mirrors/node/), copy them into the VM, then run:
@@ -208,10 +208,10 @@ mkdir -p "$NVM_DIR/versions/node/v22.12.0" && tar -xJf node-v22.12.0-linux-x64.t
 ```
 
 ```bash
-ln -sfn "$NVM_DIR/versions/node/v22.12.0" "$NVM_DIR/alias/default" && node -v
+ln -sfn "$NVM_DIR/versions/node/v22.12.0" "$NVM_DIR/alias/default"
 ```
 
-If you go with NVM (Options B, C, D), skip the NodeSource block and go straight to step 12; `node -v` should print `v22.x.x`. Before picking an option, check which sites the VM can reach with `curl -I https://raw.githubusercontent.com`, `curl -I https://gitee.com`, or `curl -I https://npmmirror.com`.
+If you go with NVM (Options B, C, D), skip the NodeSource block and go straight to step 12. Before picking an option, check which sites the VM can reach with `curl -I https://raw.githubusercontent.com`, `curl -I https://gitee.com`, or `curl -I https://npmmirror.com`.
 
 12. Copy the committed sample snapshots:
 
@@ -269,7 +269,7 @@ To start them again after reopening a terminal, repeat step 1, the activation co
 
 > **Ubuntu/Debian users: the quick start above already completes this section.** Its commands are steps 2–10; this section explains what each one does and gives the Windows/macOS equivalents, so read it as reference instead of running it a second time.
 
-Python 3.8 or newer is required. Check with `python --version`.
+Python 3.8 or newer is required.
 
 **Windows (PowerShell)**
 
@@ -377,7 +377,7 @@ Node.js 22 is required. The Ubuntu package is too old for Vite 8, so install the
 winget install OpenJS.NodeJS.LTS
 ```
 
-Check with `node --version`; 20.19+ or 22.12+ is required.
+Node 20.19+ or 22.12+ is required.
 
 The Vue build imports `data/normalized/weather.json`, `quake.json`, `heritage.json`, and `news.json`. A small public snapshot is committed under `data/sample/normalized/`, so a fresh clone can build without running the crawler:
 
