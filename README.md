@@ -53,9 +53,11 @@ Vue 3.5 and TypeScript do the UI. ECharts handles charts, Leaflet handles maps, 
 
 It was built and tested with Python 3.8 and Node 22. Vite 8 requires Node 20.19+ on the 20.x line, or 22.12+. If you only want to look at the dashboard, you can skip the Django steps; you need Node and the JSON snapshots.
 
-### 0. Zero-experience quick start (Ubuntu/Debian)
+### 0. Quick start (Ubuntu/Debian): run the dashboard
 
-Open a terminal and paste the blocks below **in order, in the same terminal**. No text editor and no interactive MySQL session is needed. The only values you may want to change are the two demo passwords: `123456` for MySQL root and `admin123456` for the Django admin.
+**Steps 1-6 give you the dashboard in a browser.** They only need Node.js and the committed data snapshot. Python, Django, and MySQL are optional and only required for the admin panel and the snapshot API, which are covered in section 0b.
+
+Open a terminal and paste the blocks below **in order, in the same terminal**.
 
 1. Go to the project root. This command locates the folder that contains `manage.py` under your home directory (ignoring the virtual environment) and `cd`s into it, so it works wherever you unzipped the archive:
 
@@ -73,107 +75,9 @@ pwd && ls -1 manage.py package.json
 
 If `pwd` does not show the project folder, the archive is not under your home directory; `cd` into the extracted folder manually and continue from step 2.
 
-2. Install Python, pip, and the venv module:
+2. Install Node.js 22. Several paths are supported; **pick whichever one does not hit a network error**.
 
-**Linux (Ubuntu/Debian)**
-
-```bash
-sudo apt update
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-sudo apt install -y python-is-python3 python3-pip python3-venv curl
-```
-
-3. Create and activate the virtual environment:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-python -m venv .venv
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-source .venv/bin/activate
-```
-
-4. Install the Python dependencies:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-pip install -r requirements.txt
-```
-
-5. Install and start MySQL:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-sudo apt install -y mysql-server
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-sudo systemctl start mysql
-```
-
-6. Set the MySQL root password and create the database. The command below works regardless of whether root still uses `auth_socket` (fresh install) or has already been given a password; it uses the `debian-sys-maint` account that the Ubuntu MySQL package pre-configures and that always works locally:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-sudo mysql --defaults-file=/etc/mysql/debian.cnf -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY '123456'; CREATE DATABASE IF NOT EXISTS dyinfo_schema CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-```
-
-Then verify you can log in with the new password (`-p` and the password must be adjacent, no space):
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-mysql -u root -p123456 -e "SELECT user, plugin FROM mysql.user;"
-```
-
-7. Write `.env` with that password and a freshly generated `SECRET_KEY`, without opening an editor:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-printf 'DB_PASSWORD=123456\nSECRET_KEY=%s\nDEBUG=True\nALLOWED_HOSTS=*\n' "$(python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')" > .env
-```
-
-8. Create the database tables:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-python manage.py migrate
-```
-
-9. Create the admin account `admin` / `admin123456` without prompts:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-DJANGO_SUPERUSER_USERNAME=admin DJANGO_SUPERUSER_EMAIL=admin@example.com DJANGO_SUPERUSER_PASSWORD=admin123456 python manage.py createsuperuser --noinput
-```
-
-10. Start Django in the background so the terminal stays free:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-nohup python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &
-```
-
-11. Install Node.js 22. Several paths are supported; **pick whichever one does not hit a network error**:
-
-    **Option A — apt + NodeSource (VM can reach both Ubuntu archives and deb.nodesource.com):**
+    **Option A - apt + NodeSource (VM can reach both Ubuntu archives and deb.nodesource.com):**
 
 **Linux (Ubuntu/Debian)**
 
@@ -205,7 +109,7 @@ curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 sudo apt install -y nodejs
 ```
 
-    **Option B — NVM (VM can reach raw.githubusercontent.com):**
+    **Option B - NVM (VM can reach raw.githubusercontent.com):**
 
 **Linux (Ubuntu/Debian)**
 
@@ -225,7 +129,7 @@ export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 nvm install 22
 ```
 
-    **Option C — NVM via Chinese mirrors (VM cannot reach raw.githubusercontent.com but can reach gitee / npmmirror):**
+    **Option C - NVM via Chinese mirrors (VM cannot reach raw.githubusercontent.com but can reach gitee / npmmirror):**
 
 **Linux (Ubuntu/Debian)**
 
@@ -245,7 +149,7 @@ export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 export NVM_NODEJS_ORG_MIRROR=https://npmmirror.com/mirrors/node && nvm install 22
 ```
 
-    **Option D — fully offline (VM has no external internet):** Download `nvm-v0.40.1.tar.gz` and `node-v22.12.0-linux-x64.tar.xz` on another machine (e.g. https://npmmirror.com/mirrors/nvm/ and https://npmmirror.com/mirrors/node/), copy them into the VM, then run:
+    **Option D - fully offline (VM has no external internet):** Download `nvm-v0.40.1.tar.gz` and `node-v22.12.0-linux-x64.tar.xz` on another machine (e.g. https://npmmirror.com/mirrors/nvm/ and https://npmmirror.com/mirrors/node/), copy them into the VM, then run:
 
 **Linux (Ubuntu/Debian)**
 
@@ -271,9 +175,9 @@ mkdir -p "$NVM_DIR/versions/node/v22.12.0" && tar -xJf node-v22.12.0-linux-x64.t
 ln -sfn "$NVM_DIR/versions/node/v22.12.0" "$NVM_DIR/alias/default"
 ```
 
-If you go with NVM (Options B, C, D), skip the NodeSource block and go straight to step 12. Before picking an option, check which sites the VM can reach with `curl -I https://raw.githubusercontent.com`, `curl -I https://gitee.com`, or `curl -I https://npmmirror.com`.
+If you go with NVM (Options B, C, D), skip the NodeSource block and go straight to step 3. Before picking an option, check which sites the VM can reach with `curl -I https://raw.githubusercontent.com`, `curl -I https://gitee.com`, or `curl -I https://npmmirror.com`.
 
-12. Copy the committed sample snapshots:
+3. Copy the committed sample snapshots:
 
 **Linux (Ubuntu/Debian)**
 
@@ -281,7 +185,7 @@ If you go with NVM (Options B, C, D), skip the NodeSource block and go straight 
 npm run data:sample
 ```
 
-13. Install the front-end dependencies:
+4. Install the front-end dependencies:
 
 **Linux (Ubuntu/Debian)**
 
@@ -303,7 +207,7 @@ npm config set registry https://registry.npmmirror.com
 npm install
 ```
 
-14. Start the front end in the background and make it reachable from the host machine:
+5. Start the web server in the background and make it reachable from the host machine:
 
 **Linux (Ubuntu/Debian)**
 
@@ -311,7 +215,7 @@ npm install
 nohup npm run dev -- --host > frontend.log 2>&1 &
 ```
 
-15. Read the front-end URL and the VM address:
+6. Read the front-end URL and the VM address, then open the dashboard:
 
 **Linux (Ubuntu/Debian)**
 
@@ -325,15 +229,9 @@ cat frontend.log
 hostname -I
 ```
 
-Open `http://<VM-IP>:5173/` for the dashboard and `http://<VM-IP>:8000/admin/` for the Django admin (`admin` / `admin123456`). Inside the VM's own browser, `http://127.0.0.1:5173/` and `http://127.0.0.1:8000/admin/` work as well.
+`frontend.log` should contain `VITE v8.x ready` and `Local: http://localhost:5173/`. Open `http://<VM-IP>:5173/` from the host machine, or `http://127.0.0.1:5173/` inside the VM. **That is the system dashboard, and it needs no database.**
 
-To stop the two servers later:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-pkill -f "manage.py runserver"
-```
+To stop it later:
 
 **Linux (Ubuntu/Debian)**
 
@@ -341,11 +239,131 @@ pkill -f "manage.py runserver"
 pkill -f "vite"
 ```
 
-To start them again after reopening a terminal, repeat step 1, the activation command from step 3, and steps 10 and 14. The passwords above are local demo values, not secrets; `.env` is gitignored. The detailed per-platform instructions follow below.
+### 0b. Optional: Django admin and MySQL (Ubuntu/Debian)
+
+The steps below add the Django admin at port 8000 and the read-only snapshot API. Skip this whole section if you only need the dashboard.
+
+7. Install Python, pip, and the venv module:
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+sudo apt update
+```
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+sudo apt install -y python-is-python3 python3-pip python3-venv curl
+```
+
+8. Create and activate the virtual environment:
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+python -m venv .venv
+```
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+source .venv/bin/activate
+```
+
+9. Install the Python dependencies:
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+pip install -r requirements.txt
+```
+
+10. Install and start MySQL:
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+sudo apt install -y mysql-server
+```
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+sudo systemctl start mysql
+```
+
+11. Set the MySQL root password and create the database. The command below works regardless of whether root still uses `auth_socket` (fresh install) or has already been given a password; it uses the `debian-sys-maint` account that the Ubuntu MySQL package pre-configures and that always works locally:
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+sudo mysql --defaults-file=/etc/mysql/debian.cnf -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY '123456'; CREATE DATABASE IF NOT EXISTS dyinfo_schema CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+```
+
+Then verify you can log in with the new password (`-p` and the password must be adjacent, no space):
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+mysql -u root -p123456 -e "SELECT user, plugin FROM mysql.user;"
+```
+
+12. Write `.env` with that password and a freshly generated `SECRET_KEY`, without opening an editor:
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+printf 'DB_PASSWORD=123456\nSECRET_KEY=%s\nDEBUG=True\nALLOWED_HOSTS=*\n' "$(python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')" > .env
+```
+
+13. Create the database tables:
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+python manage.py migrate
+```
+
+14. Create the admin account `admin` / `admin123456` without prompts:
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+DJANGO_SUPERUSER_USERNAME=admin DJANGO_SUPERUSER_EMAIL=admin@example.com DJANGO_SUPERUSER_PASSWORD=admin123456 python manage.py createsuperuser --noinput
+```
+
+15. Start Django in the background so the terminal stays free:
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+nohup python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &
+```
+
+16. Read the backend log:
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+cat server.log
+```
+
+The admin is at `http://<VM-IP>:8000/admin/` (`admin` / `admin123456`); inside the VM use `http://127.0.0.1:8000/admin/`. A `staticfiles.W004 ... 'static' ... does not exist` warning is harmless and does not stop the server.
+
+To stop the backend later:
+
+**Linux (Ubuntu/Debian)**
+
+```bash
+pkill -f "manage.py runserver"
+```
+
+The demo passwords above are local values, not secrets, and `.env` is gitignored. To restart after reopening the terminal: repeat step 1, the activation command from step 8, step 5, and step 15. The detailed per-platform reference follows below.
 
 ### 1. Django and MySQL
 
-> **Ubuntu/Debian users: the quick start above already completes this section.** Its commands are steps 2–10; this section explains what each one does and gives the Windows/macOS equivalents, so read it as reference instead of running it a second time.
+> **Ubuntu/Debian users: section 0b above already completes this section.** Its commands are steps 7–15; this section explains what each one does and gives the Windows/macOS equivalents, so read it as reference instead of running it a second time.
 
 Python 3.8 or newer is required.
 
@@ -357,7 +375,7 @@ winget install --id Python.Python.3.12 -e
 
 On macOS use `brew install python@3.12`, or download the installer from <https://www.python.org/downloads/>.
 
-Then create the virtual environment and install the backend dependencies (on Linux this is quick start steps 3–4).
+Then create the virtual environment and install the backend dependencies (on Linux this is quick start steps 8–9).
 
 Create the virtual environment:
 
@@ -391,7 +409,7 @@ Copy the environment template:
 Copy-Item .env.example .env
 ```
 
-Open `.env` (`nano .env` on Linux, `notepad .env` on Windows) and set `DB_PASSWORD` and `SECRET_KEY`; quick start step 7 writes the file for you. Both are read from the environment, and `SECRET_KEY` has no fallback, so an empty value will stop the server. You can generate a key with:
+Open `.env` (`nano .env` on Linux, `notepad .env` on Windows) and set `DB_PASSWORD` and `SECRET_KEY`; quick start step 12 writes the file for you. Both are read from the environment, and `SECRET_KEY` has no fallback, so an empty value will stop the server. You can generate a key with:
 
 **All platforms**
 
@@ -399,7 +417,7 @@ Open `.env` (`nano .env` on Linux, `notepad .env` on Windows) and set `DB_PASSWO
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
 
-Install MySQL Server if it is not already running (on Linux this is quick start steps 5–6, which also set the root password and create the database).
+Install MySQL Server if it is not already running (on Linux this is quick start steps 10–11, which also set the root password and create the database).
 
 **Windows**
 
@@ -471,7 +489,7 @@ Also note that `exit` in the previous block is a MySQL command typed at the `mys
 
 ### 2. Data snapshots
 
-Node.js 22 is required. The Ubuntu package is too old for Vite 8, so install the current release first; on Linux follow quick start step 11.
+Node.js 22 is required. The Ubuntu package is too old for Vite 8, so install the current release first; on Linux follow quick start step 2.
 
 **Windows (PowerShell)**
 
@@ -554,7 +572,7 @@ polling: the Vue app continues to read its bundled snapshot until it is rebuilt.
 
 ### 3. Frontend
 
-Install the front-end dependencies (quick start step 13):
+Install the front-end dependencies (quick start step 4):
 
 **All platforms**
 
@@ -562,7 +580,7 @@ Install the front-end dependencies (quick start step 13):
 npm install
 ```
 
-Start the dev server (quick start step 14):
+Start the dev server (quick start step 5):
 
 **All platforms**
 
