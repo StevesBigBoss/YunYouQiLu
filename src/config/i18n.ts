@@ -22,7 +22,7 @@ export const LOCALES: LocaleMeta[] = [
   { id: 'ar', native: 'العربية', zh: '阿拉伯语', en: 'Arabic' },
 ]
 
-export const DEFAULT_LOCALE: LocaleId = 'zh-CN'
+export const DEFAULT_LOCALE: LocaleId = 'en'
 
 type Dict = Record<string, string>
 
