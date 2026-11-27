@@ -8,27 +8,27 @@ Double-click **`Start-Site.bat`** in the project folder and the browser opens at
 
 That is the only required step. Manual PowerShell setup, the Django admin and MySQL backend, and the optional tooling are documented under [Extensions](#extensions-optional) below.
 
-## Data authenticity
+## Requirements
 
-The platform mixes real public data with clearly labeled demo data. The same
-distinction is used in the paper and in `PRIVACY_AND_DATA.md`:
+The dashboard needs only this:
 
-| Data | Source | Status |
+| Component | Version | Notes |
 |---|---|---|
-| Weather | Open-Meteo (CC BY 4.0) | Real, refreshed by the crawler |
-| Earthquakes | USGS FDSN Event API | Real, refreshed by the crawler |
-| 190 national ICH items | ihchina.cn | Real public list |
-| News headlines | Ministry of Culture and Tourism, Xinhua Shandong, Dazhong | Real public headlines |
-| 2024 city tourism totals | Shandong Statistical Yearbook 2025, tables 6-20/6-21/6-25/6-26 | Official statistics in `src/data/tourismStats.ts` |
-| 2024 city analytics | Same yearbook tables, exported to `data/real/shandong_city_tourism_2024.csv` | Official indicators; reproducible K-means/SOM/SAE results |
-| Visitor flow, monthly heat, industry, marketing, resource, water level, hazards | Front-end fixtures | Synthetic/demo data |
-| County splits | Fixed allocation from city totals | Demo allocation, not official county data |
-| Disaster predictions and capacity warnings | Rule-based fixtures | Synthetic/demo data |
-| Douyin profiles/comments | Local collector output | Public platform content; not redistributed |
+| Windows 10/11 with PowerShell | any recent build | the launcher is `Start-Site.bat` |
+| Node.js | 20.19+ (20.x line) or 22.12+ | installed automatically with `winget` if missing or too old |
+| npm | ships with Node.js | used on the first run to install the front-end packages |
+| Internet access | first run only | to download Node.js and the npm packages |
 
-The global header and the landing page label the demo environment. Do not cite
-the `/flow`, `/industry`, `/resource`, `/marketing`, `/disaster`, monthly heat,
-or county-split values as observations.
+The optional backend in [Extensions](#extensions-optional) additionally needs:
+
+| Component | Version |
+|---|---|---|
+| Python | 3.8+ (3.12 recommended) |
+| pip | ships with Python |
+| MySQL Server | 8.x |
+| MySQL client (`mysql`) | on `PATH`, or use the "MySQL 8.0 Command Line Client" entry |
+
+Nothing else has to be installed: the Node crawler and the forecast/analytics scripts use only their language standard libraries, and the dashboard reads the committed JSON snapshots at build time. Which data is real and which is demo is described in `PRIVACY_AND_DATA.md`.
 
 ## Background
 
