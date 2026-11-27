@@ -51,9 +51,9 @@ Vue 3.5 and TypeScript do the UI. ECharts handles charts, Leaflet handles maps, 
 
 ## Running it
 
-It was built and tested with Python 3.8 and Node 22. Vite 8 requires Node 20.19+ on the 20.x line, or 22.12+. If you only want to look at the dashboard, you can skip the Django steps; you need Node and the JSON snapshots.
+It was built and tested with Python 3.8 and Node 22. Vite 8 requires Node 20.19+ on the 20.x line, or 22.12+; the launcher checks this for you.
 
-### One-click launcher (Windows, macOS, Linux)
+### Quick start: double-click the launcher
 
 Double-click **`Start-Site.bat`** on Windows, **`Start-Site.command`** on macOS, or run **`Start-Site.sh`** on Linux (mark it executable once with `chmod +x Start-Site.sh`). Nothing else is required:
 
@@ -61,12 +61,17 @@ Double-click **`Start-Site.bat`** on Windows, **`Start-Site.command`** on macOS,
 - on the first run it installs the npm dependencies and builds the site (needs internet once)
 - if `data/normalized/` is still empty (always the case in a fresh download), it copies the bundled sample snapshot from `data/sample/normalized/` first, so the pages have content without running the crawler
 - it starts the local server and opens `http://localhost:4173/` in the default browser
+- first-run prompts: on Windows choose "More info" then "Run anyway" if SmartScreen appears; on macOS right-click the file and choose Open; on Linux run `bash Start-Site.sh` if double-click opens an editor instead
 
-The service keeps running after the window is closed; start the launcher again later and it reuses it. It only starts the dashboard, so the Django admin and MySQL steps below are not needed for it.
+The service keeps running after the window is closed; start the launcher again later and it reuses it. That dashboard is the entry to every page in the system.
 
-### 0. Quick start (Ubuntu/Debian): run the dashboard
+## Extensions (optional)
 
-**Steps 1-6 open the dashboard in a browser**, and they only need Node.js plus the committed data snapshot. **Step 0b (steps 7-16) completes the system** with the Django admin, MySQL, and the snapshot API. Everything after 0b is reference or optional tooling.
+Nothing in this section is needed to open the website. It documents the same setup as manual command-line steps, the Windows/macOS equivalents, the Django admin and MySQL backend, the crawl and snapshot workflow, the build/preview pipeline, and the analytics scripts.
+
+### 0. Manual setup (Ubuntu/Debian), steps 1-16
+
+**Steps 1-6 open the dashboard in a browser** and need only Node.js plus the committed data snapshot. **Steps 7-16 (section 0b) add the Django admin, MySQL, and the snapshot API.** Use this path only if you cannot use the launcher.
 
 Open a terminal and paste the blocks below **in order, in the same terminal**.
 
@@ -286,7 +291,7 @@ pkill -f "vite"
 
 ### 0b. Django admin and MySQL (Ubuntu/Debian)
 
-The rest of the main path. These steps add the Django admin at port 8000, the MySQL database, and the read-only snapshot API. The dashboard works without them, so skip the section if you only need the pages.
+Steps 7-16 add the Django admin at port 8000, the MySQL database, and the read-only snapshot API. The dashboard works without them, so skip the section if you only need the pages.
 
 7. Install Python, pip, and the venv module:
 
@@ -412,13 +417,9 @@ To stop the backend later:
 pkill -f "manage.py runserver"
 ```
 
-The demo passwords above are local values, not secrets, and `.env` is gitignored. To restart after reopening the terminal: repeat step 1, the activation command from step 8, step 5, and step 15. The detailed per-platform reference follows below.
+The demo passwords above are local values, not secrets, and `.env` is gitignored. To restart after reopening the terminal: repeat step 1, the activation command from step 8, step 5, and step 15.
 
-## Alternative platforms and extensions (optional)
-
-Sections 1–6 are not part of the Ubuntu main path above. Section 1 gives the Windows/macOS equivalents of steps 7–16; sections 2–6 cover the crawl and snapshot workflow, the build/preview pipeline, the crawler, the forecast, and the analytics scripts. Read or run only what you need.
-
-### 1. Django and MySQL
+### 1. Django and MySQL (other platforms)
 
 > **Ubuntu/Debian users: section 0b above already completes this section.** Its commands are steps 7–15; this section explains what each one does and gives the Windows/macOS equivalents, so read it as reference instead of running it a second time.
 
@@ -432,7 +433,7 @@ winget install --id Python.Python.3.12 -e
 
 On macOS use `brew install python@3.12`, or download the installer from <https://www.python.org/downloads/>.
 
-Then create the virtual environment and install the backend dependencies (on Linux this is quick start steps 8–9).
+Then create the virtual environment and install the backend dependencies (on Linux this is steps 8–9 of section 0).
 
 Create the virtual environment:
 
@@ -466,7 +467,7 @@ Copy the environment template:
 Copy-Item .env.example .env
 ```
 
-Open `.env` (`nano .env` on Linux, `notepad .env` on Windows) and set `DB_PASSWORD` and `SECRET_KEY`; quick start step 12 writes the file for you. Both are read from the environment, and `SECRET_KEY` has no fallback, so an empty value will stop the server. You can generate a key with:
+Open `.env` (`nano .env` on Linux, `notepad .env` on Windows) and set `DB_PASSWORD` and `SECRET_KEY`; step 12 of section 0 writes the file for you. Both are read from the environment, and `SECRET_KEY` has no fallback, so an empty value will stop the server. You can generate a key with:
 
 **All platforms**
 
@@ -474,7 +475,7 @@ Open `.env` (`nano .env` on Linux, `notepad .env` on Windows) and set `DB_PASSWO
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
 
-Install MySQL Server if it is not already running (on Linux this is quick start steps 10–11, which also set the root password and create the database).
+Install MySQL Server if it is not already running (on Linux this is steps 10–11 of section 0, which also set the root password and create the database).
 
 **Windows**
 
@@ -548,7 +549,7 @@ Also note that `exit` in the previous block is a MySQL command typed at the `mys
 
 ### 2. Data snapshots
 
-Node.js 22 is required. The Ubuntu package is too old for Vite 8, so install the current release first; on Linux follow quick start step 2.
+Node.js 22 is required. The Ubuntu package is too old for Vite 8, so install the current release first; on Linux follow step 2 of section 0.
 
 **Windows (PowerShell)**
 
@@ -631,7 +632,7 @@ polling: the Vue app continues to read its bundled snapshot until it is rebuilt.
 
 ### 3. Frontend
 
-Install the front-end dependencies (quick start step 4):
+Install the front-end dependencies (step 4 of section 0):
 
 **All platforms**
 
@@ -639,7 +640,7 @@ Install the front-end dependencies (quick start step 4):
 npm install
 ```
 
-Start the dev server (quick start step 5):
+Start the dev server (step 5 of section 0):
 
 **All platforms**
 
@@ -663,7 +664,7 @@ Then serve it:
 npm run preview
 ```
 
-The preview server uses port 4173. It binds to 127.0.0.1, so `http://localhost:4173/` works only in the browser of the machine that runs it; from another machine use the dev server with `--host` instead (see the address table in quick start step 6). `node scripts/serve-public.mjs` wraps the same steps, starts a Cloudflare quick tunnel if `cloudflared.exe` is around, and writes the public URL to `公网地址.txt` (gitignored).
+The preview server uses port 4173. It binds to 127.0.0.1, so `http://localhost:4173/` works only in the browser of the machine that runs it; from another machine use the dev server with `--host` instead (see the address table in step 6 of section 0). `node scripts/serve-public.mjs` wraps the same steps, starts a Cloudflare quick tunnel if `cloudflared.exe` is around, and writes the public URL to `公网地址.txt` (gitignored).
 
 ### 4. Douyin data (optional)
 
