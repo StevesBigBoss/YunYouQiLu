@@ -55,375 +55,109 @@ It was built and tested with Python 3.8 and Node 22. Vite 8 requires Node 20.19+
 
 ### Quick start: double-click the launcher
 
-Double-click **`Start-Site.bat`** on Windows, **`Start-Site.command`** on macOS, or run **`Start-Site.sh`** on Linux (mark it executable once with `chmod +x Start-Site.sh`). Nothing else is required:
+Double-click **`Start-Site.bat`** in the project folder. Nothing else is required:
 
-- if Node.js is missing or too old, Windows installs Node.js 22 through `winget`, macOS tries Homebrew, and Linux prints the two commands to install it
+- if Node.js is missing or too old, it installs Node.js 22 through `winget`
 - on the first run it installs the npm dependencies and builds the site (needs internet once)
 - if `data/normalized/` is still empty (always the case in a fresh download), it copies the bundled sample snapshot from `data/sample/normalized/` first, so the pages have content without running the crawler
 - it starts the local server and opens `http://localhost:4173/` in the default browser
-- first-run prompts: on Windows choose "More info" then "Run anyway" if SmartScreen appears; on macOS right-click the file and choose Open; on Linux run `bash Start-Site.sh` if double-click opens an editor instead
+- if SmartScreen appears, choose "More info" and then "Run anyway"
 
 The service keeps running after the window is closed; start the launcher again later and it reuses it. That dashboard is the entry to every page in the system.
 
 ## Extensions (optional)
 
-Nothing in this section is needed to open the website. It documents the same setup as manual command-line steps, the Windows/macOS equivalents, the Django admin and MySQL backend, the crawl and snapshot workflow, the build/preview pipeline, and the analytics scripts.
+Nothing in this section is needed to open the website. It documents the same setup as manual Windows commands, the Django admin and MySQL backend, the crawl and snapshot workflow, the build/preview pipeline, and the analytics scripts.
 
-### 0. Manual setup (Ubuntu/Debian), steps 1-16
+### 0. Manual setup (Windows PowerShell), steps 1-16
 
 **Steps 1-6 open the dashboard in a browser** and need only Node.js plus the committed data snapshot. **Steps 7-16 (section 0b) add the Django admin, MySQL, and the snapshot API.** Use this path only if you cannot use the launcher.
 
-Open a terminal and paste the blocks below **in order, in the same terminal**.
+Open PowerShell and paste the blocks below **in order, in the same window**.
 
-1. Go to the project root. This command locates the folder that contains `manage.py` under your home directory (ignoring the virtual environment) and `cd`s into it, so it works wherever you unzipped the archive:
+1. Go to the project root, the folder that contains `manage.py` (adjust the path to where you extracted the archive):
 
-**Linux (Ubuntu/Debian)**
+**Windows (PowerShell)**
 
-```bash
-cd "$(dirname "$(find ~ -maxdepth 5 -name manage.py -not -path '*/.venv/*' -print -quit)")"
+```powershell
+Set-Location "$env:USERPROFILE\Downloads\YunYouQiLu-1.1.1"
 ```
 
-**Linux (Ubuntu/Debian)**
+**Windows (PowerShell)**
 
-```bash
-pwd && ls -1 manage.py package.json
+```powershell
+Get-ChildItem manage.py, package.json
 ```
 
-If `pwd` does not show the project folder, the archive is not under your home directory; `cd` into the extracted folder manually and continue from step 2.
+If the second command errors, you are in the wrong folder; `Set-Location` into the extracted folder and continue from step 2.
 
-2. Install Node.js 22. Several paths are supported; **pick whichever one does not hit a network error**.
+2. Install Node.js 22:
 
-    **Option A - apt + NodeSource (VM can reach both Ubuntu archives and deb.nodesource.com):**
+**Windows (PowerShell)**
 
-**Linux (Ubuntu/Debian)**
-
-```bash
-sudo sed -i.bak '/cdrom/d' /etc/apt/sources.list
+```powershell
+winget install OpenJS.NodeJS.LTS -e
 ```
 
-**Linux (Ubuntu/Debian)**
-
-```bash
-for f in /etc/apt/sources.list.d/*.sources; do [ -f "$f" ] && sudo sed -i.bak '/cdrom/d' "$f"; done
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-sudo apt update
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-sudo apt install -y nodejs
-```
-
-    **Option B - NVM (VM can reach raw.githubusercontent.com):**
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-nvm install 22
-```
-
-    **Option C - NVM via Chinese mirrors (VM cannot reach raw.githubusercontent.com but can reach gitee / npmmirror):**
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-export NVM_SOURCE=https://gitee.com/mirrors/nvm.git && curl -o- https://gitee.com/mirrors/nvm/raw/v0.40.1/install.sh | bash
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-export NVM_NODEJS_ORG_MIRROR=https://npmmirror.com/mirrors/node && nvm install 22
-```
-
-    **Option D - fully offline (VM has no external internet):** Download `nvm-v0.40.1.tar.gz` and `node-v22.12.0-linux-x64.tar.xz` on another machine (e.g. https://npmmirror.com/mirrors/nvm/ and https://npmmirror.com/mirrors/node/), copy them into the VM, then run:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-mkdir -p ~/.nvm && tar -xzf nvm-v0.40.1.tar.gz -C ~/.nvm --strip-components=1
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh"
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-mkdir -p "$NVM_DIR/versions/node/v22.12.0" && tar -xJf node-v22.12.0-linux-x64.tar.xz -C "$NVM_DIR/versions/node/v22.12.0" --strip-components=1
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-ln -sfn "$NVM_DIR/versions/node/v22.12.0" "$NVM_DIR/alias/default"
-```
-
-If you go with NVM (Options B, C, D), skip the NodeSource block and go straight to step 3. Before picking an option, check which sites the VM can reach with `curl -I https://raw.githubusercontent.com`, `curl -I https://gitee.com`, or `curl -I https://npmmirror.com`.
+Node 20.19+ or 22.12+ is required. Close and reopen PowerShell after installing, so the new `node` and `npm` are on `PATH`.
 
 3. Copy the committed sample snapshots:
 
-**Linux (Ubuntu/Debian)**
+**Windows (PowerShell)**
 
-```bash
+```powershell
 npm run data:sample
 ```
 
 4. Install the front-end dependencies:
 
-**Linux (Ubuntu/Debian)**
+**Windows (PowerShell)**
 
-```bash
+```powershell
 npm install
 ```
 
 If the download stalls or fails with a network error, switch to a mirror and retry:
 
-**Linux (Ubuntu/Debian)**
+**Windows (PowerShell)**
 
-```bash
+```powershell
 npm config set registry https://registry.npmmirror.com
 ```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-npm install
-```
-
-5. Start the web server in the background and make it reachable from the host machine:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-nohup npm run dev -- --host > frontend.log 2>&1 &
-```
-
-6. Read the front-end URL and the VM address, then open the dashboard:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-cat frontend.log
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-hostname -I
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-echo "http://$(hostname -I | awk '{print $1}'):5173/"
-```
-
-The last command prints a ready-to-click URL such as `http://192.168.241.132:5173/`; in the VS Code terminal `Ctrl+Click` (or `Cmd+Click` on macOS) opens it in the host browser.
-
-On Windows, with the preview server running, print the same kind of link:
 
 **Windows (PowerShell)**
 
 ```powershell
-Write-Output "http://localhost:4173/"
+npm install
 ```
 
-The dev server writes its own links to `frontend.log`. To print only the network URL after starting it in the background:
+5. Start the dev server:
 
-**Linux (Ubuntu/Debian)**
+**Windows (PowerShell)**
 
-```bash
-grep -Eo 'http://[0-9.]+:5173/' frontend.log | head -n 1
+```powershell
+npm run dev -- --host
 ```
 
-`frontend.log` should contain `VITE v8.x ready` and `Local: http://localhost:5173/`. **That is the system dashboard, and it needs no database.** The page alone is enough to review the system; step 0b below adds the Django admin and MySQL backend, and everything after it is reference or optional tooling.
+The server stays in the foreground: leave this window open and use a second PowerShell window for the remaining steps.
 
-Each machine has its own `localhost`, so the address depends on where the browser runs:
+6. Open the dashboard:
 
-| Browser runs on | URL to type | Service that must be running there |
-|---|---|---|
-| The VM itself | `http://127.0.0.1:5173/` | step 5 in this VM |
-| The Windows/macOS host, reaching the VM | `http://<VM-IP>:5173/` | step 5 in this VM (`--host` exposes it) |
-| The host, with a Vite preview started on the host | `http://localhost:4173/` | `npm run build` then `npm run preview` on the host |
+**Windows (PowerShell)**
 
-`localhost:4173` typed inside the VM will fail with "connection refused": port 4173 only exists on the machine where `npm run preview` runs, and it binds to 127.0.0.1 by default.
-
-To stop it later:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-pkill -f "vite"
+```powershell
+Start-Process "http://localhost:5173/"
 ```
 
-### 0b. Django admin and MySQL (Ubuntu/Debian)
+The dev server prints `VITE v8.x ready` and `Local: http://localhost:5173/`. **That is the system dashboard, and it needs no database.** Because of `--host`, other devices on the same network can reach it at `http://<this-PC-IP>:5173/`; `ipconfig` shows the address. Port 4173 only exists while `npm run preview` runs, and it binds to 127.0.0.1.
+
+Press `Ctrl+C` in the dev-server window to stop it.
+
+### 0b. Django admin and MySQL (Windows PowerShell)
 
 Steps 7-16 add the Django admin at port 8000, the MySQL database, and the read-only snapshot API. The dashboard works without them, so skip the section if you only need the pages.
 
-7. Install Python, pip, and the venv module:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-sudo apt update
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-sudo apt install -y python-is-python3 python3-pip python3-venv curl
-```
-
-8. Create and activate the virtual environment:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-python -m venv .venv
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-source .venv/bin/activate
-```
-
-9. Install the Python dependencies:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-pip install -r requirements.txt
-```
-
-10. Install and start MySQL:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-sudo apt install -y mysql-server
-```
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-sudo systemctl start mysql
-```
-
-11. Set the MySQL root password and create the database. The command below works regardless of whether root still uses `auth_socket` (fresh install) or has already been given a password; it uses the `debian-sys-maint` account that the Ubuntu MySQL package pre-configures and that always works locally:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-sudo mysql --defaults-file=/etc/mysql/debian.cnf -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY '123456'; CREATE DATABASE IF NOT EXISTS dyinfo_schema CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-```
-
-Then verify you can log in with the new password (`-p` and the password must be adjacent, no space):
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-mysql -u root -p123456 -e "SELECT user, plugin FROM mysql.user;"
-```
-
-12. Write `.env` with that password and a freshly generated `SECRET_KEY`, without opening an editor:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-printf 'DB_PASSWORD=123456\nSECRET_KEY=%s\nDEBUG=True\nALLOWED_HOSTS=*\n' "$(python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')" > .env
-```
-
-13. Create the database tables:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-python manage.py migrate
-```
-
-14. Create the admin account `admin` / `admin123456` without prompts:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-DJANGO_SUPERUSER_USERNAME=admin DJANGO_SUPERUSER_EMAIL=admin@example.com DJANGO_SUPERUSER_PASSWORD=admin123456 python manage.py createsuperuser --noinput
-```
-
-15. Start Django in the background so the terminal stays free:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-nohup python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &
-```
-
-16. Read the backend log:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-cat server.log
-```
-
-Print the clickable admin link:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-echo "http://$(hostname -I | awk '{print $1}'):8000/admin/"
-```
-
-The admin is at `http://<VM-IP>:8000/admin/` (`admin` / `admin123456`); inside the VM use `http://127.0.0.1:8000/admin/`. A `staticfiles.W004 ... 'static' ... does not exist` warning is harmless and does not stop the server.
-
-To stop the backend later:
-
-**Linux (Ubuntu/Debian)**
-
-```bash
-pkill -f "manage.py runserver"
-```
-
-The demo passwords above are local values, not secrets, and `.env` is gitignored. To restart after reopening the terminal: repeat step 1, the activation command from step 8, step 5, and step 15.
-
-### 1. Django and MySQL (other platforms)
-
-> **Ubuntu/Debian users: section 0b above already completes this section.** Its commands are steps 7–15; this section explains what each one does and gives the Windows/macOS equivalents, so read it as reference instead of running it a second time.
-
-Python 3.8 or newer is required.
+7. Install Python 3.12:
 
 **Windows (PowerShell)**
 
@@ -431,11 +165,9 @@ Python 3.8 or newer is required.
 winget install --id Python.Python.3.12 -e
 ```
 
-On macOS use `brew install python@3.12`, or download the installer from <https://www.python.org/downloads/>.
+Close and reopen PowerShell afterwards. Python 3.8 or newer is required.
 
-Then create the virtual environment and install the backend dependencies (on Linux this is steps 8–9 of section 0).
-
-Create the virtual environment:
+8. Create and activate the virtual environment:
 
 **Windows (PowerShell)**
 
@@ -443,15 +175,21 @@ Create the virtual environment:
 python -m venv .venv
 ```
 
-Activate it:
-
 **Windows (PowerShell)**
 
 ```powershell
 .venv\Scripts\Activate.ps1
 ```
 
-Install the backend dependencies:
+If PowerShell refuses to run the script, allow it for the current window:
+
+**Windows (PowerShell)**
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+9. Install the Python dependencies:
 
 **Windows (PowerShell)**
 
@@ -459,33 +197,13 @@ Install the backend dependencies:
 pip install -r requirements.txt
 ```
 
-Copy the environment template:
+10. Install MySQL Server 8 with the MySQL Installer from <https://dev.mysql.com/downloads/installer/> and choose a root password during setup. Open "MySQL 8.0 Command Line Client" from the Start menu, or add `C:\Program Files\MySQL\MySQL Server 8.0\bin` to `PATH` so `mysql` works in PowerShell.
+
+11. Create the database from the MySQL shell:
 
 **Windows (PowerShell)**
 
 ```powershell
-Copy-Item .env.example .env
-```
-
-Open `.env` (`nano .env` on Linux, `notepad .env` on Windows) and set `DB_PASSWORD` and `SECRET_KEY`; step 12 of section 0 writes the file for you. Both are read from the environment, and `SECRET_KEY` has no fallback, so an empty value will stop the server. You can generate a key with:
-
-**All platforms**
-
-```bash
-python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
-```
-
-Install MySQL Server if it is not already running (on Linux this is steps 10–11 of section 0, which also set the root password and create the database).
-
-**Windows**
-
-Install MySQL Server 8 with the MySQL Installer from <https://dev.mysql.com/downloads/installer/> and choose a root password during setup. Open "MySQL 8.0 Command Line Client" from the Start menu, or add `C:\Program Files\MySQL\MySQL Server 8.0\bin` to `PATH` so `mysql` works in PowerShell.
-
-Then log in and create a database named `dyinfo_schema` from the MySQL shell:
-
-**All platforms**
-
-```bash
 mysql -u root -p
 ```
 
@@ -495,89 +213,122 @@ mysql -u root -p
 CREATE DATABASE dyinfo_schema CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-Leave the MySQL shell before running the Django commands:
-
 **MySQL shell**
 
 ```bash
 exit
 ```
 
-> **Already followed section 0b on Ubuntu?** Do not run the migrations or the admin-user command again; steps 13–14 already did both. The blocks below are the Windows/macOS equivalents, plus the interactive form for anyone who skipped 0b.
-
-Apply the migrations:
-
-**All platforms**
-
-```bash
-python manage.py migrate
-```
-
-Create an admin user (it prompts for a username, email, and password; if the user already exists, Django stops with a harmless "already taken" message):
-
-**All platforms**
-
-```bash
-python manage.py createsuperuser
-```
-
-Start the development server:
-
-**All platforms**
-
-```bash
-python manage.py runserver 0.0.0.0:8000
-```
-
-The admin is at `http://127.0.0.1:8000/admin/`.
-
-`runserver` is a foreground process and does not return to the shell prompt. Leave it running while you use the browser, and press `Ctrl+C` to stop it. Run the front-end commands below in a second terminal, or start the server in the background with:
-
-**Linux / macOS**
-
-```bash
-nohup python manage.py runserver 0.0.0.0:8000 > server.log 2>&1 &
-```
-
-**Linux / macOS**
-
-```bash
-tail -f server.log
-```
-
-Also note that `exit` in the previous block is a MySQL command typed at the `mysql>` prompt; a `python` command typed there is treated as SQL and will appear to hang.
-
-### 2. Data snapshots
-
-Node.js 22 is required. The Ubuntu package is too old for Vite 8, so install the current release first; on Linux follow step 2 of section 0.
+12. Write `.env` with that password and a freshly generated `SECRET_KEY`, without opening an editor:
 
 **Windows (PowerShell)**
 
 ```powershell
-winget install OpenJS.NodeJS.LTS
+"DB_PASSWORD=123456`nSECRET_KEY=$((python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())').Trim())`nDEBUG=True`nALLOWED_HOSTS=*" | Set-Content -Encoding utf8 .env
 ```
 
-Node 20.19+ or 22.12+ is required.
+13. Create the database tables:
+
+**Windows (PowerShell)**
+
+```powershell
+python manage.py migrate
+```
+
+14. Create the admin account `admin` / `admin123456` without prompts:
+
+**Windows (PowerShell)**
+
+```powershell
+$env:DJANGO_SUPERUSER_USERNAME="admin"
+```
+
+**Windows (PowerShell)**
+
+```powershell
+$env:DJANGO_SUPERUSER_EMAIL="admin@example.com"
+```
+
+**Windows (PowerShell)**
+
+```powershell
+$env:DJANGO_SUPERUSER_PASSWORD="admin123456"
+```
+
+**Windows (PowerShell)**
+
+```powershell
+python manage.py createsuperuser --noinput
+```
+
+15. Start Django:
+
+**Windows (PowerShell)**
+
+```powershell
+python manage.py runserver 0.0.0.0:8000
+```
+
+`runserver` is a foreground process and does not return to the prompt; leave it running and press `Ctrl+C` to stop it. Use a second PowerShell window for the front-end commands.
+
+16. Open the admin panel:
+
+**Windows (PowerShell)**
+
+```powershell
+Start-Process "http://127.0.0.1:8000/admin/"
+```
+
+The admin is at `http://127.0.0.1:8000/admin/` (`admin` / `admin123456`). A `staticfiles.W004 ... 'static' ... does not exist` warning is harmless and does not stop the server.
+
+The demo passwords above are local values, not secrets, and `.env` is gitignored. To restart after reopening PowerShell: repeat step 1, the activation command from step 8, step 5, and step 15.
+
+### 1. Django and MySQL notes (Windows)
+
+The steps above are the full procedure. The details they rely on:
+
+- `.env` is read through `python-dotenv`; `DB_PASSWORD` and `SECRET_KEY` have no fallback, so an empty value stops the server.
+- Generate a key with:
+
+**Windows (PowerShell)**
+
+```powershell
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+
+- `mysql` and the password must stay adjacent (`-p123456`, no space); with a space MySQL treats the password as a database name.
+- `exit` is a MySQL command typed at the `mysql>` prompt. A `python` command typed there is treated as SQL and appears to hang.
+- Create an admin interactively instead of step 14 if you prefer:
+
+**Windows (PowerShell)**
+
+```powershell
+python manage.py createsuperuser
+```
+
+The admin is at `http://127.0.0.1:8000/admin/`.
+
+### 2. Data snapshots
 
 The Vue build imports `data/normalized/weather.json`, `quake.json`, `heritage.json`, and `news.json`. A small public snapshot is committed under `data/sample/normalized/`, so a fresh clone can build without running the crawler:
 
-**All platforms**
+**Windows (PowerShell)**
 
-```bash
+```powershell
 npm run data:sample
 ```
 
-**All platforms**
+**Windows (PowerShell)**
 
-```bash
+```powershell
 npm run check:snapshots
 ```
 
 The sample was fetched on 2026-11-02 and contains 16 city weather records, 20 earthquakes, 190 heritage items, and 79 news headlines. It contains no Douyin user data. To refresh it from the sources instead, run the crawler from the project root:
 
-**All platforms**
+**Windows (PowerShell)**
 
-```bash
+```powershell
 node scripts/crawler/crawl.mjs
 ```
 
@@ -589,7 +340,7 @@ The build-time import remains the default, so the dashboard still works without
 Django. When the backend is running, the same files are available through a
 read-only, allow-listed API:
 
-**All platforms (HTTP)**
+**HTTP**
 
 ```text
 GET /api/snapshots/            status, sizes, SHA-256, freshness, last run
@@ -605,74 +356,71 @@ and missing or corrupt files return `503` rather than a stack trace.
 
 Refresh uses the existing Node crawler through a management command:
 
-**All platforms**
+**Windows (PowerShell)**
 
-```bash
+```powershell
 python manage.py refresh_snapshots --check
 ```
 
-**All platforms**
+**Windows (PowerShell)**
 
-```bash
+```powershell
 python manage.py refresh_snapshots --run --source weather --source quake
 ```
 
-The repository does not bundle an always-on scheduler. Run the command from
-cron, a systemd timer, or Windows Task Scheduler; the API reports the resulting
-file timestamps and a `stale` flag. For example, on a Unix host:
+The repository does not bundle an always-on scheduler. On Windows, point Task Scheduler at the refresh command:
 
-**Linux (cron)**
+**Windows (PowerShell)**
 
-```cron
-0 */6 * * * cd /srv/yunyouqilu && .venv/bin/python manage.py refresh_snapshots --run >> /var/log/yunyouqilu-snapshots.log 2>&1
+```powershell
+schtasks /Create /SC HOURLY /MO 6 /TN "YunYouQiLu snapshots" /TR "powershell -NoProfile -Command \"cd 'C:\path\to\yunyouqilu'; .venv\Scripts\python.exe manage.py refresh_snapshots --run\"" /F
 ```
 
-There is still no database-backed dashboard API and no automatic browser
-polling: the Vue app continues to read its bundled snapshot until it is rebuilt.
+The API reports the resulting file timestamps and a `stale` flag. There is still no database-backed dashboard API and no automatic browser polling: the Vue app continues to read its bundled snapshot until it is rebuilt.
 
 ### 3. Frontend
 
-Install the front-end dependencies (step 4 of section 0):
+Install the front-end dependencies:
 
-**All platforms**
+**Windows (PowerShell)**
 
-```bash
+```powershell
 npm install
 ```
 
-Start the dev server (step 5 of section 0):
+Start the dev server:
 
-**All platforms**
+**Windows (PowerShell)**
 
-```bash
-npm run dev
+```powershell
+npm run dev -- --host
 ```
 
 The dev server listens on `http://localhost:5173/`. For a production build, build the bundle first:
 
-**All platforms**
+**Windows (PowerShell)**
 
-```bash
+```powershell
 npm run build
 ```
 
 Then serve it:
 
-**All platforms**
+**Windows (PowerShell)**
 
-```bash
+```powershell
 npm run preview
 ```
 
-The preview server uses port 4173. It binds to 127.0.0.1, so `http://localhost:4173/` works only in the browser of the machine that runs it; from another machine use the dev server with `--host` instead (see the address table in step 6 of section 0). `node scripts/serve-public.mjs` wraps the same steps, starts a Cloudflare quick tunnel if `cloudflared.exe` is around, and writes the public URL to `公网地址.txt` (gitignored).
+The preview server uses port 4173 and binds to 127.0.0.1, so `http://localhost:4173/` works only on this PC. `node scripts/serve-public.mjs` wraps the same steps, starts a Cloudflare quick tunnel if `cloudflared.exe` is around, and writes the public URL to `公网地址.txt` (gitignored).
 
 ### 4. Douyin data (optional)
 
 Put a Douyin web cookie in `TIKTOK_COOKIE` if you have one. Then run:
 
-**All platforms**
+**Windows (PowerShell)**
 
-```bash
+```powershell
 python spiders/yellow_river_spider.py
 ```
 
@@ -683,9 +431,9 @@ It collects videos and comments for the keyword 黄河流域生态治理 (Yellow
 The annual Qingdao revenue series and the OLS demo are separate from the front
 end. They run on the standard library only:
 
-**All platforms**
+**Windows (PowerShell)**
 
-```bash
+```powershell
 python scripts/forecast_qingdao.py
 ```
 
@@ -701,9 +449,9 @@ The three previously unimplemented methods are now available as dependency-free
 Python modules under `app/analytics/`. They run on the standard library, use a
 fixed seed, and consume the official 2024 indicators for all 16 cities:
 
-**All platforms**
+**Windows (PowerShell)**
 
-```bash
+```powershell
 python scripts/run_city_analytics.py
 ```
 
@@ -741,31 +489,31 @@ validation, not for operational segmentation.
 
 ## Tests and CI
 
-**All platforms**
+**Windows (PowerShell)**
 
 ```bash
 python manage.py test --settings=tiktok_blogger_web.settings_test
 ```
 
-**All platforms**
+**Windows (PowerShell)**
 
 ```bash
 python scripts/run_city_analytics.py
 ```
 
-**All platforms**
+**Windows (PowerShell)**
 
 ```bash
 npm run data:sample
 ```
 
-**All platforms**
+**Windows (PowerShell)**
 
 ```bash
 npm run check:snapshots
 ```
 
-**All platforms**
+**Windows (PowerShell)**
 
 ```bash
 npm run build
