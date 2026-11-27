@@ -1,8 +1,12 @@
 # YunYouQiLu (云游齐鲁)
 
-YunYouQiLu is a dashboard for culture and tourism along the Yellow River in Shandong. It covers all 16 prefecture-level cities in the province; nine of them sit on the river and get most of the attention. Some pages are map-first: city heat, scenic spots, protected areas, heritage sites, and disaster risk. Others are chart-first: visitor flow, industry numbers, marketing, and public opinion. Weather and earthquake feeds are real; most of the tourism figures are not. The interface starts in Chinese; the top bar has a language menu with English and several other locales.
+YunYouQiLu is a Vue 3 + Django dashboard for culture and tourism along the Yellow River in Shandong. It covers all 16 prefecture-level cities; nine sit on the river. Weather and earthquake feeds are real; most tourism figures are labeled demo data. The interface starts in Chinese, with other languages in the top-bar menu.
 
-The front end is Vue 3 with TypeScript, Vite, ECharts, and Leaflet. The backend is Django 4.2 with MySQL. The two sides are loosely coupled: the dashboard imports four JSON snapshots at build time and does not call Django at runtime, so you can run the UI on its own. Django is there for the admin, the Douyin models, a few account endpoints, and an optional read-only snapshot API.
+## Running it
+
+Double-click **`Start-Site.bat`** in the project folder and the browser opens at `http://localhost:4173/`. The launcher installs Node.js 22 if needed, installs the npm packages, copies the sample snapshots, builds the site, and starts the local server. If SmartScreen appears, choose "More info" and then "Run anyway". Running it again reuses the live server.
+
+That is the only required step. Manual PowerShell setup, the Django admin and MySQL backend, and the optional tooling are documented under [Extensions](#extensions-optional) below.
 
 ## Data authenticity
 
@@ -47,23 +51,7 @@ The repo started as a Douyin blogger data exercise. The Django models and admin 
 
 ## Stack
 
-Vue 3.5 and TypeScript do the UI. ECharts handles charts, Leaflet handles maps, and Vite 8 builds it. The Django side runs on 4.2 LTS, uses django-simpleui for the admin, and talks to MySQL 8 through PyMySQL. The Douyin spiders are Python. The Node crawler for public weather, earthquake, heritage, and news data has no npm dependencies.
-
-## Running it
-
-It was built and tested with Python 3.8 and Node 22. Vite 8 requires Node 20.19+ on the 20.x line, or 22.12+; the launcher checks this for you.
-
-### Quick start: double-click the launcher
-
-Double-click **`Start-Site.bat`** in the project folder. Nothing else is required:
-
-- if Node.js is missing or too old, it installs Node.js 22 through `winget`
-- on the first run it installs the npm dependencies and builds the site (needs internet once)
-- if `data/normalized/` is still empty (always the case in a fresh download), it copies the bundled sample snapshot from `data/sample/normalized/` first, so the pages have content without running the crawler
-- it starts the local server and opens `http://localhost:4173/` in the default browser
-- if SmartScreen appears, choose "More info" and then "Run anyway"
-
-The service keeps running after the window is closed; start the launcher again later and it reuses it. That dashboard is the entry to every page in the system.
+Vue 3.5 and TypeScript do the UI. ECharts handles charts, Leaflet handles maps, and Vite 8 builds it. The Django side runs on 4.2 LTS, uses django-simpleui for the admin, and talks to MySQL 8 through PyMySQL. The Douyin spiders are Python. The Node crawler for public weather, earthquake, heritage, and news data has no npm dependencies. The dashboard imports four JSON snapshots at build time and does not call Django at runtime, so the UI runs on its own; Django adds the admin, the Douyin models, a few account endpoints, and an optional read-only snapshot API.
 
 ## Extensions (optional)
 
