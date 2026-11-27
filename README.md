@@ -55,7 +55,7 @@ It was built and tested with Python 3.8 and Node 22. Vite 8 requires Node 20.19+
 
 ### One-click launcher (Windows, macOS, Linux)
 
-Double-click **`启动网站.bat`** on Windows, **`启动网站.command`** on macOS, or run **`启动网站.sh`** on Linux (mark it executable once with `chmod +x 启动网站.sh`). Nothing else is required:
+Double-click **`Start-Site.bat`** on Windows, **`Start-Site.command`** on macOS, or run **`Start-Site.sh`** on Linux (mark it executable once with `chmod +x Start-Site.sh`). Nothing else is required:
 
 - if Node.js is missing or too old, Windows installs Node.js 22 through `winget`, macOS tries Homebrew, and Linux prints the two commands to install it
 - on the first run it installs the npm dependencies and builds the site (needs internet once)
