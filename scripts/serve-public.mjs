@@ -38,6 +38,24 @@ function hasDeps() {
   return existsSync(VITE_BIN)
 }
 
+function hasSnapshot() {
+  return existsSync(join(projectRoot, 'data', 'normalized', 'weather.json'))
+}
+
+function ensureSnapshot() {
+  if (hasSnapshot()) return true
+  say('[1/3] 还没有数据快照，正在使用仓库自带的示例数据…')
+  const result = spawnSync(process.execPath, [join(projectRoot, 'scripts', 'use_sample_data.mjs')], {
+    cwd: projectRoot,
+    stdio: 'inherit',
+  })
+  if (result.status !== 0 || !hasSnapshot()) {
+    say('[1/3] 示例数据准备失败，请把上面的报错发给开发者。')
+    return false
+  }
+  return true
+}
+
 function installDeps() {
   say('[1/3] 首次运行，正在安装页面依赖（需要联网，约 1~3 分钟）…')
   const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm'
@@ -114,12 +132,12 @@ async function previewAlive() {
   }
 }
 
-async function ensurePreview() {
+async function ensurePreview(forceBuild = false) {
   if (await previewAlive()) {
     say(`[1/3] 预览服务已在运行：http://localhost:${PORT}/`)
     return true
   }
-  if (!existsSync(join(projectRoot, 'dist', 'index.html'))) {
+  if (forceBuild || !existsSync(join(projectRoot, 'dist', 'index.html'))) {
     say('[1/3] 还没有生产构建，先执行构建（约 10 秒）…')
     const build = spawnSync(process.execPath, [VITE_BIN, 'build'], {
       cwd: projectRoot,
@@ -225,8 +243,10 @@ async function verify(url) {
 }
 
 if (!ensureNodeVersion()) process.exit(1)
+const snapshotWasMissing = !hasSnapshot()
+if (!ensureSnapshot()) process.exit(1)
 if (!hasDeps() && !installDeps()) process.exit(1)
-if (!(await ensurePreview())) process.exit(1)
+if (!(await ensurePreview(snapshotWasMissing))) process.exit(1)
 LAN = candidateAddresses(await outboundAddress())
 
 if (NO_TUNNEL) {

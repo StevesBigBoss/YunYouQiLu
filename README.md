@@ -59,6 +59,7 @@ Double-click **`启动网站.bat`** on Windows, **`启动网站.command`** on ma
 
 - if Node.js is missing or too old, Windows installs Node.js 22 through `winget`, macOS tries Homebrew, and Linux prints the two commands to install it
 - on the first run it installs the npm dependencies and builds the site (needs internet once)
+- if `data/normalized/` is still empty (always the case in a fresh download), it copies the bundled sample snapshot from `data/sample/normalized/` first, so the pages have content without running the crawler
 - it starts the local server and opens `http://localhost:4173/` in the default browser
 
 The service keeps running after the window is closed; start the launcher again later and it reuses it. It only starts the dashboard, so the Django admin and MySQL steps below are not needed for it.
