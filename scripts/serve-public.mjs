@@ -16,12 +16,45 @@ const CLOUDFLARED =
     join(projectRoot, 'scripts', 'cloudflared.exe'),
   ].find((p) => existsSync(p)) ?? join(projectRoot, 'cloudflared.exe')
 const PREVIEW_LOG = join(os.tmpdir(), 'sd-preview.log')
+const VITE_BIN = join(projectRoot, 'node_modules', 'vite', 'bin', 'vite.js')
 const URL_FILE = join(projectRoot, '公网地址.txt')
 const NO_TUNNEL = process.argv.includes('--no-tunnel')
 const KEEP_OLD = process.argv.includes('--keep')
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 const say = (msg) => console.log(msg)
+
+function ensureNodeVersion() {
+  if (process.release.name !== 'node') return true
+  const [major, minor] = process.versions.node.split('.').map(Number)
+  const ok = (major === 20 && minor >= 19) || (major === 22 && minor >= 12) || major > 22
+  if (ok) return true
+  say(`当前 Node.js 版本 v${process.versions.node} 太旧，页面需要 20.19+ 或 22.12+。`)
+  say('请安装 Node.js 22 后重新双击启动：https://nodejs.org/zh-cn/download')
+  return false
+}
+
+function hasDeps() {
+  return existsSync(VITE_BIN)
+}
+
+function installDeps() {
+  say('[1/3] 首次运行，正在安装页面依赖（需要联网，约 1~3 分钟）…')
+  const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm'
+  const run = (args) =>
+    spawnSync(npm, args, { cwd: projectRoot, stdio: 'inherit', shell: process.platform === 'win32' })
+  let result = run(['install', '--no-audit', '--no-fund'])
+  if (result.status !== 0) {
+    say('[1/3] 官方源下载失败，改用国内镜像重试…')
+    result = run(['install', '--no-audit', '--no-fund', '--registry=https://registry.npmmirror.com'])
+  }
+  if (result.status !== 0 || !hasDeps()) {
+    say('[1/3] 依赖安装失败，请把上面的报错发给开发者。')
+    return false
+  }
+  say('[1/3] 依赖安装完成。')
+  return true
+}
 
 function outboundAddress() {
   return new Promise((resolve) => {
@@ -88,11 +121,10 @@ async function ensurePreview() {
   }
   if (!existsSync(join(projectRoot, 'dist', 'index.html'))) {
     say('[1/3] 还没有生产构建，先执行构建（约 10 秒）…')
-    const build = spawnSync(
-      process.execPath,
-      [join(projectRoot, 'node_modules', 'vite', 'bin', 'vite.js'), 'build'],
-      { cwd: projectRoot, stdio: 'inherit' },
-    )
+    const build = spawnSync(process.execPath, [VITE_BIN, 'build'], {
+      cwd: projectRoot,
+      stdio: 'inherit',
+    })
     if (build.status !== 0) {
       say('构建失败，请把上面的报错发给开发者。')
       return false
@@ -102,15 +134,7 @@ async function ensurePreview() {
   const out = openSync(PREVIEW_LOG, 'a')
   spawn(
     process.execPath,
-    [
-      join(projectRoot, 'node_modules', 'vite', 'bin', 'vite.js'),
-      'preview',
-      '--port',
-      String(PORT),
-      '--strictPort',
-      '--host',
-      '0.0.0.0',
-    ],
+    [VITE_BIN, 'preview', '--port', String(PORT), '--strictPort', '--host', '0.0.0.0'],
     { cwd: projectRoot, detached: true, stdio: ['ignore', out, out] },
   ).unref()
   for (let i = 0; i < 40; i += 1) {
@@ -200,6 +224,8 @@ async function verify(url) {
   return null
 }
 
+if (!ensureNodeVersion()) process.exit(1)
+if (!hasDeps() && !installDeps()) process.exit(1)
 if (!(await ensurePreview())) process.exit(1)
 LAN = candidateAddresses(await outboundAddress())
 
@@ -210,7 +236,7 @@ if (NO_TUNNEL) {
   for (const line of localLines()) say(line)
   say('============================================================')
   say('')
-  say('说明：这个窗口关掉服务就停了；重新启动请再双击一次本图标。')
+  say('说明：页面服务已在后台运行，这个窗口可以直接关掉；下次双击会直接复用。')
   say('      想让别人在外网访问，请用「启动公网访问.bat」。')
   process.exit(0)
 }

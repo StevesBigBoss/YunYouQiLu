@@ -50,7 +50,6 @@ dist.zip
 公网地址.txt
 启动公网访问.bat
 启动开发模式.bat
-启动网站.bat
 
 # 论文排版、软著 PDF 与本机一次性脚本（含本机绝对路径/体积大，不入库）
 /docx_edit_work/
