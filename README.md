@@ -10,23 +10,16 @@ That is the only required step. Manual PowerShell setup, the Django admin and My
 
 ## Requirements
 
-The dashboard needs only this:
-
-| Component | Version | Notes |
-|---|---|---|
-| Windows 10/11 with PowerShell | any recent build | the launcher is `Start-Site.bat` |
-| Node.js | 20.19+ (20.x line) or 22.12+ | installed automatically with `winget` if missing or too old |
-| npm | ships with Node.js | used on the first run to install the front-end packages |
-| Internet access | first run only | to download Node.js and the npm packages |
-
-The optional backend in [Extensions](#extensions-optional) additionally needs:
-
-| Component | Version |
-|---|---|---|
-| Python | 3.8+ (3.12 recommended) |
-| pip | ships with Python |
-| MySQL Server | 8.x |
-| MySQL client (`mysql`) | on `PATH`, or use the "MySQL 8.0 Command Line Client" entry |
+| Component | Version | Needed for | Notes |
+|---|---|---|---|
+| Windows 10/11 with PowerShell | any recent build | everything | the launcher is `Start-Site.bat` |
+| Node.js | 20.19+ (20.x) or 22.12+ | dashboard | installed automatically with `winget` if missing or too old |
+| npm | ships with Node.js | dashboard | installs the front-end packages on the first run |
+| Python | 3.8+ (3.12 recommended) | Django backend, spiders, forecast and analytics scripts | `winget install --id Python.Python.3.12 -e` |
+| pip | ships with Python | Django backend, spiders | installs `requirements.txt` |
+| MySQL Server | 8.x | Django backend (database `dyinfo_schema`) | choose a root password during installation |
+| MySQL client (`mysql`) | 8.x | Django backend | on `PATH`, or use the "MySQL 8.0 Command Line Client" entry |
+| Internet access | — | first run, and whenever snapshots are refreshed | downloads Node.js, the npm packages, and crawler data |
 
 Nothing else has to be installed: the Node crawler and the forecast/analytics scripts use only their language standard libraries, and the dashboard reads the committed JSON snapshots at build time. Which data is real and which is demo is described in `PRIVACY_AND_DATA.md`.
 
