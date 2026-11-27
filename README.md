@@ -53,15 +53,15 @@ Vue 3.5 and TypeScript do the UI. ECharts handles charts, Leaflet handles maps, 
 
 It was built and tested with Python 3.8 and Node 22. Vite 8 requires Node 20.19+ on the 20.x line, or 22.12+. If you only want to look at the dashboard, you can skip the Django steps; you need Node and the JSON snapshots.
 
-### One-click launcher (Windows)
+### One-click launcher (Windows, macOS, Linux)
 
-Double-click **`启动网站.bat`** in the project folder. Nothing else is required:
+Double-click **`启动网站.bat`** on Windows, **`启动网站.command`** on macOS, or run **`启动网站.sh`** on Linux (mark it executable once with `chmod +x 启动网站.sh`). Nothing else is required:
 
-- if Node.js is missing or too old, it installs Node.js 22 through `winget`
+- if Node.js is missing or too old, Windows installs Node.js 22 through `winget`, macOS tries Homebrew, and Linux prints the two commands to install it
 - on the first run it installs the npm dependencies and builds the site (needs internet once)
 - it starts the local server and opens `http://localhost:4173/` in the default browser
 
-The service keeps running after the window is closed; double-click the file again later and it reuses it. It only starts the dashboard, so the Django admin and MySQL steps below are not needed for it.
+The service keeps running after the window is closed; start the launcher again later and it reuses it. It only starts the dashboard, so the Django admin and MySQL steps below are not needed for it.
 
 ### 0. Quick start (Ubuntu/Debian): run the dashboard
 
