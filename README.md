@@ -10,6 +10,8 @@ That is the only required step. Manual PowerShell setup, the Django admin and My
 
 ## Requirements
 
+To run the dashboard only Windows and Node.js are required; npm ships with Node.js and the launcher installs nothing else. Python, pip and MySQL are needed only for the optional Django backend, the spiders, and the forecast/analytics scripts, and the double-click launcher never touches them.
+
 | Component | Version | Needed for | Notes |
 |---|---|---|---|
 | Windows 10/11 with PowerShell | any recent build | everything | the launcher is `Start-Site.bat` |
