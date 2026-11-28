@@ -1,5 +1,7 @@
 # Shell scripts must keep LF so they run on macOS/Linux.
 *.sh text eol=lf
 *.command text eol=lf
-# Batch files must keep CRLF so cmd.exe parses blocks correctly.
-*.bat text eol=crlf
+# Batch files must keep CRLF in the repo itself, otherwise a GitHub zip
+# download gives LF endings and cmd.exe closes the window instantly.
+*.bat binary
+*.cmd binary
