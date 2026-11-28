@@ -7,18 +7,30 @@ rem Double-click this file to open the site at http://localhost:4173/
 rem It installs Node.js if missing, installs npm packages on the first run,
 rem builds the site, starts the server and opens the browser.
 
-set "NODE_EXE=%ProgramFiles%\nodejs\node.exe"
-if exist "%NODE_EXE%" goto run
+set "NODE_EXE="
+if exist "%ProgramFiles%\nodejs\node.exe" set "NODE_EXE=%ProgramFiles%\nodejs\node.exe"
+if not defined NODE_EXE (
+  for /f "delims=" %%i in ('where node 2^>nul') do set "NODE_EXE=%%i"
+)
+if not defined NODE_EXE (
+  echo Node.js not found. Installing Node.js 22 automatically (needs internet, about 1 minute)...
+  where winget >nul 2>nul
+  if errorlevel 1 goto manual
+  winget install --id OpenJS.NodeJS.LTS -e --silent --accept-source-agreements --accept-package-agreements
+  if exist "%ProgramFiles%\nodejs\node.exe" set "NODE_EXE=%ProgramFiles%\nodejs\node.exe"
+)
+if not defined NODE_EXE goto manual
 
-for /f "delims=" %%i in ('where node 2^>nul') do call :use "%%i"
-if defined NODE_EXE goto run
+rem Put the Node.js directory on PATH for this session so child processes (npm, vite) find it.
+for %%I in ("%NODE_EXE%") do set "PATH=%%~dpI;%PATH%"
 
-echo Node.js not found. Installing Node.js 22 automatically (needs internet, about 1 minute)...
-where winget >nul 2>nul
-if errorlevel 1 goto manual
-winget install --id OpenJS.NodeJS.LTS -e --silent --accept-source-agreements --accept-package-agreements
-set "NODE_EXE=%ProgramFiles%\nodejs\node.exe"
-if exist "%NODE_EXE%" goto run
+"%NODE_EXE%" "%~dp0scripts\serve-public.mjs" --no-tunnel %*
+if errorlevel 1 goto fail
+start "" "http://localhost:4173/"
+echo.
+echo Browser opened at http://localhost:4173/ - you can close this window.
+pause
+exit /b 0
 
 :manual
 echo.
@@ -28,21 +40,8 @@ echo.
 pause
 exit /b 1
 
-:use
-set "NODE_EXE=%~1"
-exit /b 0
-
-:run
-"%NODE_EXE%" "%~dp0scripts\serve-public.mjs" --no-tunnel %*
-if errorlevel 1 goto fail
-start "" "http://localhost:4173/"
-echo.
-echo Browser opened at http://localhost:4173/ - you can close this window.
-pause
-exit /b 0
-
 :fail
 echo.
-echo Startup failed. Read the messages above.
+echo Startup failed. Scroll up and read the messages above, or send this window to the developer.
 pause
 exit /b 1

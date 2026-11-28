@@ -56,9 +56,23 @@ function ensureSnapshot() {
   return true
 }
 
+function npmCommand() {
+  if (process.platform !== 'win32') return 'npm'
+  const dir = dirname(process.execPath)
+  for (const name of ['npm.cmd', 'npm']) {
+    const candidate = join(dir, name)
+    if (existsSync(candidate)) return candidate
+  }
+  return 'npm.cmd'
+}
+
 function installDeps() {
   say('[1/3] 首次运行，正在安装页面依赖（需要联网，约 1~3 分钟）…')
-  const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm'
+  const npm = npmCommand()
+  if (!existsSync(npm) && process.platform === 'win32') {
+    say('[1/3] 找不到 npm.cmd。请先在命令行执行 npm -v，确认 Node.js 安装完整后重新双击启动。')
+    return false
+  }
   const run = (args) =>
     spawnSync(npm, args, { cwd: projectRoot, stdio: 'inherit', shell: process.platform === 'win32' })
   let result = run(['install', '--no-audit', '--no-fund'])
