@@ -27,7 +27,9 @@ if (-not $node) {
   Write-Host '[1/3] Node.js not found, installing Node.js 22 with winget (about 1 minute)...'
   $winget = Get-Command winget.exe -ErrorAction SilentlyContinue
   if ($winget) {
-    & $winget.Source install --id OpenJS.NodeJS.LTS -e --silent --accept-source-agreements --accept-package-agreements
+    # --source winget avoids the "msstore" agreement prompt; --disable-interactivity stops any wait for input.
+    & $winget.Source install --id OpenJS.NodeJS.LTS -e --source winget --silent --accept-source-agreements --accept-package-agreements --disable-interactivity
+    Start-Sleep -Seconds 2
     $node = Find-Node
   }
   if (-not $node) {
