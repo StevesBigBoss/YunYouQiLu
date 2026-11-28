@@ -56,25 +56,22 @@ function ensureSnapshot() {
   return true
 }
 
-function npmCommand() {
-  if (process.platform !== 'win32') return 'npm'
+function npmInvocation() {
+  if (process.platform !== 'win32') return { cmd: 'npm', prefix: [], shell: false }
   const dir = dirname(process.execPath)
-  for (const name of ['npm.cmd', 'npm']) {
-    const candidate = join(dir, name)
-    if (existsSync(candidate)) return candidate
-  }
-  return 'npm.cmd'
+  // Run npm's JS entry through node itself: no shell, so spaces in "C:\Program Files" are safe.
+  const cli = join(dir, 'node_modules', 'npm', 'bin', 'npm-cli.js')
+  if (existsSync(cli)) return { cmd: process.execPath, prefix: [cli], shell: false }
+  const cmdFile = join(dir, 'npm.cmd')
+  if (existsSync(cmdFile)) return { cmd: `"${cmdFile}"`, prefix: [], shell: true }
+  return { cmd: 'npm.cmd', prefix: [], shell: true }
 }
 
 function installDeps() {
   say('[1/3] 首次运行，正在安装页面依赖（需要联网，约 1~3 分钟）…')
-  const npm = npmCommand()
-  if (!existsSync(npm) && process.platform === 'win32') {
-    say('[1/3] 找不到 npm.cmd。请先在命令行执行 npm -v，确认 Node.js 安装完整后重新双击启动。')
-    return false
-  }
+  const { cmd, prefix, shell } = npmInvocation()
   const run = (args) =>
-    spawnSync(npm, args, { cwd: projectRoot, stdio: 'inherit', shell: process.platform === 'win32' })
+    spawnSync(cmd, [...prefix, ...args], { cwd: projectRoot, stdio: 'inherit', shell })
   let result = run(['install', '--no-audit', '--no-fund'])
   if (result.status !== 0) {
     say('[1/3] 官方源下载失败，改用国内镜像重试…')
